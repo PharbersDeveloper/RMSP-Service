@@ -1,0 +1,15 @@
+logs
+target
+/.idea
+/.idea_modules
+/.classpath
+/.project
+/.settings
+/.g8
+/RUNNING_PID
+resource/.Rhistory
+resource/
+
+*.history
+
+.metaserver/metaserver.log
