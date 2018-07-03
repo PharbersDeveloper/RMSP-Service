@@ -1,0 +1,23 @@
+<pharbers-modules>
+    <!--<r-path>-->
+        <!--<rfile value="resource/stp_handler.R"/>-->
+        <!--<rdata value="resource/pre_data_linux.RData"/>-->
+    <!--</r-path>-->
+    <!--<excel-path>-->
+        <!--<report value="resource/report/"/>-->
+        <!--<report_download value="bin/resource/report/"/>-->
+        <!--<pre_info_new value="resource/pre_info_new.xlsx"/>-->
+    <!--</excel-path>-->
+    <!--<program-path>-->
+        <!--<program value="/root/program/rmsp-service-1.0/"/>-->
+    <!--</program-path>-->
+    <program-path>
+        <program value=""/>
+    </program-path>
+    <r-path>
+        <rfile value="/Users/qianpeng/Desktop/stp_handler.R"/>
+    </r-path>
+    <excel-path>
+        <report value="/Users/qianpeng/Desktop/write_excel.R"/>
+    </excel-path>
+</pharbers-modules>

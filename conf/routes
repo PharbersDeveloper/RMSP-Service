@@ -1,0 +1,87 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# https://www.playframework.com/documentation/latest/ScalaRouting
+# ~~~~
+
+#GET     /                           controllers.RMSPRoutesController.login
+#GET     /login                      controllers.RMSPRoutesController.login
+#GET     /register                   controllers.RMSPRoutesController.register
+#GET     /index                      controllers.RMSPRoutesController.index(uuid = "")
+#GET     /index/:uuid                controllers.RMSPRoutesController.index(uuid)
+#GET     /brd                        controllers.RMSPRoutesController.brd(uuid = "")
+#GET     /brd/:uuid                  controllers.RMSPRoutesController.brd(uuid)
+#GET     /product                    controllers.RMSPRoutesController.product(uuid = "")
+#GET     /product/:uuid              controllers.RMSPRoutesController.product(uuid)
+#GET     /market                     controllers.RMSPRoutesController.market(uuid = "", phrase = "1")
+#GET     /market/:uuid/:phrase       controllers.RMSPRoutesController.market(uuid, phrase)
+#GET     /decision                   controllers.RMSPRoutesController.decision(uuid = "", phrase = "1")
+#GET     /decision/:uuid/:phrase     controllers.RMSPRoutesController.decision(uuid, phrase)
+#GET     /management                 controllers.RMSPRoutesController.management(uuid = "", phrase = "1")
+#GET     /management/:uuid/:phrase   controllers.RMSPRoutesController.management(uuid, phrase)
+#GET     /report                     controllers.RMSPRoutesController.report(uuid = "", phrase = "1")
+#GET     /report/:uuid/:phrase       controllers.RMSPRoutesController.report(uuid, phrase)
+#
+#GET     /phase_error/:uuid/:phase   controllers.RMSPRoutesController.phase_error(uuid, phase)
+#
+#GET     /takenew                    controllers.RMSPRoutesController.takenew
+#GET     /takelast/:uuid             controllers.RMSPRoutesController.takelast(uuid)
+
+# version 2.0
+#GET     /                           controllers.RMSPRoutesControllerV2.indexV2
+
+GET     /start                      controllers.RMSPRoutesControllerV2.start
+GET     /transition/:uuid/:phrase   controllers.RMSPRoutesControllerV2.transition(uuid, phrase)
+
+GET     /                           controllers.RMSPRoutesControllerV2.login
+#GET     /login                      controllers.RMSPRoutesController.login
+GET     /login                      controllers.RMSPRoutesControllerV2.login
+
+GET     /index                      controllers.RMSPRoutesControllerV2.indexV2(uuid = "")
+GET     /index/:uuid                controllers.RMSPRoutesControllerV2.indexV2(uuid)
+
+GET     /home                       controllers.RMSPRoutesControllerV2.home(uuid = "", phrase = "")
+GET     /home/:uuid/:phrase         controllers.RMSPRoutesControllerV2.home(uuid, phrase)
+
+GET     /takenew                    controllers.RMSPRoutesControllerV2.takenew
+GET     /takelast/:uuid             controllers.RMSPRoutesControllerV2.takelast(uuid)
+
+GET     /report                     controllers.RMSPRoutesControllerV2.report(uuid = "", phrase = "1")
+GET     /report/:uuid/:phrase       controllers.RMSPRoutesControllerV2.report(uuid, phrase)
+
+GET     /summary                    controllers.RMSPRoutesControllerV2.summary
+
+POST    /decision/proceed           controllers.RMSPRoutesController.updatedecision
+POST    /management/proceed         controllers.RMSPRoutesController.updatemanagement
+
+# 下载文件
+GET     /download/file/:name      controllers.FopController.downloadFile(name)
+
+# 用户注册
+POST    /user/register              controllers.user.RegisterController.registerUser
+POST    /register/check/name        controllers.user.RegisterController.registerUserCheckAccount
+POST    /register/check/email       controllers.user.RegisterController.registerUserCheckEmail
+POST    /register/check/phone       controllers.user.RegisterController.registerUserCheckPhone
+
+#检查Phase状态
+POST    /phase/status               controllers.checkstatus.CheckStatusController.checkStatus
+
+# 用户登入
+POST    /user/authpwd               controllers.auth.AuthController.authWithPassword
+
+# 用户call R
+POST    /submit/submitdata          controllers.rscript.RscriptController.callCalcRscript
+
+# 生成Excel
+POST    /submit/create              controllers.rscript.RscriptController.callDownLoadExcelRscript
+
+# 生成医院数据
+POST    /hospital/create            controllers.rsinformation.RsInformationController.generateHospitalFile
+
+# 代表初始雷达图 预设值
+POST    /salesmen/init/radarmap     controllers.rsinformation.RsInformationController.salesmenRadarMap
+
+# 测评报告
+POST    /summary/query              controllers.summary.SummaryController.query
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
