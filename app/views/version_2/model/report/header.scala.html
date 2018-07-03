@@ -1,0 +1,45 @@
+@import java.text.NumberFormat
+@import play.api.libs.json.JsValue
+@(uuid: String, phrase: String, report: JsValue)
+<div class="header">
+    <div class="row head-describe">
+        @if(phrase.toInt != 2) {
+            <div class="col-md-11 box bg">
+                <div class="col-md-5 col-sm-5 col-xs-5">周期(@{phrase})&nbsp;&nbsp;100天计划部署</div>
+                <div class="col-md-7 col-sm-7 col-xs-7 text-right" >
+                    @*<div class="config" name="toggle-check-result">*@
+                        @*<span><i class="glyphicon glyphicon-cog"></i></span>*@
+                    @*</div>*@
+                    <div class="config" name="toggle-export">
+                        <i class="glyphicon glyphicon-cog"></i>
+                        <div class="config-toggle-content" name="area-export">
+                            <p id="exportExcel">导出Excel</p>
+                        </div>
+                    </div>
+
+                    <div class="timer" style="display: none;"><i class="glyphicon glyphicon-time"></i><span>00:00</span></div>
+                </div>
+            </div>
+            <div class="col-md-1 text-right">
+                <button class="btn btn-primary btn-md submit-btn" name="go-phrase" type="button"><span>进入周期2</span></button>
+            </div>
+        } else {
+            <div class="col-md-11 box bg">
+                <div class="col-md-5 col-sm-5 col-xs-5">周期(@{phrase})&nbsp;&nbsp;100天计划部署</div>
+                <div class="col-md-7 col-sm-7 col-xs-7 text-right" >
+                    <div class="config" name="toggle-export">
+                        <i class="glyphicon glyphicon-cog"></i>
+                        <div class="config-toggle-content" name="area-export">
+                            <p id="exportExcel">导出Excel</p>
+                        </div>
+                    </div>
+                    <div class="timer" style="display: none;"><i class="glyphicon glyphicon-time"></i><span>00:00</span></div>
+                </div>
+            </div>
+            <div class="col-md-1 text-right">
+                <button class="btn btn-primary btn-md check-result-btn" name="coming-soon" type="button"><span>测评报告</span></button>
+            </div>
+        }
+
+    </div>
+</div>

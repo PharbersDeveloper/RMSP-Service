@@ -1,0 +1,70 @@
+@()
+@main("注册") {
+    <div class="register-box">
+        <div class="register-logo">
+            <a href="javascript:;">区域管理培训模拟平台注册页面</a>
+        </div>
+
+        <div class="register-box-body">
+            <p class="login-box-msg">注册一个新的账户</p>
+            <form id="register-form" onkeydown="if(event.keyCode==13){return false;}">
+                <div class="form-group has-feedback">
+                    <input type="text" class="form-control" id="account" name="account" placeholder="用户名" required autofocus>
+                </div>
+                <div class="form-group has-feedback">
+                    <input type="password" class="form-control" id="password" name="password" required placeholder="密码">
+                    @*<span class="glyphicon glyphicon-lock form-control-feedback"></span>*@
+                </div>
+                <div class="form-group has-feedback">
+                    <input type="password" class="form-control" id="confirmpwd" name="confirmpwd" placeholder="确认密码" required>
+                    @*<span class="glyphicon glyphicon-lock form-control-feedback"></span>*@
+                </div>
+                <div class="form-group has-feedback">
+                    <input type="text" class="form-control" id="name" name="name" placeholder="姓名" required>
+                    @*<span class="glyphicon glyphicon-user form-control-feedback"></span>*@
+                </div>
+                <div class="form-group has-feedback">
+                    <input type="number" max="120" class="form-control" id="age" name="age" placeholder="年龄" required>
+                    @*<span class="glyphicon glyphicon-superscript form-control-feedback"></span>*@
+                </div>
+                <div class="form-group has-feedback">
+                    <input type="text" class="form-control" id="company" name="company" placeholder="公司" required>
+                    @*<span class="glyphicon glyphicon-home form-control-feedback"></span>*@
+                </div>
+                <div class="form-group has-feedback">
+                    <input type="text" class="form-control" id="department" name="department" placeholder="部门" required>
+                    @*<span class="glyphicon glyphicon-briefcase form-control-feedback"></span>*@
+                </div>
+                <div class="form-group has-feedback">
+                    <select class="form-control" id="position" name="position" placeholder="职务">
+                        <option value="销售代表">销售代表</option>
+                        <option value="地区经理" selected>地区经理</option>
+                        <option value="大区经理">大区经理</option>
+                        <option value="区域销售总监">区域销售总监</option>
+                        <option value="全国销售总监">全国销售总监</option>
+                    </select>
+                    @*<input type="text" class="form-control" placeholder="职务">*@
+                    @*<span class="glyphicon glyphicon-object-align-left  form-control-feedback"></span>*@
+                </div>
+                <div class="form-group has-feedback">
+                    <input type="text" maxlength="11" class="form-control" id="phone" name="phone" placeholder="手机号码" required>
+                    @*<span class="glyphicon glyphicon-phone form-control-feedback"></span>*@
+                </div>
+                <div class="form-group has-feedback">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="电子邮件" required>
+                    @*<span class="glyphicon glyphicon-envelope form-control-feedback"></span>*@
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-8"></div>
+                    <div class="col-xs-4">
+                        <button id="submit" type="button" class="btn btn-primary btn-block btn-flat">注册</button>
+                    </div>
+                </div>
+            </form>
+            <a href="/login" class="text-center">已经有一个账户</a>
+        </div>
+    </div>
+
+    <script src="@routes.Assets.versioned("javascripts/business-lib/login/register.js")" type="text/javascript" defer="defer"></script>
+}

@@ -1,0 +1,21 @@
+@import java.text.NumberFormat
+@import play.api.libs.json.JsValue
+@*uuid、期数、报告*@
+@(uuid: String, phrase: String, report: JsValue)
+
+@version_2.model.application.template("区域管理模拟平台"){
+
+    <input type="hidden" name="uuid" value="@uuid" disabled="disabled" />
+    <input type="hidden" name="phrase" value="@phrase" disabled="disabled" />
+    <div class="home">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    @version_2.model.report.header(uuid, phrase, report)
+                    @version_2.model.report.reportContent(uuid, phrase, report)
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="@routes.Assets.versioned("javascripts/version_2/report/report.js")" type="text/javascript" defer="defer"></script>
+}

@@ -1,0 +1,141 @@
+@import play.api.libs.json.JsValue
+@(cycle: String)(input : List[play.api.libs.json.JsValue])(flag: (Boolean, Int))
+<div class="row">
+    <div class="col-sm-12">
+        <div class="box box-solid box-primary">
+            <div class="box-header">
+                <h3 class="box-title">经理时间分配(天数)</h3>
+            </div>
+            <div class="box-body">
+                <div>
+                    <div>
+                        <div style="display:inline-block;margin-left:15%;vertical-align:middle;text-align:center;width:11.5%">总时间的百分比</div>
+                        <div style="display:inline-block;vertical-align:middle;text-align:left;margin-left:30px;width:8%">经理</div>
+                        <div style="display:inline-block;vertical-align:middle;text-align:left;margin-left:25px;width:10.5%">小宋</div>
+                        <div style="display:inline-block;vertical-align:middle;text-align:left;margin-left:20px;width:10.5%">小兰</div>
+                        <div style="display:inline-block;vertical-align:middle;text-align:left;margin-left:15px;width:10.5%">小木</div>
+                        <div style="display:inline-block;vertical-align:middle;text-align:left;margin-left:15px;width:10.5%">小白</div>
+                        <div style="display:inline-block;vertical-align:middle;text-align:left;margin-left:10px;width:10%">小青</div>
+                    </div>
+                    <br>
+                    @for(data <- input) {
+                        @if((data \ "project_name").as[String] == "能力辅导") {
+                            <div>
+                                <input type="hidden" name="input" disabled value="@{(data \ "project_name").as[String]}">
+                                <div style="display:inline-block;vertical-align:middle;text-align:left;width:13%;margin-left:20px">能力辅导</div>
+                                <div style="display:inline-block;vertical-align:middle;text-align:left;margin-left:1%;width:8%;margin-right:1%">
+                                    <pre class="noplaceholder disabled" disabled="true" pharbers-sum="coach-all" pharbers-share="share">0</pre>
+                                </div>
+                                <div style="display:inline-block;vertical-align:middle;text-align:left;margin-left:2%;width:8%;margin-right:1%">
+                                    <pre class="noplaceholder disabled" disabled="true" pharbers-sum="coach-all">0</pre>
+                                </div>
+
+                                @for(apply <- (data \ "apply").as[List[String Map JsValue]]) {
+                                    <div style="display:inline-block;vertical-align:middle;text-align:center;margin-left:2.5%;width:8%;margin-right:1.5%">
+                                        <div class="form-group ">
+                                            <input type="number" min="0" @{if(flag._2 > cycle.toInt) {"disabled"} else {}}  code="@{(data \ "project_code").as[Int]}" name="@{apply("personal").as[String]}" pharbers-type="@{(data \ "project_name").as[String]}" type="text" class="form-control " value="@{apply("days").as[Double].toInt}" />
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                        @if((data \ "project_name").as[String] == "实地协访") {
+                            <div>
+                                <input type="hidden" name="input" disabled value="@{(data \ "project_name").as[String]}">
+                                <div style="display:inline-block;vertical-align:middle;text-align:left;width:13%;margin-left:20px;">实地协访</div>
+                                <div style="display:inline-block;vertical-align:middle;text-align:left;margin-left:1%;width:8%;margin-right:1%">
+                                    <pre class="noplaceholder disabled"  disabled="true" pharbers-sum="assist-all" pharbers-share="share">0</pre>
+                                </div>
+                                <div style="display:inline-block;vertical-align:middle;text-align:left;margin-left:2%;width:8%;margin-right:1%">
+                                    <pre class="noplaceholder disabled" disabled="true" pharbers-sum="assist-all">0</pre>
+                                </div>
+                                @for(apply <- (data \ "apply").as[List[String Map JsValue]]) {
+                                    <div style="display:inline-block;vertical-align:middle;text-align:center;margin-left:2.5%;width:8%;margin-right:1.5%">
+                                        <div class="form-group ">
+                                            <input type="number" min="0" @{if(flag._2 > cycle.toInt) {"disabled"} else {}}  code="@{(data \ "project_code").as[Int]}" name="@{apply("personal").as[String]}" pharbers-type="@{(data \ "project_name").as[String]}" type="text" class="form-control " value="@{apply("days").as[Double].toInt}" />
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                        @if((data \ "project_name").as[String] == "团队例会和团建") {
+                            <div>
+                                <input type="hidden" name="input" disabled value="@{(data \ "project_name").as[String]}">
+                                <div style="display:inline-block;vertical-align:middle;text-align:left;width:13%;margin-left:20px;">团队例会和团建</div>
+                                <div style="display:inline-block;vertical-align:middle;text-align:left;margin-left:1%;width:8%;margin-right:1%">
+                                    <pre class="noplaceholder disabled"  disabled="true" pharbers-sum="construction-all" pharbers-share="share">0</pre>
+                                </div>
+                                @for(apply <- (data \ "apply").as[List[String Map JsValue]]) {
+                                    <div style="display:inline-block;vertical-align:middle;text-align:center;margin-left:2%;width:8%;margin-right:1.5%">
+                                        <div class="form-group ">
+                                            <input type="number" min="0" @{if(flag._2 > cycle.toInt) {"disabled"} else {}}  code="@{(data \ "project_code").as[Int]}" name="@{apply("personal").as[String]}" pharbers-type="@{(data \ "project_name").as[String]}" type="text" class="form-control " value="@{apply("days").as[Double].toInt}" />
+                                        </div>
+                                    </div>
+                                }
+                                <div style="display:inline-block;vertical-align:middle;text-align:left;margin-left:2%;width:8%;margin-right:1.5%">
+                                    <pre pharbers-type="p@{cycle}_sr1_team_meeting" class="noplaceholder disabled" disabled="true" pharbers-sum="construction-all">0</pre>
+                                </div>
+                                <div style="display:inline-block;vertical-align:middle;text-align:left;margin-left:2.5%;width:8%;margin-right:1.5%">
+                                    <pre pharbers-type="p@{cycle}_sr2_team_meeting" class="noplaceholder disabled" disabled="true" pharbers-sum="construction-all">0</pre>
+                                </div>
+                                <div style="display:inline-block;vertical-align:middle;text-align:left;margin-left:2.5%;width:8%;margin-right:1.5%">
+                                    <pre pharbers-type="p@{cycle}_sr3_team_meeting" class="noplaceholder disabled" disabled="true" pharbers-sum="construction-all">0</pre>
+                                </div>
+                                <div style="display:inline-block;vertical-align:middle;text-align:left;margin-left:2.5%;width:8%;margin-right:1.5%">
+                                    <pre pharbers-type="p@{cycle}_sr4_team_meeting" class="noplaceholder disabled" disabled="true" pharbers-sum="construction-all">0</pre>
+                                </div>
+                                <div style="display:inline-block;vertical-align:middle;text-align:left;margin-left:2.5%;width:8%;margin-right:1.5%">
+                                    <pre pharbers-type="p@{cycle}_sr5_team_meeting" class="noplaceholder disabled" disabled="true" pharbers-sum="construction-all">0</pre>
+                                </div>
+                            </div>
+                        }
+
+                        @if((data \ "project_name").as[String] == "KPI 报告分析") {
+                            <div>
+                                <input type="hidden" name="input" disabled value="@{(data \ "project_name").as[String]}">
+                                <div style="display:inline-block;vertical-align:middle;text-align:left;width:13%;margin-left:20px;">KPI 报告分析</div>
+                                <div style="display:inline-block;vertical-align:middle;text-align:left;margin-left:1%;width:8%;margin-right:1%">
+                                    <pre pharbers-type="p@{cycle}_total_kpi_analysis" class="noplaceholder disabled" pharbers-sum="report-all" pharbers-share="share" disabled="true">0</pre>
+                                </div>
+                                @for(apply <- (data \ "apply").as[List[String Map JsValue]]) {
+                                    <div style="display:inline-block;vertical-align:middle;text-align:center;margin-left:2%;width:8%;margin-right:1.5%">
+                                        <div class="form-group ">
+                                            <input type="number" min="0" @{if(flag._2 > cycle.toInt) {"disabled"} else {}}  code="@{(data \ "project_code").as[Int]}" name="@{apply("personal").as[String]}" pharbers-type="@{(data \ "project_name").as[String]}" type="text" class="form-control " value="@{apply("days").as[Double].toInt}" />
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+
+                        @if((data \ "project_name").as[String] == "行政工作") {
+                            <div>
+                                <input type="hidden" name="input" disabled value="@{(data \ "project_name").as[String]}">
+                                <div style="display:inline-block;vertical-align:middle;text-align:left;width:13%;margin-left:20px;">行政工作</div>
+                                <div style="display:inline-block;vertical-align:middle;text-align:left;margin-left:1%;width:8%;margin-right:1%">
+                                    <pre pharbers-type="p@{cycle}_total_admin_work" class="noplaceholder disabled" disabled="true" pharbers-sum="pr-all" pharbers-share="share">0</pre>
+                                </div>
+                                @for(apply <- (data \ "apply").as[List[String Map JsValue]]) {
+                                    <div style="display:inline-block;vertical-align:middle;text-align:center;margin-left:2%;width:8%;margin-right:1.5%">
+                                        <div class="form-group ">
+                                            <input type="number" min="0" @{if(flag._2 > cycle.toInt) {"disabled"} else {}}  code="@{(data \ "project_code").as[Int]}" name="@{apply("personal").as[String]}" pharbers-type="@{(data \ "project_name").as[String]}" type="text" class="form-control " value="@{apply("days").as[Double].toInt}" />
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                    }
+
+                    <div>
+                        <div style="display:inline-block;vertical-align:middle;text-align:left;width:13%;margin-left:20px">合计</div>
+                        <div style="display:inline-block;vertical-align:middle;text-align:left;margin-left:1%;width:8%;margin-right:1%">
+                            <pre pharbers-type="p@{cycle}_total_management" class="noplaceholder disabled" pharbers-sum="sum-all" disabled="true">0</pre>
+                        </div>
+                        <div style="display:inline-block;vertical-align:middle;text-align:left;margin-left:2%;width:8%;margin-right:1%">
+                            <pre pharbers-type="p@{cycle}_flm_management" class="noplaceholder disabled" pharbers-sum="sum-all" disabled="true">0</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

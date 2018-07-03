@@ -1,0 +1,55 @@
+@(data: List[play.api.libs.json.JsValue])(uuid : String)
+
+@Home.home("product")(uuid)("") {
+<section class="content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="box box-solid box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">销售产品介绍</h3>
+                </div>
+                <div id="product-info-content">
+                    <div class="box-body">
+                        <div id="products_info" style="width: 100%;height: auto;visibility: inherit;" class="datatables html-widget html-widget-output shiny-bound-output">
+                            <div id="DataTables_Table_1_wrapper" class="dataTables_wrapper no-footer">
+                                <table class="display dataTable no-footer table-striped" id="DataTables_Table_1" role="grid">
+                                    <caption></caption>
+                                    <thead>
+                                        <tr role="row">
+                                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 150px;">品牌</th>
+                                            <th class="sorting_disabled dt-left" rowspan="1" colspan="1" style="width: 80px;">产品展示</th>
+                                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">类别</th>
+                                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">上市时间</th>
+                                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">单价.公司考核价.</th>
+                                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">单位成本</th>
+                                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">医保</th>
+                                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">类型</th>
+                                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">竞品信息</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @data.zipWithIndex.map { prod =>
+                                            <tr role="row">
+                                                <td class=" dt-center">@{(prod._1 \ "prod_brand").asOpt[String]}</td>
+                                                <td class=" dt-left"><img src="@routes.Assets.versioned("images/Drug/drug"+ {prod._2 + 1} +".jpg")" height="100"></td>
+                                                <td class=" dt-center">@{(prod._1 \ "prod_name").asOpt[String]}</td>
+                                                <td class=" dt-center">@{(prod._1 \ "prod_sales_time").asOpt[String]}</td>
+                                                <td class=" dt-center">@{(prod._1 \ "prod_unit_price").asOpt[String]}</td>
+                                                <td class=" dt-center">@{(prod._1 \ "prod_unit_cost").asOpt[String]}</td>
+                                                <td class=" dt-center">@{(prod._1 \ "prod_insurance").asOpt[String]}</td>
+                                                <td class=" dt-center">@{(prod._1 \ "prod_cat").asOpt[String]}</td>
+                                                <td class=" dt-center">@{(prod._1 \ "prod_competition").asOpt[String]}</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @* @Module.Product.product_content() *@
+            </div>
+        </div>
+    </div>
+</section>
+}

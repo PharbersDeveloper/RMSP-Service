@@ -1,0 +1,82 @@
+@(m: play.api.libs.json.JsValue)
+@import java.text.NumberFormat
+<div class="box-body">
+    <div style="margin-left: 3%" name="hospitals">
+        @Module.Report.hospital_select()
+    </div>
+    <div style="margin-left: 3%" name="dimension">
+        @Module.Report.vdoing_select()
+    </div>
+
+    <div style="text-align: left;margin-left: 3%">
+        <div style="width: 100%;height: auto;visibility: inherit;" class="datatables html-widget html-widget-output">
+            <div class="dataTables_wrapper no-footer">
+                <table class="display dataTable no-footer table-striped" name="time-distribution" role="grid">
+                    <caption>时间分配</caption>
+                    <thead style="background-color: rgb(65, 85, 93);color: rgb(255, 255, 255);">
+                        <tr role="row">
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">医院</th>
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">因素</th>
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">口服抗生素</th>
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">一代降糖药</th>
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">三代降糖药</th>
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">皮肤药</th>
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">总体</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @{
+                            val rp = (m \ "report").asOpt[List[play.api.libs.json.JsValue]].get
+                            val tp = rp.find(p => (p \ "report_name").asOpt[String].get == "分配报告_资源分配").get
+                            val tmp = (tp \ "result").asOpt[List[play.api.libs.json.JsValue]].get
+
+                            tmp.map { iter =>
+                                val regex="""-?[0-9]+.*[0-9]*""".r
+                                <tr role="row" pharbers-filter={(iter \ "hosp_name").asOpt[String].get} other-filter={(iter \ "factor").asOpt[String].get} >
+                                <td class="dt-center">{(iter \ "hosp_name").asOpt[String].get}</td>
+                                <td class="dt-center">{(iter \ "factor").asOpt[String].get}</td>
+                                <td class="dt-center">{
+                                    if(regex.findFirstMatchIn((iter \ "product_first").asOpt[String].get).isDefined) {
+                                        NumberFormat.getInstance().format((iter \ "product_first").asOpt[String].get.toDouble)
+                                    } else {
+                                        (iter \ "product_first").asOpt[String].get
+                                    }
+                                }</td>
+                                <td class="dt-center">{
+                                    if(regex.findFirstMatchIn((iter \ "product_second").asOpt[String].get).isDefined) {
+                                        NumberFormat.getInstance().format((iter \ "product_second").asOpt[String].get.toDouble)
+                                    } else {
+                                        (iter \ "product_second").asOpt[String].get
+                                    }
+                                }</td>
+                                <td class="dt-center">{
+                                    if(regex.findFirstMatchIn((iter \ "product_third").asOpt[String].get).isDefined) {
+                                        NumberFormat.getInstance().format((iter \ "product_third").asOpt[String].get.toDouble)
+                                    } else {
+                                        (iter \ "product_third").asOpt[String].get
+                                    }
+                                }</td>
+                                <td class="dt-center">{
+                                    if(regex.findFirstMatchIn((iter \ "product_fourth").asOpt[String].get).isDefined) {
+                                        NumberFormat.getInstance().format((iter \ "product_fourth").asOpt[String].get.toDouble)
+                                    } else {
+                                        (iter \ "product_fourth").asOpt[String].get
+                                    }
+                                }</td>
+                                <td class="dt-center">{
+                                    if(regex.findFirstMatchIn((iter \ "overall").asOpt[String].get).isDefined) {
+                                        NumberFormat.getInstance().format((iter \ "overall").asOpt[String].get.toDouble)
+                                    } else {
+                                        (iter \ "overall").asOpt[String].get
+                                    }
+                                }</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

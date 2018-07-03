@@ -1,0 +1,158 @@
+@import play.api.libs.json.JsValue
+@import java.text.NumberFormat
+@(hospital: List[play.api.libs.json.JsValue], pepole: List[play.api.libs.json.JsValue], cycle: String, inputs: List[play.api.libs.json.JsValue], flag: (Boolean, Int))
+
+@*************************************
+* Business Page                     *
+*                                   *
+* @numberFormat                     *
+* TODO: 提到view下单独形成一个,       *
+* TODO: 可以被import的包.            *
+*************************************@
+@numberFormat(d: AnyVal) = @{
+    val numberFormat = NumberFormat.getInstance()
+    numberFormat.setGroupingUsed(false)
+    numberFormat.format(d)
+}
+<div class="row">
+    @for(data <- inputs) {
+        <div class="col-sm-12">
+            <input type="hidden" value="@{(data \ "hosp_code").as[Int]}" name="input"/>
+            <div class="box box-solid box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">@{{(data \ "hosp_code").as[Int]} + ". " + (data \ "hosp_name").as[String]}</h3>
+                </div>
+                <div class="box-body cyc@{cycle}_hospital@{(data \ "hosp_code").as[Int]}_body">
+                    <div>
+                        <div style="display:inline-block;vertical-align:middle;margin-left:18%;width:18%;text-align:center">口服抗生素</div>
+                        <div style="display:inline-block;width:18%;text-align:center;vertical-align:middle;margin-left:10px">一代降糖药</div>
+                        <div style="display:inline-block;width:18%;text-align:center;vertical-align:middle;margin-left:10px">三代降糖药</div>
+                        <div style="display:inline-block;width:18%;text-align:center;vertical-align:middle;margin-left:10px">皮肤药</div>
+                    </div>
+                    <br>
+                    <div class="hospital-num">
+                        <div style="display:inline-block;width:16%;vertical-align:middle;margin-left:20px;text-align:left;">潜力(元)</div>
+                        @for(hosp <- hospital) {
+                            @if( (data \ "hosp_code").as[Int] == (hosp \ "hosp_code").asOpt[String].get.toInt) {
+                                <div style="display:inline-block;width:16%;vertical-align:middle;margin-left:10px;text-align:left;margin-right:10px;">
+                                    <pre class="noplaceholder">@{NumberFormat.getInstance().format((hosp \ "口服抗生素").asOpt[List[String]].get.tail.head.toDouble)}</pre>
+                                </div>
+                                <div style="display:inline-block;width:16%;vertical-align:middle;margin-left:20px;text-align:left;margin-right:10px;">
+                                    <pre class=" noplaceholder ">@{NumberFormat.getInstance().format((hosp \ "一代降糖药").asOpt[List[String]].get.tail.head.toDouble)}</pre>
+                                </div>
+                                <div style="display:inline-block;width:16%;vertical-align:middle;margin-left:20px;text-align:left;margin-right:10px;">
+                                    <pre class=" noplaceholder ">@{NumberFormat.getInstance().format((hosp \ "三代降糖药").asOpt[List[String]].get.tail.head.toDouble)}</pre>
+                                </div>
+                                <div style="display:inline-block;width:16%;vertical-align:middle;margin-left:20px;text-align:left;margin-right:10px;">
+                                    <pre class=" noplaceholder ">@if((hosp \ "皮肤药").asOpt[List[String]].get.tail.head.isEmpty) {&nbsp;} else {@{NumberFormat.getInstance().format((hosp \ "皮肤药").asOpt[List[String]].get.tail.head.toDouble)}}</pre>
+                                </div>
+                            }
+                        }
+                    </div>
+                    <div>
+                        <div style="display:inline-block;width:16%;vertical-align:middle;margin-left:20px;text-align:left;">批准的总推广预算(%)</div>
+                        <div style="display:inline-block;width:16%;vertical-align:middle;margin-left:10px;text-align:center;margin-right:10px;">
+                            <div class="form-group ">
+                                <input type="number" min="0" @{if(flag._2 > cycle.toInt) {"disabled"} else {}} hospital-code="@{(data \ "hosp_code").as[Int]}" hospital-name="@{(data \ "hosp_name").as[String]}" pharbers-type="批准的总推广预算" name="budget" type="text" class="form-control" value="@{
+                                    numberFormat((data \ "budget").as[Double])
+//                                    (data \ "budget").as[Double].toInt
+                                }" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hospital-num">
+                        <div style="display:inline-block;width:16%;vertical-align:middle;margin-left:20px;text-align:left;">上期销售额(元)</div>
+                        @for(hosp <- hospital) {
+                            @if( (data \ "hosp_code").as[Int] == (hosp \ "hosp_code").asOpt[String].get.toInt) {
+                                <div style="display:inline-block;width:16%;vertical-align:middle;margin-left:10px;text-align:left;margin-right:10px;">
+                                    <pre class=" noplaceholder ">@{NumberFormat.getInstance().format((hosp \ "口服抗生素").asOpt[List[String]].get.head.replace(",", "").toDouble)}</pre>
+                                </div>
+                                <div style="display:inline-block;width:16%;vertical-align:middle;margin-left:20px;text-align:left;margin-right:10px;">
+                                    <pre class=" noplaceholder ">@{NumberFormat.getInstance().format((hosp \ "一代降糖药").asOpt[List[String]].get.head.replace(",", "").toDouble)}</pre>
+                                </div>
+                                <div style="display:inline-block;width:16%;vertical-align:middle;margin-left:20px;text-align:left;margin-right:10px;">
+                                    <pre class=" noplaceholder ">@{NumberFormat.getInstance().format((hosp \ "三代降糖药").asOpt[List[String]].get.head.replace(",", "").toDouble)}</pre>
+                                </div>
+                                <div style="display:inline-block;width:16%;vertical-align:middle;margin-left:20px;text-align:left;margin-right:10px;">
+                                    <pre class=" noplaceholder ">@{NumberFormat.getInstance().format((hosp \ "皮肤药").asOpt[List[String]].get.head.replace(",", "").toDouble)}</pre>
+                                </div>
+                            } else {}
+                        }
+                    </div>
+                    <div>
+
+                        <div style="display:inline-block;width:16%;vertical-align:middle;margin-left:20px;text-align:left;">销售指标设定(元)</div>
+                        @for(sales <- (data \ "sales").as[List[String Map JsValue]]) {
+                            @if(sales("prod_name").as[String] != "皮肤药") {
+                                <div style="display:inline-block;width:16%;vertical-align:middle;margin-left:10px;text-align:center;margin-right:20px;">
+                                    <div class="form-group">
+                                        <input type="number" min="0" @{if(flag._2 > cycle.toInt) {"disabled"} else {}}  hospital-code="@{(data \ "hosp_code").as[Int]}" hospital-name="@{(data \ "hosp_name").as[String]}"  pharbers-type="@{sales("prod_name").as[String]}" name="prod_value" type="text" class="form-control" value="@{
+                                            numberFormat(sales("prod_value").as[Double])
+                                        }" >
+                                    </div>
+                                </div>
+                            } else {
+                                <div style="display:inline-block;width:16%;vertical-align:middle;margin-left:10px;text-align:center;margin-right:10px;">
+                                    @if(((data \ "hosp_name").as[String] == "人民医院" || (data \ "hosp_name").as[String] == "军区医院" || (data \ "hosp_name").as[String] == "中日医院" || (data \ "hosp_name").as[String] == "西河医院") && cycle == "2") {
+                                        <div class="form-group">
+                                            <input type="number" min="0" @{if(flag._2 > cycle.toInt) {"disabled"} else {}}  hospital-code="@{(data \ "hosp_code").as[Int]}" hospital-name="@{(data \ "hosp_name").as[String]}"  pharbers-type="@{sales("prod_name").as[String]}" name="prod_value" type="text" class="form-control disabled" value="@{
+                                                numberFormat(sales("prod_value").as[Double])
+                                            }">
+                                        </div>
+                                    } else {
+                                        <div class="form-group disabled" disabled="disabled">
+                                            <input type="number" min="0" @{if(flag._2 > cycle.toInt) {"disabled"} else {}}  hospital-code="@{(data \ "hosp_code").as[Int]}" hospital-name="@{(data \ "hosp_name").as[String]}"  pharbers-type="@{sales("prod_name").as[String]}" name="prod_value" type="text" class="form-control disabled" disabled="disabled"  value="@{
+                                                numberFormat(sales("prod_value").as[Double])
+                                            }">
+                                        </div>
+                                    }
+                                </div>
+                            }
+                        }
+                    </div>
+                    <div>
+                        <div style="display:inline-block;width:16%;vertical-align:middle;margin-left:20px;text-align:left;">分派业务代表</div>
+                        <div style="display:inline-block;width:16%;vertical-align:middle;margin-left:10px;text-align:center;margin-right:10px;">
+                            <div class="form-group">
+                                <div>
+                                    <select @{if(flag._2 > cycle.toInt) {"disabled"} else {}}  hospital-code="@{(data \ "hosp_code").as[Int]}" hospital-name="@{(data \ "hosp_name").as[String]}" name="salesmen" class="form-control selectized" tabindex="-1" >
+                                        <option value="" >请选择</option>
+                                        @for(p <- pepole) {
+                                            <option value="@{(p \ "name").as[String]}" @if((data \ "salesmen").as[String] == (p \ "name").as[String]) {selected="selected"} else {}>
+                                                @{(p \ "name").asOpt[String].get}
+                                            </option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div style="display:inline-block;width:16%;vertical-align:middle;margin-left:20px;text-align:left;">批准的医院拜访时间(%)</div>
+                        @for(visit_hours <- (data \ "visit_hours").as[List[String Map JsValue]]) {
+                            @if(visit_hours("prod_name").as[String] != "皮肤药") {
+                                <div style="display:inline-block;width:16%;vertical-align:middle;margin-left:10px;text-align:center;margin-right:20px;">
+                                    <div class="form-group">
+                                        <input type="number" min="0" @{if(flag._2 > cycle.toInt) {"disabled"} else {}}  hospital-code="@{(data \ "hosp_code").as[Int]}" hospital-name="@{(data \ "hosp_name").as[String]}" pharbers-type="@{visit_hours("prod_name").as[String]}" name="prod_hours" type="text" class="form-control" value="@{visit_hours("prod_hours").as[Double].toInt}" >
+                                    </div>
+                                </div>
+                            } else {
+                                <div style="display:inline-block;width:16%;vertical-align:middle;margin-left:10px;text-align:center;margin-right:10px;">
+                                @if(((data \ "hosp_name").as[String] == "人民医院" || (data \ "hosp_name").as[String] == "军区医院" || (data \ "hosp_name").as[String] == "中日医院" || (data \ "hosp_name").as[String] == "西河医院") && cycle == "2") {
+                                    <div class="form-group">
+                                        <input type="number" min="0" @{if(flag._2 > cycle.toInt) {"disabled"} else {}}  hospital-code="@{(data \ "hosp_code").as[Int]}" hospital-name="@{(data \ "hosp_name").as[String]}" pharbers-type="@{visit_hours("prod_name").as[String]}" name="prod_hours" type="text" class="form-control" value="@{visit_hours("prod_hours").as[Double].toInt}">
+                                    </div>
+                                } else {
+                                    <div class="form-group disabled" disabled="disabled">
+                                        <input type="number" min="0" @{if(flag._2 > cycle.toInt) {"disabled"} else {}}  hospital-code="@{(data \ "hosp_code").as[Int]}" hospital-name="@{(data \ "hosp_name").as[String]}" pharbers-type="@{visit_hours("prod_name").as[String]}" name="prod_hours" type="text" class="form-control disabled"  value="@{visit_hours("prod_hours").as[Double].toInt}" disabled="true">
+                                    </div>
+                                }
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

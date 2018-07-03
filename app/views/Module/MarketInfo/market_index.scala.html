@@ -1,0 +1,156 @@
+@import java.text.NumberFormat
+@(news : play.api.libs.json.JsValue, data : play.api.libs.json.JsValue)(uuid : String)(p : String)(flag: (Boolean, Int))
+
+@Home.home("market")(uuid)(p) {
+    <!--隐藏域，存储uuid-->
+    <input type="hidden" name="uuid" value="@uuid" disabled="disabled"/>
+    <input type="hidden" name="phase" value="@p" disabled="disabled">
+<section class="content">
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#tab-2685-1" aria-controls="tab-2685-1" data-toggle="tab">新闻</a></li>
+        <li role="presentation"><a href="#tab-2685-2" aria-controls="tab-2685-2" data-toggle="tab">客户信息</a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" role="tabpanel" data-value="新闻" id="tab-2685-1">
+            <section class="content container-fluid">
+                <div class="row clean-bootstrap-col-padding-all">
+                    <div class="col-sm-2" title="周期列表">
+                        <a href='@{"/market/" + uuid + "/1"}' class='btn btn-default @{if(p == "1") "active"}' id="cycle1-news" type="button">周期1:新闻快报</a>
+                        <br>
+                        <br>
+                        <a href='@{"/market/" + uuid + "/2"}'class='btn btn-default @{if(p == "2") "active"}' id="cycle2-news" type="button" @{ if(flag._2 >= p.toInt) {} else {if(p.toInt != 2)  """ style=display:none """} }>周期2:新闻快报</a>
+                    </div>
+                    <div class="col-sm-10 ">
+                        <div class="box box-solid box-primary">
+                            <div class="box-header">
+                                <h3 class="box-title">周期@{p}：新闻快报</h3>
+                            </div>
+                            <div id="market-info-new-content">
+                                <div class="box-body">
+                                    <div style="width: 100%; height: auto; visibility: inherit;" class="datatables html-widget html-widget-output">
+                                        <div class="dataTables_wrapper no-footer">
+                                            <table class="display dataTable no-footer table-striped" name="news-table" role="grid">
+                                                <caption></caption>
+                                                <thead>
+                                                    <tr role="row">
+                                                        <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 150px;">医院</th>
+                                                        <th class="sorting_disabled dt-left" rowspan="1" colspan="1" style="width: 80px;"></th>
+                                                        <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">快报</th>
+                                                        <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;" name="show-switch">上期销售额(元)</th>
+                                                        <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;" name="show-switch">口服抗生素</th>
+                                                        <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;" name="show-switch">一代降糖药</th>
+                                                        <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;" name="show-switch">三代降糖药</th>
+                                                        <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;" name="show-switch">皮肤药</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="news">
+                                                    @{
+                                                        val phrase = (news \ p).asOpt[List[play.api.libs.json.JsValue]].get
+                                                        phrase.zipWithIndex.map { his =>
+                                                        <tr role="row">
+                                                            <td class="dt-center">{(his._1 \ "hosp_name").asOpt[String].get}</td>
+                                                            <td class="dt-left"><img src={"/assets/images/Hospitals/hosp"+(his._2 + 1)+".png"} height="52" /></td>
+                                                            <td class="dt-center">{(his._1 \ "phrase").asOpt[String].get}</td>
+                                                            <td class="dt-center" name="show-switch">{
+                                                                NumberFormat.getInstance().format((his._1 \ "total").asOpt[String].get.replace(",", "").toDouble)
+                                                            }</td>
+                                                            <td class="dt-center" name="show-switch">{
+                                                                NumberFormat.getInstance().format((his._1 \ "口服抗生素").asOpt[String].get.replace(",", "").toDouble)
+                                                            }</td>
+                                                            <td class="dt-center" name="show-switch">{
+                                                                NumberFormat.getInstance().format((his._1 \ "一代降糖药").asOpt[String].get.replace(",", "").toDouble)
+                                                            }</td>
+                                                            <td class="dt-center" name="show-switch">{
+                                                                NumberFormat.getInstance().format((his._1 \ "三代降糖药").asOpt[String].get.replace(",", "").toDouble)
+                                                            }</td>
+                                                            <td class="dt-center" name="show-switch">{
+                                                                NumberFormat.getInstance().format((his._1 \ "皮肤药").asOpt[String].get.replace(",", "").toDouble)
+                                                            }</td>
+                                                        </tr>
+                                                    }}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="tab-pane" role="tabpanel" data-value="客户信息" id="tab-2685-2">
+            <section class="content container-fluid">
+                <div class="row clean-bootstrap-col-padding-all">
+                    <div class="col-sm-2" title="周期列表">
+                        <a href='@{"/market/" + uuid + "/1"}' class='btn btn-default @{if(p == "1") "active"}' id="cycle1-customer" type="button" >周期1:新闻快报</a>
+                        <br>
+                        <br>
+                        <a href='@{"/market/" + uuid + "/2"}' class='btn btn-default @{if(p == "2") "active"}' id="cycle2-customer" type="button" @{ if(flag._2 >= p.toInt) {} else {if(p.toInt != 2) """ style=display:none """} }>周期2:新闻快报</a>
+                    </div>
+                    <div class="col-sm-10">
+                        <div class="box box-solid box-primary">
+                            <div class="box-header">
+                                <h3 class="box-title">周期@{p}：客户潜力信息</h3>
+                            </div>
+                            <div id="market-info-client-info-content">
+                                <div class="box-body">
+                                    <div style="width: 100%; height: auto; visibility: inherit;" class="datatables html-widget html-widget-output">
+                                        <div class="dataTables_wrapper no-footer">
+                                            <table class="display dataTable no-footer table-striped" name="customer-table" role="grid">
+                                                <caption></caption>
+                                                <thead>
+                                                    <tr role="row">
+                                                        <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">名称</th>
+                                                        <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">区域</th>
+                                                        <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">类型</th>
+                                                        <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">口服抗生素</th>
+                                                        <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">一代降糖药</th>
+                                                        <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">三代降糖药</th>
+                                                        <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">皮肤药</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="client">
+                                                @{
+                                                    val phrase = (data \ p).asOpt[List[play.api.libs.json.JsValue]].get
+                                                    phrase.map { iter =>
+                                                    <tr role="row" >
+                                                        <td class=" dt-center">{(iter \ "hosp_name").asOpt[String].get}</td>
+                                                        <td class=" dt-center">{(iter \ "hosp_area").asOpt[String].get}</td>
+                                                        <td class=" dt-center">{(iter \ "hosp_cat").asOpt[String].get}</td>
+                                                        <td class=" dt-center">{
+                                                            NumberFormat.getInstance().format((iter \ "口服抗生素").asOpt[String].get.replace(",", "").toDouble)
+                                                        }</td>
+                                                        <td class=" dt-center">{
+                                                            NumberFormat.getInstance().format((iter \ "一代降糖药").asOpt[String].get.replace(",", "").toDouble)
+                                                        }</td>
+                                                        <td class=" dt-center">{
+                                                            NumberFormat.getInstance().format((iter \ "三代降糖药").asOpt[String].get.replace(",", "").toDouble)
+                                                        }</td>
+                                                        <td class=" dt-center">{
+                                                            if((iter \ "皮肤药").asOpt[String].get.isEmpty) {
+                                                                (iter \ "皮肤药").asOpt[String].get
+                                                            } else {
+                                                                NumberFormat.getInstance().format((iter \ "皮肤药").asOpt[String].get.toDouble)
+                                                            }
+                                                        }</td>
+                                                    </tr>
+                                                }}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+}
+<!--动态异步加载js-->
+<script defer="defer">
+    $.getScript('@routes.Assets.versioned("javascripts/business-lib/market/market.js")');
+</script>

@@ -1,0 +1,71 @@
+@import java.text.NumberFormat
+@(data: String, cycle: String)
+<div class="row ">
+    <div class="col-sm-12">
+        <div class="box box-solid box-primary">
+            <div class="box-header">
+                <h3 class="box-title">分配汇总</h3>
+            </div>
+            <div class="box-body">
+                <div>
+                    <div style="display:inline-block;width:16%;vertical-align:middle;margin-left:20px;text-align:left;">总推广预算(元)</div>
+                    <div style="display:inline-block;width:16%;vertical-align:middle;margin-left:10px;text-align:left">
+                        <pre class="noplaceholder ">@{NumberFormat.getInstance().format(data.toDouble)}</pre>
+                    </div>
+                    <div style="display:inline-block;width:20%;vertical-align:middle;margin-left:10%;text-align:left;">口服抗生素 已分配指标(元)</div>
+                    <div style="display:inline-block;width:16%;vertical-align:middle;margin-left:10px;text-align:left">
+                        <pre name="口服抗生素" class="noplaceholder">0</pre>
+                    </div>
+                </div>
+                <div>
+                    <div style="display:inline-block;width:16%;vertical-align:middle;margin-left:20px;text-align:left;">已分配的推广预算(%)</div>
+                    <div style="display:inline-block;width:16%;vertical-align:middle;margin-left:10px;text-align:left">
+                        <pre name="sum-budget" class="noplaceholder">0</pre>
+                    </div>
+                    <div style="display:inline-block;width:20%;vertical-align:middle;margin-left:10%;text-align:left;">一代降糖药 已分配指标(元)</div>
+                    <div style="display:inline-block;width:16%;vertical-align:middle;margin-left:10px;text-align:left">
+                        <pre name="一代降糖药" class="noplaceholder">0</pre>
+                    </div>
+                </div>
+                <div>
+                    <div style="display:inline-block;width:16%;vertical-align:middle;margin-left:20px;text-align:left;">已分配时间 小宋(%)</div>
+                    <div style="display:inline-block;width:16%;vertical-align:middle;margin-left:10px;text-align:left">
+                        <pre  pharbers-pepole="小宋" class="noplaceholder">0</pre>
+                    </div>
+                    <div style="display:inline-block;width:20%;vertical-align:middle;margin-left:10%;text-align:left;">三代降糖药 已分配指标(元)</div>
+                    <div style="display:inline-block;width:16%;vertical-align:middle;margin-left:10px;text-align:left">
+                        <pre name="三代降糖药" class="noplaceholder">0</pre>
+                    </div>
+                </div>
+                <div>
+                    <div style="display:inline-block;width:16%;vertical-align:middle;margin-left:20px;text-align:left;">已分配时间 小兰(%)</div>
+                    <div style="display:inline-block;width:16%;vertical-align:middle;margin-left:10px;text-align:left">
+                        <pre pharbers-pepole="小兰" class=" noplaceholder">0</pre>
+                    </div>
+                    <div style="display:inline-block;width:20%;vertical-align:middle;margin-left:10%;text-align:left;">皮肤药 已分配指标(元)</div>
+                    <div style="display:inline-block;width:16%;vertical-align:middle;margin-left:10px;text-align:left">
+                        <pre name="皮肤药" class="noplaceholder">0</pre>
+                    </div>
+                </div>
+                <div>
+                    <div style="display:inline-block;width:16%;vertical-align:middle;margin-left:20px;text-align:left;">已分配时间 小木(%)</div>
+                    <div style="display:inline-block;width:16%;vertical-align:middle;margin-left:10px;text-align:left">
+                        <pre pharbers-pepole="小木" class="noplaceholder">0</pre>
+                    </div>
+                </div>
+                <div>
+                    <div style="display:inline-block;width:16%;vertical-align:middle;margin-left:20px;text-align:left;">已分配时间 小白(%)</div>
+                    <div style="display:inline-block;width:16%;vertical-align:middle;margin-left:10px;text-align:left">
+                        <pre pharbers-pepole="小白" class="noplaceholder">0</pre>
+                    </div>
+                </div>
+                <div>
+                    <div style="display:inline-block;width:16%;vertical-align:middle;margin-left:20px;text-align:left;">已分配时间 小青(%)</div>
+                    <div style="display:inline-block;width:16%;vertical-align:middle;margin-left:10px;text-align:left">
+                        <pre pharbers-pepole="小青" class="noplaceholder">0</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

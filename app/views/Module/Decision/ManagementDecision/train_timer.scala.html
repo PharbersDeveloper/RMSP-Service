@@ -1,0 +1,38 @@
+@import play.api.libs.json.JsValue
+@(cycle: String)(input : List[play.api.libs.json.JsValue])(flag: (Boolean, Int))
+<div class="row">
+    <div class="col-sm-12">
+        <div class="box box-solid box-primary">
+            <div class="box-header">
+                <h3 class="box-title">批准代表脱岗进行产品培训(天数)</h3>
+            </div>
+            <div>
+                <div class="box-body">
+                    <div>
+                        <div style="display:inline-block;margin-left:15%;vertical-align:middle;text-align:center;width:11.5%">小宋</div>
+                        <div style="display:inline-block;vertical-align:middle;text-align:left;margin-left:30px;width:8%">小兰</div>
+                        <div style="display:inline-block;vertical-align:middle;text-align:left;margin-left:25px;width:10.5%">小木</div>
+                        <div style="display:inline-block;vertical-align:middle;text-align:left;margin-left:20px;width:10.5%">小白</div>
+                        <div style="display:inline-block;vertical-align:middle;text-align:left;margin-left:15px;width:10.5%">小青</div>
+                    </div>
+                    <br>
+                    <div>
+                        @for(data <- input) {
+                            @if((data \ "project_name").as[String] == "产品培训") {
+                                <input @{if(flag._2 > cycle.toInt) {"disabled"} else {}} type="hidden" name="input" disabled value="@{(data \ "project_name").as[String]}">
+                                <div style="display:inline-block;vertical-align:middle;text-align:left;width:13%;margin-left:20px">产品培训</div>
+                                @for(apply <- (data \ "apply").as[List[String Map JsValue]]) {
+                                    <div style="display:inline-block;vertical-align:middle;text-align:center;margin-left:2%;width:8%;">
+                                        <div class="form-group ">
+                                            <input type="number" min="0" @{if(flag._2 > cycle.toInt) {"disabled"} else {}} code="@{(data \ "project_code").as[Int]}" name="@{apply("personal").as[String]}" pharbers-type="@{(data \ "project_name").as[String]}" type="text" class="form-control " value="@{apply("days").as[Double].toInt}" />
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

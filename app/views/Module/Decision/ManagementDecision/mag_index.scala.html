@@ -1,0 +1,39 @@
+@(input : List[play.api.libs.json.JsValue])(uuid : String)(phase : String)(flag: (Boolean, Int))
+
+@Home.home("management")(uuid)(phase) {
+<section class="content">
+    <ul class="nav nav-tabs" id="management_tab" role="tablist">
+        <li role="presentation" class='@{if(phase == "1") "active"}'><a href='@{"/management/" + uuid + "/1"}'>周期1</a></li>
+        <li role="presentation" class='@{if(phase == "2") "active"}' @{ if(flag._2 >= phase.toInt + 1) {""" style=display:block """} else {if(phase.toInt != 2) """ style=display:none """} }><a href='@{"/management/" + uuid + "/2"}'>周期2</a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" role="tabpanel" data-value="周期1" id="tab-2611-1">
+            <br>
+            <div class="row">
+                <div class="col-sm-10"></div>
+                <div class="col-sm-2">
+                    <button @{if(flag._2 > phase.toInt) {"disabled"} else {}} id="go-submit" style="width: 150px;" type="button" class="btn btn-default action-button">
+                        <i class="fa fa-check-square-o"></i>
+                        <strong>提交</strong>
+                    </button>
+                </div>
+            </div>
+            <br>
+            <div id="decision-management">
+                @Module.Decision.ManagementDecision.time_allot(phase)(input)
+                @Module.Decision.ManagementDecision.manager_timer_allot(phase)(input)(flag)
+                @Module.Decision.ManagementDecision.train_timer(phase)(input)(flag)
+            </div>
+        </div>
+    </div>
+
+    <!--隐藏域，存储uuid-->
+    <input type="hidden" name="uuid" value="@uuid" disabled="disabled"/>
+    <input type="hidden" name="phase" value="@phase" disabled="disabled">
+</section>
+}
+<!--动态异步加载js-->
+<script defer="defer">
+        $.getScript('@routes.Assets.versioned("javascripts/business-lib/decision/refactor/management.js")');
+        $.getScript('@routes.Assets.versioned("javascripts/business-lib/decision/refactor/page-store.js")');
+</script>

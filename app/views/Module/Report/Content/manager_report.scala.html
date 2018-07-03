@@ -1,0 +1,70 @@
+@(m: play.api.libs.json.JsValue)
+@import java.text.NumberFormat
+<div class="box-body">
+    <div style="text-align: left;margin-left: 3%">
+        <div style="width: 100%;height: auto;visibility: inherit;" class="datatables html-widget html-widget-output">
+            <div class="dataTables_wrapper no-footer">
+                <table class="display dataTable no-footer table-striped" role="grid">
+                    <caption>职员成本</caption>
+                    <thead style="background-color: rgb(65, 85, 93);color: rgb(255, 255, 255);">
+                        <tr role="row">
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">销售代表</th>
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">绩效奖金(元)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            val rp = (m \ "report").asOpt[List[play.api.libs.json.JsValue]].get
+                            val tp = rp.find(p => (p \ "report_name").asOpt[String].get == "经理报告_职员成本").get
+                            val tmp = (tp \ "result").asOpt[List[play.api.libs.json.JsValue]].get
+
+                            tmp.map { iter =>
+                                <tr role="row">
+                                <td class="dt-center">{(iter \ "salesmen").asOpt[String].get}</td>
+                                <td class="dt-center">{
+                                    NumberFormat.getInstance().format((iter \ "bonus").asOpt[Int].get.toDouble)
+                                }</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div style="text-align: left;;margin-left: 3%">
+        <div style="width: 100%;height: auto;visibility: inherit;" class="datatables html-widget html-widget-output">
+            <div class="dataTables_wrapper no-footer">
+                <table class="display dataTable no-footer table-striped" role="grid">
+                    <caption>时间分配</caption>
+                    <thead style="background-color: rgb(65, 85, 93);color: rgb(255, 255, 255);">
+                        <tr role="row">
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;"> </th>
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">值</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @{
+                            val rp = (m \ "report").asOpt[List[play.api.libs.json.JsValue]].get
+                            val tp = rp.find(p => (p \ "report_name").asOpt[String].get == "经理报告_时间分配").get
+                            val tmp = (tp \ "result").asOpt[List[play.api.libs.json.JsValue]].get
+
+                            tmp.map { iter =>
+                                <tr role="row">
+                                <td class="dt-center">{(iter \ "general_names").asOpt[String].get}</td>
+                                <td class="dt-center">{
+                                    NumberFormat.getInstance().format((iter \ "values").asOpt[Double].get)
+                                }</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

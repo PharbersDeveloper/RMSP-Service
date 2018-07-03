@@ -1,0 +1,112 @@
+@(uuid : String)(phase : String)(report : play.api.libs.json.JsValue)(flag: (Boolean, Int))
+
+@Home.home("report")(uuid)(phase) {
+<input value="@{phase}" disabled type="hidden" name="phase"/>
+<input value="@{uuid}" disabled type="hidden" name="uuid"/>
+<section class="content">
+    <ul class="nav nav-tabs" id="report-tab" role="tablist">
+        <li role="presentation" class='@{if(phase == "1") "active"}'><a href='@{"/report/" + uuid + "/1"}'>周期1</a></li>
+        <li role="presentation" class='@{if(phase == "2") "active"}'  @{ if(flag._2 >= phase.toInt + 1 ) {""" style=display:block """} else {if(phase.toInt != 2) """ style=display:none """} }><a href='@{"/report/" + uuid + "/2"}'>周期2</a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" role="tabpanel" data-value="周期1" id="tab-2688-1">
+            <div name="cycle1-style-controller" >
+                <section class=" clean-bootstrap-col-padding-all"><!--content container-fluid-->
+                    <div id="download-report-cycle1">
+                        <br>
+                        <div class="row ">
+                            <div class="col-sm-10"></div>
+                            <div class="col-sm-2">
+                                <button class="btn btn-default" id="download-report"><i class="fa fa-download"></i>下载周期@{phase}报告</button>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                    <div id="market-sales-report-cycle1">
+                        <div class="row ">
+                            <div class="col-sm-12">
+                                <div class="box box-solid box-primary">
+                                    <div class="box-header">
+                                        <h3 class="box-title">市场销售报告</h3>
+                                    </div>
+                                    <div name="market-sales">
+                                        @Module.Report.Content.market_sales_report(report)
+                                        @* @Module.Report.ReportCycle1Content.market_sales_report() *@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="delegate-report-cycle1">
+                        <div class="row ">
+                            <div class="col-sm-12">
+                                <div class="box box-solid box-primary">
+                                    <div class="box-header">
+                                        <h3 class="box-title">代表报告</h3>
+                                    </div>
+                                    <div name="deputy">
+                                        @Module.Report.Content.delegate_report(report)
+                                        @* @Module.Report.ReportCycle1Content.delegate_report() *@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="manager-report-cycle1">
+                        <div class="row ">
+                            <div class="col-sm-12">
+                                <div class="box box-solid box-primary">
+                                    <div class="box-header">
+                                        <h3 class="box-title">经理报告</h3>
+                                    </div>
+                                    <div name="manager">
+                                        @Module.Report.Content.manager_report(report)
+                                        @* @Module.Report.ReportCycle1Content.manager_report() *@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="allot-report-cycle1">
+                        <div class="row ">
+                            <div class="col-sm-12">
+                                <div class="box box-solid box-primary">
+                                    <div class="box-header">
+                                        <h3 class="box-title">分配报告</h3>
+                                    </div>
+                                    <div name="allot">
+                                        @Module.Report.Content.allot_report(report)
+                                        @* @Module.Report.ReportCycle1Content.allot_report() *@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="sales-details-cycle1">
+                        <div class="row ">
+                            <div class="col-sm-12">
+                                <div class="box box-solid box-primary">
+                                    <div class="box-header">
+                                        <h3 class="box-title">销售报告</h3>
+                                    </div>
+                                    <div name="sales">
+                                        @Module.Report.Content.sales_report(report)
+                                        @* @Module.Report.ReportCycle1Content.sales_report()*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</section>
+}
+    <!--动态异步加载js-->
+<script defer="defer">
+        $.getScript('@routes.Assets.versioned("javascripts/business-lib/report/report.js")');
+</script>

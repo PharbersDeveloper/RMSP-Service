@@ -1,0 +1,26 @@
+@(cycle: String)(input : List[play.api.libs.json.JsValue])
+<div class="row">
+    <div class="col-sm-12">
+        <div class="box box-solid box-primary">
+            <div class="box-header">
+                <h3 class="box-title">时间分配</h3>
+            </div>
+            <div class="box-body">
+                <div>
+                    <div>
+                        <div style="display:inline-block;vertical-align:middle;text-align:left;width:15%;margin-left:20px;">可供时间分配(天)</div>
+                        <div style="display:inline-block;vertical-align:middle;text-align:left;margin-left:3%;width:8%;margin-right:1%">
+                            <pre pharbers-type="p@{cycle}_work_time" class=" noplaceholder disabled" disabled="true">100</pre>
+                        </div>
+                    </div>
+                    <div>
+                        <div style="display:inline-block;vertical-align:middle;text-align:left;width:15%;margin-left:20px;">已分配时间 经理(天)</div>
+                        <div style="display:inline-block;vertical-align:middle;text-align:left;margin-left:3%;width:8%;margin-right:1%">
+                            <pre pharbers-type="p@{cycle}_arranged_time_of_flm" pharbers-sum="sum-all" class=" noplaceholder disabled" disabled="true">0</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

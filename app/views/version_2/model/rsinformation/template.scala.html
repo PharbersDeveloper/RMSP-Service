@@ -1,0 +1,186 @@
+@import java.text.NumberFormat
+@import controllers.routes
+@import play.api.libs.json.JsValue
+
+@(uuid: String, phrase: String, salesman: List[JsValue], hosp_new: JsValue, hosp_list: List[JsValue], product: List[JsValue], report: Option[JsValue])
+<input type="hidden" name="uuid" value="@{uuid}">
+<input type="hidden" name="phrase" value="@{phrase}">
+<div class="resource-content">
+    <div class="navbar-resource">
+        <div class="col-md-8 col-sm-8 col-xs-8">
+            <div class="btn-group navbar-btn" name="navbar-btn" role="group">
+                <button type="button " class="btn btn-default" name="hosp-info-btn">医院信息</button>
+                <button type="button" class="btn btn-default active" name="delegate-info-btn">代表信息</button>
+                <button type="button" class="btn btn-default" name="product-info-btn">产品信息</button>
+                @{if(phrase.toInt == 2) {
+                        <button type="button" class="btn btn-default" name="phrase-report">周期(1)报告</button>
+                } else {}}
+
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-3 col-xs-3 col-md-offset-1 col-sm-offset-1 col-xs-offset-1 text-right">
+            <button class="btn btn-primary btn-md download-btn" type="button" id="download-btn">下载医院数据</button>
+            <button class="btn btn-primary btn-md backup-btn" type="button" id="backup-btn">收起</button>
+        </div>
+    </div>
+    <div class="hospital-list" style="display:none;">
+        <div class="hospital">
+            @{
+                hosp_list.zipWithIndex.map { x =>
+                    (hosp_new \ phrase).as[List[JsValue]].find(f => (f \ "hosp_code").as[String] == (x._1 \ "hosp_code").as[String]).map { f =>
+                        <div class={
+                            if(x._2 % 2 == 0){"details even"} else {"details"}
+                        } >
+                            <div class="media">
+                                <div class="media-left">
+                                    <a href="#">
+                                        <img class="media-object img-rounded" src={"/assets/images/version_2/"+(x._1 \ "hosp_name").as[String]+".jpg"}  width="140" height="140" alt="医院" />
+                                    </a>
+                                    <p class="text-center hospital-name">{(x._1 \ "hosp_name").as[String]}</p>
+                                </div>
+                                <div class="media-body">
+                                    <p class="media-heading">医院概况</p>
+                                    <p class="describe">
+                                        {(f \ "phrase").as[String]}
+                                    </p>
+                                </div>
+                                <div class="media-body">
+                                    <p class="media-heading">药品潜力</p>
+                                    <div class="potential">
+                                        <p>口服抗生素：{NumberFormat.getInstance().format((x._1 \ "口服抗生素").as[List[String]].tail.head.toDouble)}</p>
+                                        <p>一代降糖药：{NumberFormat.getInstance().format((x._1 \ "一代降糖药").as[List[String]].tail.head.toDouble)}</p>
+                                        <p>三代降糖药：{NumberFormat.getInstance().format((x._1 \ "三代降糖药").as[List[String]].tail.head.toDouble)}</p>
+                                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;皮肤药：{if((x._1 \ "皮肤药").as[List[String]].tail.head.isEmpty) {0} else {NumberFormat.getInstance().format((x._1 \ "皮肤药").as[List[String]].tail.head.toDouble)}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            }
+        </div>
+    </div>
+    <div class="person-list">
+        <div class="person">
+            @salesman.zipWithIndex.reverse.map { person =>
+                <div class="details @if(person._2 % 2 == 0) {even}">
+                    <div class="media">
+                        <div class="media-left">
+                            <a href="#">
+                                <img class="media-object img-circle" src="@{routes.Assets.versioned("images/version_2/"+(person._1 \ "name").asOpt[String].get+".png")}" width="140" height="140" alt="人">
+                            </a>
+                            <p class="text-center person-name">@{(person._1 \ "name").asOpt[String]}</p>
+                        </div>
+                        <div class="media-body">
+                            <p class="media-heading">代表概况</p>
+                            <p class="describe">
+                                @{
+                                    (person._1 \ "skills").as[String] + (person._1 \ "description").as[String] + (person._1 \ "motivation").as[String]
+                                }
+                            </p>
+                        </div>
+                        <div class="media-body">
+                            <p class="media-heading">能力值</p>
+                            <div class="radar-map">
+                                <div name="@{(person._1 \ "name").asOpt[String]}" style="width: 280px; height: 200px;"></div>
+                                @*<img src="@{routes.Assets.versioned("images/version_2/"+(phrase)+"-"+(person._1 \ "name").asOpt[String].get+".png")}" width="280" height="192">*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+    <div class="product-list" style="display:none;">
+        <div class="table-responsive" style="padding: 0 0 0 5px;">
+            <table class="table">
+                <tr>
+                    <th style="width:156px;">药品类别/名称</th>
+                    <th style="width:156px;">产品展示</th>
+                    <th style="width:156px;">上市时间</th>
+                    <th style="width:156px;">公司考核价</th>
+                    <th style="width:156px;">单位成本</th>
+                    <th style="width:156px;">医保</th>
+                    <th style="width:156px;">类型</th>
+                    <th style="width:273px;">竞品信息</th>
+                </tr>
+            </table>
+        </div>
+        <div class="product">
+            <div class="table-responsive">
+                <table class="table">
+                    @product.map { pro =>
+                        <tr>
+                            <td style="width:155px;" align="center">
+                                @{(pro \ "prod_name").as[String]}
+                                <br>
+                                @{(pro \ "prod_brand").as[String]}
+                            </td>
+                            <td style="width:156px;" align="center"><img class="img-rounded" src=@{"/assets/images/version_2/"+(pro \ "prod_name").as[String]+".png"} alt="" width="100" height="100"></td>
+                            <td style="width:156px;" class="number">@{(pro \ "prod_sales_time").as[String]}</td>
+                            <td style="width:156px;" class="number">@{(pro \ "prod_unit_price").as[String]}元</td>
+                            <td style="width:156px;" class="number">@{(pro \ "prod_unit_cost").as[String]}元</td>
+                            <td style="width:156px;" class="number">@{(pro \ "prod_insurance").as[String]}</td>
+                            <td style="width:156px;" class="number">@{(pro \ "prod_cat").as[String]}</td>
+                            <td style="width:273px;">
+                                <p style="text-align: left; padding:0 25px;">@{(pro \ "prod_competition").as[String]}</p>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="report-list" style="display: none;">
+        @if((report.get \ "report").as[List[JsValue]].nonEmpty) {
+            <div name="radar-values" style="display: none;">
+                @{
+                    val tmp = (report.get \ "report").asOpt[List[JsValue]].get
+                    val hash = Map("report_name" -> "代表报告_产品知识", "general_names" -> "产品知识(指数)") ::
+                                Map("report_name" -> "代表报告_经验", "general_names" -> "经验") ::
+                                Map("report_name" -> "代表报告_销售技巧", "general_names" -> "销售技巧(指数)") ::
+                                Map("report_name" -> "代表报告_工作积极性", "general_names" -> "工作积极性(指数)") :: Nil
+                    hash.map{ x =>
+                        val content = (tmp.find(f => (f \ "report_name").as[String] == x("report_name")).get \ "result")
+                                        .as[List[JsValue]]
+
+
+                        val pre = content.find(f => (f \ "general_names").as[String] == ("前期"+x("general_names"))).get
+                        val cur = content.find(f => (f \ "general_names").as[String] == ("当期"+x("general_names"))).get
+                        <div name={x("report_name")} style="display: none;">
+                            <div name="pre">
+                                <span name="小宋">{(pre \ "salesmen_first").asOpt[Int].get}</span>
+                                <span name="小兰">{(pre \ "salesmen_second").asOpt[Int].get}</span>
+                                <span name="小木">{(pre \ "salesmen_third").asOpt[Int].get}</span>
+                                <span name="小白">{(pre \ "salesmen_fourth").asOpt[Int].get}</span>
+                                <span name="小青">{(pre \ "salesmen_fifth").asOpt[Int].get}</span>
+                            </div>
+                            <div name="cur">
+                                <span name="小宋">{(cur \ "salesmen_first").asOpt[Int].get}</span>
+                                <span name="小兰">{(cur \ "salesmen_second").asOpt[Int].get}</span>
+                                <span name="小木">{(cur \ "salesmen_third").asOpt[Int].get}</span>
+                                <span name="小白">{(cur \ "salesmen_fourth").asOpt[Int].get}</span>
+                                <span name="小青">{(cur \ "salesmen_fifth").asOpt[Int].get}</span>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+            <div class="home">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div style="padding: 0 5px;">
+                                @version_2.model.report.reportContent(uuid, phrase, report.get)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        } else{}
+    </div>
+</div>
+
+<script src="@routes.Assets.versioned("javascripts/version_2/rsinformation/rsinformation.js")" type="text/javascript" defer="defer"></script>
+<script src="@routes.Assets.versioned("javascripts/version_2/report/report.js")" type="text/javascript" defer="defer"></script>

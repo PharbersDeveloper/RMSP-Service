@@ -1,0 +1,394 @@
+
+@()
+@version_2.model.application.template("区域管理模拟平台"){
+    <div class="home">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="header">
+                        <div class="row head-describe">
+                            <div class="col-md-12 box bg">
+                                <div class="col-md-5 col-sm-5 col-xs-5">测评报告</div>
+                                <div class="col-md-7 col-sm-7 col-xs-7 text-right" >
+                                    @*<div class="config" name="toggle-export">*@
+                                        @*<i class="glyphicon glyphicon-cog"></i>*@
+                                        @*<div class="config-toggle-content" name="area-export">*@
+                                            @*<p id="exportExcel">下载报告</p>*@
+                                        @*</div>*@
+                                    @*</div>*@
+
+                                    <div class="timer" style="display: none;"><i class="glyphicon glyphicon-time"></i><span>00:00</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="summary">
+                        @*<img width="100%" src="@{routes.Assets.versioned("images/version_2/summary.png")}" alt="summary picture">*@
+                        <div class="outline">
+                            <div class="top">
+                                <div class="outline-left">
+                                    <div class="logo-img"><img id="overall_score" src="#" alt=""></div>
+                                    <div class="title">
+                                        <p id="logo-name">精英白银</p>
+                                    </div>
+                                </div>
+                                <div class="outline-right" id="outline">
+
+                                </div>
+                            </div>
+                            <div class="bottom">
+                                <p class="title">报告概述</p>
+                                <p class="text">这一份是关于你在本轮区域管理商业模拟中的反馈报告。 这份报告的目的是帮助你在目前的职位上进行发展与突破，并为未来的管理工作做好充足的准备。在报告中，系统将从地区经理所要求具备的9项能力来综合评价你的表现，并结合医药行业现状为你提供发展建议。</p>
+                            </div>
+                        </div>
+                        <div class="resolve">
+                            <p class="title">能力解析</p>
+                            <ul id="radar-img">
+                                <li><img alt="" class="radar-img1"></li>
+                                <li><img alt="" class="radar-img2"></li>
+                                <li><img alt="" class="radar-img3"></li>
+                                <li><img alt="" class="radar-img4"></li>
+                                <li><img alt="" class="radar-img5"></li>
+                                <li><img alt="" class="radar-img6"></li>
+                                <li><img alt="" class="radar-img7"></li>
+                                <li><img alt="" class="radar-img8"></li>
+                                <li><img alt="" class="radar-img9"></li>
+                            </ul>
+                            <div id="container" style="height: 100%"></div>
+                        </div>
+                        <div class="keyword">
+                            <p class="title">关键指数</p>
+                            <div class="area1 area col-md-3">
+                               <ul>
+                                   <li>总销售额</li>
+                               </ul>
+                                <p class="top-p" id="total-sales">11,940,324</p>
+                                <p class="bot-p" ><i id="sales-ratio-i" ></i><span id="sales-ratio">12.4%</span></p>
+
+
+                            </div>
+                            <div class="area2 area col-md-3">
+                                <ul>
+                                    <li>团队指标达成率</li>
+                                </ul>
+                                <ul class="area-left" id="team-achievement">
+                                    @*<li>口服抗生素</li>*@
+                                    @*<li>一代降糖藥</li>*@
+                                    @*<li>三代降糖藥</li>*@
+                                    @*<li>皮膚藥</li>*@
+                                </ul>
+                                <ul class="area-right" id="achievement-radio">
+                                    @*<li>113%</li>*@
+                                    @*<li>113%</li>*@
+                                    @*<li>113%</li>*@
+                                    @*<li>113%</li>*@
+                                </ul>
+
+                            </div>
+                            <div class="area3 area col-md-3">
+                                <ul>
+                                    <li>份额</li>
+                                </ul>
+                                <ul class="area-left" id="product-name">
+                                    @*<li>口服抗生素</li>*@
+                                    @*<li>一代降糖藥</li>*@
+                                    @*<li>三代降糖藥</li>*@
+                                    @*<li>皮膚藥</li>*@
+                                </ul>
+                                <ul class="area-right area-right-two" id="uplift-ratio">
+                                    @*<li>+12.4%</li>*@
+                                    @*<li>+12.4%</li>*@
+                                    @*<li>+12.4%</li>*@
+                                    @*<li>+12.4%</li>*@
+                                </ul>
+                                <ul class="area-right" id="market-share">
+                                    @*<li>113%</li>*@
+                                    @*<li>113%</li>*@
+                                    @*<li>113%</li>*@
+                                    @*<li>113%</li>*@
+                                </ul>
+
+                            </div>
+                            <div class="area4 area col-md-3">
+                                <ul>
+                                    <li>团队指数</li>
+                                </ul>
+                                <p class="top-p" id="team-ability">11,940,324</p>
+                                <p class="bot-p"><i id="ability-ratio-i"></i><span id="ability-ratio">12.4%</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="analyze">
+                        <div class="strategy">
+                            <div class="head">
+                                <h1>战略规划</h1>
+                            </div>
+                            <p class="head-p">
+                                掌握信息是降低风险的关键要素，对信息的理解越深，决策出错的可能性就越低，在执行前，我们需要透过科学化的客观分析，把握外部环境变化、洞察问题，并发现其对市场、公司的影响，进而发现市场机会、把握客户发展方向、预测市场发展趋势，综合多方因素进行科学、客观的区域业务计划，这是完美达成任务的关键第一步。
+                            </p>
+                            <div description="报表分析与策略" class="abs">
+                                <div class="left">
+                                        <h2>报表分析与决策</h2>
+                                        <div class="img">
+                                            <img name="grade"  src="#" alt="">
+                                        </div>
+                                </div>
+                                <div class="right">
+                                    <div class="text">
+                                        <p class="title">考核点</p>
+                                        <ul>
+                                            <li>具备对信息、数字、资讯的敏感度。</li>
+                                            <li>能过滤无用、错误信息，不被其所干扰。</li>
+                                            <li>理解报表信息，并掌握数据分析思维，对现状进行分析。</li>
+                                        </ul>
+                                        <p class="title">能力解读</p>
+                                        <p class="status" name="explain"></p>
+                                    </div>
+                                    <div class="img" name="title">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div description="市场洞察力" class="abs">
+                                <div class="left">
+                                    <h2>市场洞察力</h2>
+                                    <div class="img">
+                                        <img name="grade" src="#" alt="">
+                                    </div>
+                                </div>
+                                <div class="right">
+                                    <div class="text">
+                                        <p class="title">考核点</p>
+                                        <ul>
+                                            <li>有效的洞察市场中的机会,了解现状、察觉问题关键。</li>
+                                            <li>思考外部环境对市场销售的关联性。</li>
+                                            <li>对趋势的提出正确预判。 </li>
+                                        </ul>
+                                        <p class="title">能力解读</p>
+                                        <p class="status" name="explain">您還需要花更多的精力，完善自己在报表与数据解读上的能力，透过科学化的分析，能使您在部署战略上，了解全局现状，洞察问题关键，您還需要花更多的精力，完善自己在报表与数据解读上的能力，透过科学化的分析，能使您在部署战略上，了解全局现状，洞察问题关键，您還需要花更多的精力，完善自己在报表与数据解读上的能力，透过科学化的分析，能使您在部署战略上，了解全局现状，洞察问题关键，预判发展趋势。從數據中你將收穫宏觀的視野,掌握全局。</p>
+                                    </div>
+                                    <div class="img" name="title">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div description="目标分级能力" class="abs">
+                                <div class="left">
+                                    <h2>目标分析能力</h2>
+                                    <div class="img">
+                                        <img name="grade" src="#" alt="">
+                                    </div>
+                                </div>
+                                <div class="right">
+                                    <div class="text">
+                                        <p class="title">考核点</p>
+                                        <ul>
+                                            <li>科学有效的将目标进行分级。</li>
+                                            <li>挖掘、发现、关注重点医院。</li>
+                                            <li>发现业务上的突破口与增长点。</li>
+                                        </ul>
+                                        <p class="title">能力解读</p>
+                                        <p class="status" name="explain">预判发展趋势。從數據中你將收穫宏觀的視野,掌握全局。</p>
+                                    </div>
+                                    <div class="img" name="title">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="business">
+                            <div class="head">
+                                <h1>业务发展</h1>
+                            </div>
+                            <p class="head-p">
+                                业务发展是关于具体区域规划中的策略部分，也就是我们常说的销售力，首先经理的角色，是组织贯彻战略的核心，是公司战略规划落地执行的关键先生。因此，您需更多理解指标背后所代表的公司整体布局，并透过您对于自身区域的理解与规划，对每个目标客户做出有针对性的销售计划，同时，考量资源分配与效益问题，做出良好的权衡，使自己的工作能有效的贯彻公司整体战略目标，与组织同步前进。
+                            </p>
+                            <div description="公司战略执行力" class="abs">
+                                <div class="left">
+                                    <h2>公司战略执行力</h2>
+                                    <div class="img">
+                                        <img name="grade" src="#" alt="">
+                                    </div>
+                                </div>
+                                <div class="right">
+                                    <div class="text">
+                                        <p class="title">考核点</p>
+                                        <ul>
+                                            <li>是否理解、达成上层下达的战略目标。</li>
+                                            <li>能深度剖析目标的含义，并将目标拆分与分解。</li>
+                                            <li>结合自身销售工作，做出完整的计划调整。</li>
+                                        </ul>
+                                        <p class="title">能力解读</p>
+                                        <p class="status" name="explain">您還需要花更多的精力，完善自己在报表与数据解读上的能力，透过科学化的分析，能使您在部署战略上，了解全局现状，洞察问题关键，预判发展趋势。從數據中你將收穫宏觀的視野,掌握全局。</p>
+                                    </div>
+                                    <div class="img" name="title">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div description="资源分配与优化" class="abs">
+                                <div class="left">
+                                    <h2>资源分配与优化</h2>
+                                    <div class="img">
+                                        <img name="grade" src="#" alt="">
+                                    </div>
+                                </div>
+                                <div class="right">
+                                    <div class="text">
+                                        <p class="title">考核点</p>
+                                        <ul>
+                                            <li>熟悉、掌握资源的分配方法。</li>
+                                            <li>能综合销售任务全局状况，在资源有限的情况下，良好的权衡，做出恰当的资源配置方案。</li>
+                                            <li>优化资源配置，确保每一份资源被高效利用。</li>
+                                        </ul>
+                                        <p class="title">能力解读</p>
+                                        <p class="status" name="explain">您還需要花更多的精力，完善自己在报表与数据解读上的能力，透过科学化的分析，能使您在部署战略上，了解全局现状，洞察问题关键，您還需要花更多的精力，完善自己在报表与数据解读上的能力，透过科学化的分析，能使您在部署战略上，了解全局现状，洞察问题关键，您還需要花更多的精力，完善自己在报表与数据解读上的能力，透过科学化的分析，能使您在部署战略上，了解全局现状，洞察问题关键，预判发展趋势。從數據中你將收穫宏觀的視野,掌握全局。</p>
+                                    </div>
+                                    <div class="img" name="title">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div description="销售计划部署" class="abs">
+                                <div class="left">
+                                    <h2>销售计划部署</h2>
+                                    <div class="img">
+                                        <img name="grade" src="#" alt="">
+                                    </div>
+                                </div>
+                                <div class="right">
+                                    <div class="text">
+                                        <p class="title">考核点</p>
+                                        <ul>
+                                            <li>是否考虑到针对目标制定不同的销售计划。</li>
+                                            <li>合理分配、调整指标的设定。</li>
+                                            <li>透过多元的资源分配，达成销售目的。</li>
+                                        </ul>
+                                        <p class="title">能力解读</p>
+                                        <p class="status" name="explain">预判发展趋势。從數據中你將收穫宏觀的視野,掌握全局。</p>
+                                    </div>
+                                    <div class="img" name="title">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="team">
+                            <div class="head">
+                                <h1>团队管理能力</h1>
+                            </div>
+                            <p class="head-p">
+                                在如今市场快速变化，到岗率低下、招聘困难的情况下，经理面临三大人员难题 ： 没人、人刚到、人走了 ，但在销售行业中，一支稳定的队伍，是创造佳绩的重要基础。因此，我们需要培养自己領导力、管理能力，使团队通过一致的努力，有效提高指标达成率，也大幅降低企业由于人员流失所导致的损耗。同时关注于人才培养，提升团队能力水平，为公司培育优秀人才，搭建人才梯队。                               </p>
+                            <div description="领导力" class="abs">
+                                <div class="left">
+                                    <h2>领导力</h2>
+                                    <div class="img">
+                                        <img name="grade" src="#" alt="">
+                                    </div>
+                                </div>
+                                <div class="right">
+                                    <div class="text">
+                                        <p class="title">考核点</p>
+                                        <ul>
+                                            <li>是否能带领队伍完成指标，并依据任务难度给予恰当的资源支持。</li>
+                                            <li>是否给予正确恰当的帮助。</li>
+                                            <li>是否设定挑战性目标，不断追求卓越。</li>
+                                        </ul>
+                                        <p class="title">能力解读</p>
+                                        <p class="status" name="explain">您還需要花更多的精力，完善自己在报表与数据解读上的能力，透过科学化的分析，能使您在部署战略上，了解全局现状，洞察问题关键，预判发展趋势。從數據中你將收穫宏觀的視野,掌握全局。</p>
+                                    </div>
+                                    <div class="img" name="title">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div description="管理能力" class="abs">
+                                <div class="left">
+                                    <h2>管理能力</h2>
+                                    <div class="img">
+                                        <img name="grade" src="#" alt="">
+                                    </div>
+                                </div>
+                                <div class="right">
+                                    <div class="text">
+                                        <p class="title">考核点</p>
+                                        <ul>
+                                            <li>是否设定挑战性目标，不断追求卓越。</li>
+                                            <li>资源、工作量、任务轻重等分配是否合理、公平。</li>
+                                            <li>是否在可达成目标的前提上，提供每个伙伴同等的进步机会。</li>
+                                        </ul>
+                                        <p class="title">能力解读</p>
+                                        <p class="status" name="explain">您還需要花更多的精力，完善自己在报表与数据解读上的能力，透过科学化的分析，能使您在部署战略上，了解全局现状，洞察问题关键，您還需要花更多的精力，完善自己在报表与数据解读上的能力，透过科学化的分析，能使您在部署战略上，了解全局现状，洞察问题关键，您還需要花更多的精力，完善自己在报表与数据解读上的能力，透过科学化的分析，能使您在部署战略上，了解全局现状，洞察问题关键，预判发展趋势。從數據中你將收穫宏觀的視野,掌握全局。</p>
+                                    </div>
+                                    <div class="img" name="title">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div description="人才培养" class="abs">
+                                <div class="left">
+                                    <h2>人才培养</h2>
+                                    <div class="img">
+                                        <img name="grade" src="#" alt="">
+                                    </div>
+                                </div>
+                                <div class="right">
+                                    <div class="text">
+                                        <p class="title">考核点</p>
+                                        <ul>
+                                            <li>关注人才发展，愿投入时间给其帮助。</li>
+                                            <li>发掘每个人的优点、缺点，有针对性的进行辅导、培训。</li>
+                                            <li>结合自身销售工作，做出完整的计划调整。</li>
+                                        </ul>
+                                        <p class="title">能力解读</p>
+                                        <p class="status" name="explain">预判发展趋势。從數據中你將收穫宏觀的視野,掌握全局。</p>
+                                    </div>
+                                    <div class="img" name="title">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="trend">
+                        <div class="head">
+                            <h1>态势与发展分析</h1>
+                        </div>
+                        <div class="curve">
+                            <div class="x-line">
+                                <ul>
+                                    <li><img src="/assets/images/version_2/x-line1.png" alt="" class="x-line-img1"></li>
+                                    <li><img src="/assets/images/version_2/x-line2.png" alt="" class="x-line-img2"></li>
+                                    <li><img src="/assets/images/version_2/x-line3.png" alt="" class="x-line-img3"></li>
+                                </ul>
+                            </div>
+                            <div id="con" style="height: 100%"></div>
+                        </div>
+                        <div class="explain">
+                            <div class="point" id="grow-potential" style="display:none;">
+                                <p class="title">发展潜力</p>
+                                <ul id="grow">
+
+                                </ul>
+                            </div>
+                            <div class="point" id="potential-risk" style="display:none;">
+                                <p class="title">潜在风险</p>
+                                <ul id="risk">
+
+                                </ul>
+                            </div>
+                            <div class="point" id="lifting-direction" style="display:none;">
+                                <p class="title" >提升方向</p>
+                                <ul id="promote">
+
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="@routes.Assets.versioned("javascripts/version_2/summary/summary.js")" type="text/javascript" defer="defer"></script>
+}

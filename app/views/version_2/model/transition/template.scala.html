@@ -1,0 +1,39 @@
+@import play.api.libs.json.JsValue
+@*uuid、期数、报告*@
+@(uuid: String, phrase: String)
+@version_2.model.application.template("区域管理模拟平台"){
+    <input type="hidden" name="uuid" value="@uuid" disabled="disabled" />
+    <input type="hidden" name="phase" value="@phrase" disabled="disabled" />
+    <div class="transition">
+        <div class="transition-wrapper">
+            <div class="items first-item">
+                <p class="item-title">资讯快报！</p>
+                <div class="item-content-wrapper">
+                    <p class="item-content">根据信息部门的调查反馈，最新的皮肤药物，在多个医院上市啦！</p>
+                    <p class="item-content">此外多家医院在用药政策发生了不同程度的变化。</p>
+                    <p class="item-bottom">您可以在 周期（2）“查看信息”中，查看到最新动态</p>
+                </div>
+                <div class="btn btn-1">下一步</div>
+            </div>
+            <div class="items second-item">
+                <p class="item-title">业务通知！</p>
+                <div class="item-content-wrapper">
+                    <p class="item-content">周期（1）的销售结果报告，已统计完成，</p>
+                    <p class="item-content">您可以在周期（2）“查看信息”中，查看用来辅助决策！</p>
+                </div>
+                <div class="btn btn-2">下一步</div>
+            </div>
+            <div class="items third-item">
+                <p class="item-title">人力部通知！</p>
+                <div class="item-content-wrapper">
+                    <p class="item-content">通过周期（1）的工作后，团队成员们各方面能力获得了不同程度的变化，</p>
+                    <p class="item-content">您可以在周期（2）“查看信息 一> 代表信息”中，查看最新动态！</p>
+                </div>
+                <div class="btn btn-3">下一步</div>
+            </div>
+            <div class="btn btn-go">开始部署周期(2)</div>
+        </div>
+
+    </div>
+    <script src="@routes.Assets.versioned("javascripts/version_2/transition/transition.js")" type="text/javascript" defer="defer"></script>
+}

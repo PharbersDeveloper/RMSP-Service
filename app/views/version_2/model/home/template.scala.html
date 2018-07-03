@@ -1,0 +1,654 @@
+@import java.text.NumberFormat
+@import play.api.libs.json.JsValue
+@*uuid、期数、医院新闻、产品、代表 , 总预算，医院列表, decision输入, management输入, 进行到周期几, 报告*@
+@(uuid: String, phrase: String, hosp_news: JsValue,
+        product: List[JsValue], salesman: List[JsValue], totalBudget: JsValue,
+        hosp_list: List[JsValue], decisioInputs: List[JsValue], manageInputs: List[JsValue], checkInputPhase: (Boolean, Int), report: Option[JsValue])
+
+@*************************************
+*                                   *
+* @numberFormat                     *
+* TODO: 提到view下单独形成一个,        *
+* TODO: 可以被import的包.             *
+*************************************@
+@numberFormat(d: AnyVal) = @{
+    val numberFormat = NumberFormat.getInstance()
+    numberFormat.setGroupingUsed(false)
+    numberFormat.format(d)
+}
+
+@version_2.model.application.template("区域管理模拟平台"){
+    <input type="hidden" name="uuid" value="@uuid" disabled="disabled">
+    <input type="hidden" name="phase" value="@phrase" disabled="disabled">
+    <div class="home">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="header">
+                        <div class="row head-describe box bg">
+                            <div class="col-md-12">
+                                <div class="col-md-5 col-sm-5 col-xs-5">周期(@{phrase})&nbsp;&nbsp;100天计划部署</div>
+                                <div class="col-md-7 col-sm-7 col-xs-7 text-right" >
+                                    <div class="config" name="toggle-import-export">
+                                        <i class="glyphicon glyphicon-cog"></i>
+                                        <div class="config-toggle-content" name="area-import-export">
+                                            <p>导入Excel</p>
+                                            @*<p>导出Excel</p>*@
+                                        </div>
+                                    </div>
+                                    <div class="timer" style="display: none;"><i class="glyphicon glyphicon-time"></i><span>00:00</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="message-box" name="message-box">
+                        <div class="row show-info">
+                            <div class="decision-info-btn box bg">
+                                <p><img src="@routes.Assets.versioned("images/version_2/file.png")" class="center-block" width="48" height="50"></p>
+                                <p class="text-center"><button class="btn btn-primary btn-sm btn-radius btn-tenuous" type="button" name="details-btn">查看信息</button></p>
+                            </div>
+                            <div class="resource-manager-info box bg">
+                                <div class="number-info">
+                                    <p class="text-left">总预算</p>
+                                    <p class="text-right">
+                                        <span class="number-size-lg">
+                                            @{
+                                                val num = (totalBudget \ phrase \ "budget").asOpt[String].map (x => x).getOrElse("")
+                                                NumberFormat.getInstance().format(num.toDouble)
+                                            }
+                                        </span>
+                                        <span>元</span>
+                                    </p>
+                                    <p class="total-budget" id="total-budget"></p>
+                                </div>
+                                <div class="person-details-info">
+                                    <div class="detail">
+                                        <p>团队成员<br>已分配时间</p>
+                                    </div>
+                                    <div class="detail">
+                                        <div class="graphicsy-pie" name="小宋"></div>
+                                        <div class="person-name">小宋</div>
+                                    </div>
+                                    <div class="detail">
+                                        <div class="graphicsy-pie" name="小兰"></div>
+                                        <div class="person-name">小兰</div>
+                                    </div>
+                                    <div class="detail">
+                                        <div class="graphicsy-pie" name="小木"></div>
+                                        <div class="person-name">小木</div>
+                                    </div>
+                                    <div class="detail">
+                                        <div class="graphicsy-pie" name="小白"></div>
+                                        <div class="person-name">小白</div>
+                                    </div>
+                                    <div class="detail">
+                                        <div class="graphicsy-pie" name="小青"></div>
+                                        <div class="person-name">小青</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row hosp-array-info box">
+                            <ul name="hosp-list" unselectable="on" onselectstart="return false;" style="-moz-user-select:none;">
+                                @{
+                                    hosp_list.zipWithIndex.map { hosp =>
+                                        <li class={"box "+(if(hosp._2 == 0){"hospactive"})+""} name={(hosp._1 \ "hosp_name").asOpt[String].get}><!--active-->
+                                            <div class="content">
+                                                <p class="text-right">{(hosp._1 \ "hosp_name").asOpt[String].get}</p>
+                                                <p class="text-left">
+                                                    <span><i class="glyphicon glyphicon-yen"></i></span>
+                                                    <span name="budget">——</span>%
+                                                </p>
+                                                <p class="text-left">
+                                                    <span>
+                                                        <i class="glyphicon glyphicon-user"></i>
+                                                    </span>
+                                                    <span name="salesmen">——</span>
+                                                </p>
+                                            </div>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                            <button class="arrow-left" name="btn-left"><-</button>
+                            <button class="arrow-right" name="btn-right">-></button>
+                        </div>
+                        <div class="row hosp-array-masklayer"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" name="input-box">
+                <div class="col-md-12">
+                    <div class="bottom" name="bottom">
+                        @hosp_list.zipWithIndex.map { hosp =>
+                            <div class="row hosp-input-info box" name=@{(hosp._1 \ "hosp_name").asOpt[String].get} @if(hosp._2 != 0){style="display: none"}>
+                                <input type="hidden" name="hospital-code" value=@{(hosp._1 \ "hosp_code").asOpt[String].get}>
+                                <div class="sales-planning">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="hosp-info box bg" name="hosp-info">
+                                                <p name="hosp-info-name">@{(hosp._1 \ "hosp_name").asOpt[String].get}</p>
+                                                <div class="hosp-info-salesman">
+                                                    <div class="salesman-picture">
+                                                        <img src=@{routes.Assets.versioned("images/version_2/salesmen-picture.png")} width="95" height="95" alt="人像">
+                                                    </div>
+                                                    <div class="selected-salesman">
+                                                        <span>请指派代表</span><br>
+                                                        <select @{if(checkInputPhase._2 > phrase.toInt) {"disabled=disabled"} else {}}>
+                                                            <option value="" hospital-name="@{(hosp._1 \ "hosp_name").asOpt[String].get}"></option>
+                                                            @decisioInputs.filter(f => (f \ "hosp_code").as[Int] == (hosp._1 \ "hosp_code").as[String].toInt).map { data =>
+                                                                <option value="不分配" hospital-name="@{(hosp._1 \ "hosp_name").asOpt[String].get}"
+                                                                    @if((data \ "salesmen").as[String] == "不分配") {selected="selected"}
+                                                                >不分配</option>
+                                                                @salesman.reverse.map { person =>
+                                                                    <option value="@{(person \ "name").asOpt[String]}"
+                                                                            hospital-name="@{(hosp._1 \ "hosp_name").asOpt[String].get}"
+                                                                            @if((data \ "salesmen").as[String] == (person \ "name").as[String]) {selected="selected"}>
+                                                                        @{(person \ "name").asOpt[String]}
+                                                                    </option>
+                                                                }
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="input-budget">
+                                                    <p>
+                                                        <span>分配推广预算</span>
+                                                        <span>
+                                                            @decisioInputs.filter(f => (f \ "hosp_code").as[Int] == (hosp._1 \ "hosp_code").as[String].toInt).map { data =>
+                                                                <input type="text"
+                                                                        @{if(checkInputPhase._2 > phrase.toInt) {"disabled=disabled"} else {}}
+                                                                        name="input-budget"
+                                                                        hospital-name="@{(hosp._1 \ "hosp_name").asOpt[String].get}"
+                                                                        pharbers-type="推广预算"
+                                                                        maxlength="4"
+                                                                        value="@{
+                                                                            val budget = (data \ "budget").as[Double]
+                                                                            if(budget == 0) {""} else {numberFormat(budget)}
+                                                                        }"/>
+                                                            } &nbsp;%
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="hosp-budget box bg" name="hosp-budget">
+                                                <ul>
+                                                    <li>
+                                                        <ul>
+                                                            <li class="left-title">&nbsp;</li>
+                                                            <li class="left-title">药品潜力</li>
+                                                            <li class="left-title">上期销售额</li>
+                                                            <li class="left-title">指标设定</li>
+                                                            <li class="left-title">沟通时间</li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <ul>
+                                                            <li class="top-tetile">口服抗生素</li>
+                                                            <li>
+                                                                <span class="hosp-budget-number">@{NumberFormat.getInstance().format((hosp._1 \ "口服抗生素").asOpt[List[String]].get.tail.head.toDouble)}</span>
+                                                                <span>元</span>
+                                                            </li>
+                                                            <li>
+                                                                <span class="hosp-budget-number">@{NumberFormat.getInstance().format((hosp._1 \ "口服抗生素").asOpt[List[String]].get.head.replace(",", "").toDouble)}</span>
+                                                                <span>元</span>
+                                                            </li>
+                                                            @decisioInputs.filter(f => (f \ "hosp_code").as[Int] == (hosp._1 \ "hosp_code").as[String].toInt).map { data =>
+                                                                <li>
+                                                                    <input type="text" name="prod_value"
+                                                                            @{if(checkInputPhase._2 > phrase.toInt) {"disabled=disabled"} else {}}
+                                                                            hospital-code="@{(hosp._1 \ "hosp_code").as[String]}"
+                                                                            hospital-name="@{(hosp._1 \ "hosp_name").as[String]}"
+                                                                            pharbers-type="@{(data \ "sales").as[List[String Map JsValue]].find(f => f("prod_name").as[String] == "口服抗生素").get("prod_name").as[String]}"
+                                                                            value="@{
+                                                                                val sales = (data \ "sales").as[List[String Map JsValue]].find(f => f("prod_name").as[String] == "口服抗生素").get("prod_value").as[Double]
+                                                                                if(sales == 0) {""} else {numberFormat(sales)}
+                                                                            }"
+                                                                            data-value=0/>&nbsp;元
+                                                                </li>
+
+                                                                <li>
+                                                                    <input type="text" name="prod_hours"
+                                                                            @{if(checkInputPhase._2 > phrase.toInt) {"disabled=disabled"} else {}}
+                                                                            hospital-code="@{(hosp._1 \ "hosp_code").as[String]}"
+                                                                            hospital-name="@{(hosp._1 \ "hosp_name").as[String]}"
+                                                                            pharbers-type="@{(data \ "visit_hours").as[List[String Map JsValue]].find(f => f("prod_name").as[String] == "口服抗生素").get("prod_name").as[String]}"
+                                                                            value="@{
+                                                                                val hours = (data \ "visit_hours").as[List[String Map JsValue]].find(f => f("prod_name").as[String] == "口服抗生素").get("prod_hours").as[Double]
+                                                                                if(hours == 0) {""} else {numberFormat(hours)}
+                                                                            }"/>&nbsp;天
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <ul>
+                                                            <li class="top-tetile">一代降糖药</li>
+                                                            <li>
+                                                                <span class="hosp-budget-number">@{NumberFormat.getInstance().format((hosp._1 \ "一代降糖药").asOpt[List[String]].get.tail.head.toDouble)}</span>
+                                                                <span>元</span>
+                                                            </li>
+                                                            <li>
+                                                                <span class="hosp-budget-number">@{NumberFormat.getInstance().format((hosp._1 \ "一代降糖药").asOpt[List[String]].get.head.replace(",", "").toDouble)}</span>
+                                                                <span>元</span>
+                                                            </li>
+                                                            @decisioInputs.filter(f => (f \ "hosp_code").as[Int] == (hosp._1 \ "hosp_code").as[String].toInt).map { data =>
+                                                                <li>
+                                                                    <input type="text" name="prod_value"
+                                                                            @{if(checkInputPhase._2 > phrase.toInt) {"disabled=disabled"} else {}}
+                                                                            hospital-code="@{(hosp._1 \ "hosp_code").as[String]}"
+                                                                            hospital-name="@{(hosp._1 \ "hosp_name").as[String]}"
+                                                                            pharbers-type="@{(data \ "sales").as[List[String Map JsValue]].find(f => f("prod_name").as[String] == "一代降糖药").get("prod_name").as[String]}"
+                                                                            value="@{
+                                                                                val sales = (data \ "sales").as[List[String Map JsValue]].find(f => f("prod_name").as[String] == "一代降糖药").get("prod_value").as[Double]
+                                                                                if(sales == 0) {""} else {numberFormat(sales)}
+                                                                            }"
+                                                                            data-value=0/>&nbsp;元
+                                                                </li>
+
+                                                                <li>
+                                                                    <input type="text" name="prod_hours"
+                                                                            @{if(checkInputPhase._2 > phrase.toInt) {"disabled=disabled"} else {}}
+                                                                            hospital-code="@{(hosp._1 \ "hosp_code").as[String]}"
+                                                                            hospital-name="@{(hosp._1 \ "hosp_name").as[String]}"
+                                                                            pharbers-type="@{(data \ "visit_hours").as[List[String Map JsValue]].find(f => f("prod_name").as[String] == "一代降糖药").get("prod_name").as[String]}"
+                                                                            value="@{
+                                                                                val hours = (data \ "visit_hours").as[List[String Map JsValue]].find(f => f("prod_name").as[String] == "一代降糖药").get("prod_hours").as[Double]
+                                                                                if(hours == 0) {""} else {numberFormat(hours)}
+                                                                            }"/>&nbsp;天
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <ul>
+                                                            <li class="top-tetile">三代降糖药</li>
+                                                            <li>
+                                                                <span class="hosp-budget-number">@{NumberFormat.getInstance().format((hosp._1 \ "三代降糖药").asOpt[List[String]].get.tail.head.toDouble)}</span>
+                                                                <span>元</span>
+                                                            </li>
+                                                            <li>
+                                                                <span class="hosp-budget-number">@{NumberFormat.getInstance().format((hosp._1 \ "三代降糖药").asOpt[List[String]].get.head.replace(",", "").toDouble)}</span>
+                                                                <span>元</span>
+                                                            </li>
+                                                            @decisioInputs.filter(f => (f \ "hosp_code").as[Int] == (hosp._1 \ "hosp_code").as[String].toInt).map { data =>
+                                                                <li>
+                                                                    <input type="text" name="prod_value"
+                                                                            @{if(checkInputPhase._2 > phrase.toInt) {"disabled=disabled"} else {}}
+                                                                            hospital-code="@{(hosp._1 \ "hosp_code").as[String]}"
+                                                                            hospital-name="@{(hosp._1 \ "hosp_name").as[String]}"
+                                                                            pharbers-type="@{(data \ "sales").as[List[String Map JsValue]].find(f => f("prod_name").as[String] == "三代降糖药").get("prod_name").as[String]}"
+                                                                            value="@{
+                                                                                val sales = (data \ "sales").as[List[String Map JsValue]].find(f => f("prod_name").as[String] == "三代降糖药").get("prod_value").as[Double]
+                                                                                if(sales == 0) {""} else {numberFormat(sales)}
+                                                                            }"
+                                                                            data-value=0/>&nbsp;元
+                                                                </li>
+
+                                                                <li>
+                                                                    <input type="text" name="prod_hours"
+                                                                            @{if(checkInputPhase._2 > phrase.toInt) {"disabled=disabled"} else {}}
+                                                                            hospital-code="@{(hosp._1 \ "hosp_code").as[String]}"
+                                                                            hospital-name="@{(hosp._1 \ "hosp_name").as[String]}"
+                                                                            pharbers-type="@{(data \ "visit_hours").as[List[String Map JsValue]].find(f => f("prod_name").as[String] == "三代降糖药").get("prod_name").as[String]}"
+                                                                            value="@{
+                                                                                val hours = (data \ "visit_hours").as[List[String Map JsValue]].find(f => f("prod_name").as[String] == "三代降糖药").get("prod_hours").as[Double]
+                                                                                if(hours == 0) {""} else {numberFormat(hours)}
+                                                                            }"/>&nbsp;天
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <ul>
+                                                            <li class="top-tetile">皮肤药</li>
+                                                            <li>
+                                                                <span class="hosp-budget-number">@if((hosp._1 \ "皮肤药").asOpt[List[String]].get.tail.head.isEmpty) {0} else {@{NumberFormat.getInstance().format((hosp._1 \ "皮肤药").asOpt[List[String]].get.tail.head.toDouble)}}</span>
+                                                                <span>元</span>
+                                                            </li>
+                                                            <li>
+                                                                <span class="hosp-budget-number">@{NumberFormat.getInstance().format((hosp._1 \ "皮肤药").asOpt[List[String]].get.head.replace(",", "").toDouble)}</span>
+                                                                <span>元</span>
+                                                            </li>
+                                                            @decisioInputs.filter(f => (f \ "hosp_code").as[Int] == (hosp._1 \ "hosp_code").as[String].toInt).map { data =>
+                                                                <li>
+                                                                    <input type="text" name="prod_value" @if(((data \ "hosp_name").as[String] == "人民医院" || (data \ "hosp_name").as[String] == "军区医院" || (data \ "hosp_name").as[String] == "中日医院" || (data \ "hosp_name").as[String] == "西河医院") && phrase == "2") {} else {disabled="disabled"}
+                                                                            @{if(checkInputPhase._2 > phrase.toInt) {"disabled=disabled"} else {}}
+                                                                            hospital-code="@{(hosp._1 \ "hosp_code").as[String]}"
+                                                                            hospital-name="@{(hosp._1 \ "hosp_name").as[String]}"
+                                                                            pharbers-type="@{(data \ "sales").as[List[String Map JsValue]].find(f => f("prod_name").as[String] == "皮肤药").get("prod_name").as[String]}"
+                                                                            value="@{
+                                                                                val sales = (data \ "sales").as[List[String Map JsValue]].find(f => f("prod_name").as[String] == "皮肤药").get("prod_value").as[Double]
+                                                                                if(sales == 0) {""} else {numberFormat(sales)}
+                                                                            }"
+                                                                            data-value=0/>&nbsp;元
+                                                                </li>
+
+                                                                <li>
+                                                                    <input type="text" name="prod_hours" @if(((data \ "hosp_name").as[String] == "人民医院" || (data \ "hosp_name").as[String] == "军区医院" || (data \ "hosp_name").as[String] == "中日医院" || (data \ "hosp_name").as[String] == "西河医院") && phrase == "2") {} else {disabled="disabled"}
+                                                                            @{if(checkInputPhase._2 > phrase.toInt) {"disabled=disabled"} else {}}
+                                                                            hospital-code="@{(hosp._1 \ "hosp_code").as[String]}"
+                                                                            hospital-name="@{(hosp._1 \ "hosp_name").as[String]}"
+                                                                            pharbers-type="@{(data \ "visit_hours").as[List[String Map JsValue]].find(f => f("prod_name").as[String] == "皮肤药").get("prod_name").as[String]}"
+                                                                            value="@{
+                                                                                val hours = (data \ "visit_hours").as[List[String Map JsValue]].find(f => f("prod_name").as[String] == "皮肤药").get("prod_hours").as[Double];
+                                                                                if(hours == 0) {""} else {numberFormat(hours)}
+                                                                            }"/>&nbsp;天
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        <div class="row">
+                            <div class="personal-training" name="personal-training" style="display: none;">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="input-personal" name="input-personal">
+                                            <div class="input-manager box bg" name="input-manager">
+                                                <p><span>单位：天</span><span>经理协访天数，不可超过該代表总拜访天数</span></p>
+                                                @manageInputs.filter(f => (f \ "project_name").as[String] == "实地协访").map { data =>
+                                                    <table>
+                                                        <tr>
+                                                            <td class="assist-tag"></td>
+                                                            <td class="assist-tag"></td>
+                                                            @{
+                                                                (data \ "apply").as[List[String Map JsValue]].map { person =>
+                                                                    <td class="person-tips">{person("personal").as[String]}</td>
+                                                                }
+                                                            }
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="assist-tag"><div class="tag"></div></td>
+                                                            <td class="name-tips">经理协助拜访</td>
+                                                            @{
+                                                                (data \ "apply").as[List[String Map JsValue]].map { person =>
+                                                                    if(checkInputPhase._2 > phrase.toInt) {
+                                                                            <td>
+                                                                                <input type="text"
+                                                                                    disabled="disabled"
+                                                                                    personal={(person("personal")).as[String]}
+                                                                                    name={(data \ "project_name").as[String]}
+                                                                                    code={(data \ "project_code").as[Int].toString}
+                                                                                    value={
+                                                                                        if(person("days").as[Int] == 0) "" else person("days").as[Int].toString
+                                                                                    }/>
+                                                                            </td>
+                                                                    } else {
+                                                                            <td>
+                                                                                <input type="text"
+                                                                                    personal={(person("personal")).as[String]}
+                                                                                    name={(data \ "project_name").as[String]}
+                                                                                    code={(data \ "project_code").as[Int].toString}
+                                                                                    value={
+                                                                                        if(person("days").as[Int] == 0) "" else person("days").as[Int].toString
+                                                                                    }/>
+                                                                            </td>
+                                                                    }
+
+                                                                }
+                                                            }
+                                                        </tr>
+                                                    </table>
+                                                }
+
+                                            </div>
+                                            <div class="input-training box bg" name="input-training">
+                                                <p><span>单位：天</span></p>
+                                                <table>
+                                                    @manageInputs.map { data =>
+                                                            @{
+                                                                if((data \ "project_name").as[String] == "能力辅导") {
+                                                                        <tr>
+                                                                            <td class="training-tag"></td>
+                                                                            <td class="training-tag"></td>
+                                                                            {(data \ "apply").as[List[String Map JsValue]].map { person =>
+                                                                                <td class="person-tips">{person("personal").as[String]}</td>
+                                                                            }}
+                                                                            </tr>
+                                                                            <tr>
+                                                                            <td class="training-tag"><div class="tag"></div></td>
+                                                                            <td class="name-tips">1对1能力辅导</td>
+                                                                            {(data \ "apply").as[List[String Map JsValue]].map { person =>
+                                                                                if(checkInputPhase._2 > phrase.toInt) {
+                                                                                        <td>
+                                                                                            <input type="text"
+                                                                                                disabled="disabled"
+                                                                                                personal={(person("personal")).as[String]}
+                                                                                                name={(data \ "project_name").as[String]}
+                                                                                                code={(data \ "project_code").as[Int].toString}
+                                                                                                value={
+                                                                                                if(person("days").as[Int] == 0) "" else person("days").as[Int].toString
+                                                                                            } />
+                                                                                        </td>
+                                                                                } else {
+                                                                                        <td>
+                                                                                            <input type="text"
+                                                                                                personal={(person("personal")).as[String]}
+                                                                                                name={(data \ "project_name").as[String]}
+                                                                                                code={(data \ "project_code").as[Int].toString}
+                                                                                                value={
+                                                                                                if(person("days").as[Int] == 0) "" else person("days").as[Int].toString
+                                                                                            } />
+                                                                                        </td>
+                                                                                }
+
+                                                                            }}
+                                                                        </tr>
+                                                                }
+                                                            }
+                                                            @{
+                                                                if((data \ "project_name").as[String] == "团队例会和团建") {
+                                                                        <tr>
+                                                                            <td class="meeting-tag"><div class="tag"></div></td>
+                                                                            <td class="name-tips">例会/团建</td>
+                                                                            <td colspan="7" class="input-meeting">
+                                                                            {(data \ "apply").as[List[String Map JsValue]].map { person =>
+                                                                                if(checkInputPhase._2 > phrase.toInt) {
+                                                                                    <input type="text"
+                                                                                        disabled="disabled"
+                                                                                        personal={(person("personal")).as[String]}
+                                                                                        name={(data \ "project_name").as[String]}
+                                                                                        code={(data \ "project_code").as[Int].toString}
+                                                                                        value={
+                                                                                        if(person("days").as[Int] == 0) "" else person("days").as[Int].toString
+                                                                                    } />
+                                                                                } else {
+                                                                                    <input type="text"
+                                                                                        personal={(person("personal")).as[String]}
+                                                                                        name={(data \ "project_name").as[String]}
+                                                                                        code={(data \ "project_code").as[Int].toString}
+                                                                                        value={
+                                                                                        if(person("days").as[Int] == 0) "" else person("days").as[Int].toString
+                                                                                    } />
+                                                                                }
+                                                                            }}
+                                                                            </td>
+                                                                        </tr>
+                                                                }
+                                                            }
+                                                        @{
+                                                            if((data \ "project_name").as[String] == "产品培训") {
+                                                                    <tr>
+                                                                        <td class="meeting-tag"></td>
+                                                                        <td class="name-tips">脱岗产品培训</td>
+                                                                        {(data \ "apply").as[List[String Map JsValue]].map { person =>
+                                                                            if(checkInputPhase._2 > phrase.toInt) {
+                                                                                    <td>
+                                                                                        <input type="text"
+                                                                                            disabled="disabled"
+                                                                                            personal={(person("personal")).as[String]}
+                                                                                            name={(data \ "project_name").as[String]}
+                                                                                            code={(data \ "project_code").as[Int].toString}
+                                                                                            value={
+                                                                                            if(person("days").as[Int] == 0) "" else person("days").as[Int].toString
+                                                                                        } />
+                                                                                    </td>
+                                                                            } else {
+                                                                                    <td>
+                                                                                        <input type="text"
+                                                                                            personal={(person("personal")).as[String]}
+                                                                                            name={(data \ "project_name").as[String]}
+                                                                                            code={(data \ "project_code").as[Int].toString}
+                                                                                            value={
+                                                                                            if(person("days").as[Int] == 0) "" else person("days").as[Int].toString
+                                                                                        } />
+                                                                                    </td>
+                                                                            }
+
+                                                                        }}
+                                                                    </tr>
+                                                            }
+                                                        }
+                                                    }
+                                                    <tr class="disabled-count">
+                                                        <td class="meeting-tag"></td>
+                                                        <td class="name-tips">总计</td>
+                                                        <td><input type="text" name="小宋" disabled="disabled">天</td>
+                                                        <td><input type="text" name="小兰" disabled="disabled">天</td>
+                                                        <td><input type="text" name="小木" disabled="disabled">天</td>
+                                                        <td><input type="text" name="小白" disabled="disabled">天</td>
+                                                        <td><input type="text" name="小青" disabled="disabled">天</td>
+                                                    </tr>
+                                                </table>
+
+
+
+                                            </div>
+                                        </div>
+                                        <div class="input-display box bg" name="input-display">
+                                            <div class="input-display-inside input-display-inside-left">
+                                                <table class="text-display">
+                                                    <tr>
+                                                        <td class="assist-tag"><div class="tag"></div></td>
+                                                        <td class="name-tips">协助拜访</td>
+                                                        <td class="kpi-tag"><div class="tag"></div></td>
+                                                        <td class="name-tips">KPI分析</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="assist-tag"></td>
+                                                        <td><span class="big-text" name="visit-days">0</span>天</td>
+                                                        <td class="kpi-tag"></td>
+                                                        <td>
+                                                            @manageInputs.filter(f => (f \ "project_name").as[String] == "KPI 报告分析").map { data =>
+                                                                @{
+                                                                    (data \ "apply").as[List[String Map JsValue]].map { person =>
+                                                                        if(checkInputPhase._2 > phrase.toInt) {
+                                                                            <input type="text"
+                                                                                disabled="disabled"
+                                                                                personal={(person("personal")).as[String]}
+                                                                                name={(data \ "project_name").as[String]}
+                                                                                code={(data \ "project_code").as[Int].toString}
+                                                                                value={
+                                                                                if(person("days").as[Int] == 0) "" else person("days").as[Int].toString
+                                                                            } />
+                                                                        } else {
+                                                                            <input type="text"
+                                                                                personal={(person("personal")).as[String]}
+                                                                                name={(data \ "project_name").as[String]}
+                                                                                code={(data \ "project_code").as[Int].toString}
+                                                                                value={
+                                                                                if(person("days").as[Int] == 0) "" else person("days").as[Int].toString
+                                                                            } />
+                                                                        }
+
+                                                                    }
+                                                                }
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="training-tag"><div class="tag"></div></td>
+                                                        <td class="name-tips">能力辅导</td>
+                                                        <td class="administrativ-tag"><div class="tag"></div></td>
+                                                        <td class="name-tips">行政工作</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="training-tag"></td>
+                                                        <td><span class="big-text" name="coach-days">0</span>天</td>
+                                                        <td class="administrativ-tag"></td>
+                                                        <td>
+                                                            @manageInputs.filter(f => (f \ "project_name").as[String] == "行政工作").map { data =>
+                                                                @{
+                                                                    (data \ "apply").as[List[String Map JsValue]].map { person =>
+
+                                                                        if(checkInputPhase._2 > phrase.toInt) {
+                                                                            <input type="text"
+                                                                                disabled="disabled"
+                                                                                personal={(person("personal")).as[String]}
+                                                                                name={(data \ "project_name").as[String]}
+                                                                                code={(data \ "project_code").as[Int].toString}
+                                                                                value={
+                                                                                if(person("days").as[Int] == 0) "" else person("days").as[Int].toString
+                                                                            } />
+                                                                        } else {
+                                                                            <input type="text"
+                                                                                personal={(person("personal")).as[String]}
+                                                                                name={(data \ "project_name").as[String]}
+                                                                                code={(data \ "project_code").as[Int].toString}
+                                                                                value={
+                                                                                if(person("days").as[Int] == 0) "" else person("days").as[Int].toString
+                                                                            } />
+                                                                        }
+
+                                                                    }
+                                                                }
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="meeting-tag"><div class="tag"></div></td>
+                                                        <td class="name-tips">例会/团建</td>
+                                                        <td class="undistributed-tag"><div class="tag"></div></td>
+                                                        <td class="name-tips">未分配</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="meeting-tag"></td>
+                                                        <td><span class="big-text" name="meeting-days">0</span>天</td>
+                                                        <td class="undistributed-tag"></td>
+                                                        <td><span class="big-text" name="other-days">100</span>天</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="input-display-inside input-display-inside-right">
+                                                <div class="allot-time" id="hospcode-allot-time"></div>
+                                                <p class="text-center">经理的分配时间比例</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row answer-tab" name="answer-tab">
+                <div class="col-md-8 col-sm-8 col-xs-8 text-right">
+                    <div class="btn-group" name="btn-group" role="group">
+                        <button type="button " class="btn btn-default active">业务决策</button>
+                        <button type="button" class="btn btn-default">管理决策</button>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-2 text-right">
+                    <button class="btn btn-primary btn-md submit-btn" name="submit-btn" type="button">提交执行</button>
+                </div>
+            </div>
+
+            <!--资源管理详情-->
+            <div class="row resource-info" name="resource-info" style="display:none;">
+                @version_2.model.rsinformation.template(uuid, phrase, salesman, hosp_news, hosp_list, product, report)
+            </div>
+        </div>
+    </div>
+    <script src="@routes.Assets.versioned("javascripts/version_2/home/home.js")" type="text/javascript" defer="defer"></script>
+}

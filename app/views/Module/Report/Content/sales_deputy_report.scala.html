@@ -1,0 +1,50 @@
+@(m : play.api.libs.json.JsValue)
+@import java.text.NumberFormat
+<div name="deputy">
+    <div style="margin-left: 3%" name="personal">
+        @Module.Report.people_select()
+    </div>
+    <div style="margin-left: 3%" name="product">
+        @Module.Report.product_select()
+    </div>
+
+    <div style="text-align: left;margin-left: 3%">
+        <div id="p1_report6_2" style="width: 100%;height: auto;visibility: inherit;" class="datatables html-widget html-widget-output">
+            <div class="dataTables_wrapper no-footer">
+                <table class="display dataTable no-footer" name="sales-personal-tb" role="grid">
+                    <caption>销售额/代表</caption>
+                    <thead style="background-color: rgb(65, 85, 93);color: rgb(255, 255, 255);">
+                        <tr role="row"><th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">销售代表</th>
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">产品</th>
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">当期销售指标</th>
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">上期销售额</th>
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">当期销售额</th>
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">销售额达成率(%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @{
+                            val rp = (m \ "report").asOpt[List[play.api.libs.json.JsValue]].get
+                            val tp = rp.find(p => (p \ "report_name").asOpt[String].get == "销售报告_销售额每代表").get
+                            val tmp = (tp \ "result").asOpt[List[play.api.libs.json.JsValue]].get
+
+                            tmp.map { iter =>
+                                <tr role="row" pharbers-filter={(iter \ "salesmen").asOpt[String].get} other-filter={(iter \ "prod_name").asOpt[String].get} >
+                                <td class="dt-center">{(iter \ "salesmen").asOpt[String].get}</td>
+                                <td class="dt-center">{(iter \ "prod_name").asOpt[String].get}</td>
+                                <td class="dt-center">{NumberFormat.getInstance().format((iter \ "current_target").asOpt[Int].get.toDouble)}</td>
+                                <td class="dt-center">{NumberFormat.getInstance().format((iter \ "last_revenue").asOpt[Int].get.toDouble)}</td>
+                                <td class="dt-center">{NumberFormat.getInstance().format((iter \ "current_revenue").asOpt[Int].get.toDouble)}</td>
+                                <td class="dt-center">{NumberFormat.getInstance().format((iter \ "target_realization").asOpt[Double].get)}</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<br/>
+<br/>

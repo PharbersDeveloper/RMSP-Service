@@ -1,0 +1,15 @@
+@(report : play.api.libs.json.JsValue)
+
+<div class="box-body">
+    <div name="sales-customer">
+        @Module.Report.Content.sales_customer_report(report)
+    </div>
+
+    <div name="sales-deputy">
+        @Module.Report.Content.sales_deputy_report(report)
+    </div>
+
+    <div name="sales-porduct">
+        @Module.Report.Content.sales_product_report(report)
+    </div>
+</div>

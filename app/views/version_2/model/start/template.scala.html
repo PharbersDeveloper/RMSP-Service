@@ -1,0 +1,129 @@
+
+@()
+@version_2.model.application.template("区域管理模拟平台"){
+    <div class="start">
+        <div id="list" class="divlist">
+            <div class="content divFirst" id="div_1">
+                <div class="leftdiv">
+                    <img width="90%" style="opacity:0.7" src=@{routes.Assets.versioned("images/version_2/start_left_1.png")} alt="firstpage">
+                </div>
+                <div class="rightdiv">
+                    <div class="right_avatar">
+                        <img width="200" height="200" src="@{routes.Assets.versioned("images/version_2/start_avatar.png")}" alt="avatar">
+                    </div>
+                    <div class="right_text_1">
+                        <p>您好!</p>
+                        <p>您已被调至“铁马市”担任销售经理一职，将负责的区域包括10家规模不一的医院。</p>
+                        <p>请带领您的5人销售团队，完成公司下达的业绩任务。</p>
+                        <p>新的一年开始，新的挑战也即将开始...</p>
+                    </div>
+                    <div class="link-div">
+                        <a class="skip" onclick="skiplink()">SKIP</a>
+                        <a class="btn btn-1" id="btn_1" onclick="btn_1_click()">下一步</a>
+                    </div>
+                </div>
+            </div>
+            <div class="content divSecond originsmall" id="div_2">
+                <!-- <a class="btn btn-2" id="btn_2">下一步</a> -->
+                <div class="leftdiv">
+                    <img width="90%"  src=@{routes.Assets.versioned("images/version_2/start_left_2.png")} alt="secondpage">
+                </div>
+                <div class="rightdiv">
+                    <div class="right_text_2 right_text">
+                        <p class="text_title">公司战略安排通知：</p>
+                        <p>年度计划安排</p>
+                        <ul>
+                            <li>全年,将分为两个周期(上半年与下半年),每个周期为100个有效工作日。</li>
+                            <li>在每一周期结束后,将产生计划执行结果,统计本周期的销售表现及团队发展情况。</li>
+                            <li>上个周期中的销售计划执行结果，将对下个周期造成影响。</li>
+                        </ul>
+                    </div>
+                    <div class="link-div">
+                        <a class="skip" onclick="skiplink()">SKIP</a>
+                        <a class="btn btn-2" id="btn_2" onclick="btn_2_click()">下一步</a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="content divThird originsmall" id="div_3">
+                <!-- <a class="btn btn-6" id="btn_3">下一步</a> -->
+                <div class="leftdiv">
+                    <img width="90%"  src=@{routes.Assets.versioned("images/version_2/start_left_3.png")} alt="thirdpage">
+                </div>
+                <div class="rightdiv">
+                    <div class="right_text_3 right_text">
+                        <p class="text_title">公司战略安排通知：</p>
+                        <p>计划部署要求</p>
+                        <ul>
+                            <li>您需要参考信息部门提供的多方信息，结合最新的市场情况，依据科学化管理思维与经验，做出相应的销售战略安排，以获得最好的销售业绩。</li>
+                            <li>同时，对团队人员的专业培养是十分重要的，在日常工作中，透过高效的科学化管理，提升团队成员们的能力。</li>
+                        </ul>
+                    </div>
+                    <div class="link-div">
+                        <a class="skip" onclick="skiplink()">SKIP</a>
+                        <a class="btn btn-3" id="btn_3" onclick="btn_3_click()">下一步</a>
+                    </div>
+                </div>
+
+            </div>
+            @*<div class="content divFourth originsmall" id="div_4">*@
+                @*<!-- <a class="btn btn-4" id="btn_4">下一步</a> -->*@
+                @*<div class="leftdiv">*@
+                    @*<img width="90%"  src=@{routes.Assets.versioned("images/version_2/start_left_4.png")} alt="forthpage">*@
+                @*</div>*@
+                @*<div class="rightdiv">*@
+                    @*<div class="right_text_4 right_text">*@
+                        @*<p class="text_title">公司战略安排通知：</p>*@
+                        @*<p>经理年终考核维度</p>*@
+                        @*<ul>*@
+                            @*<li>年终考核中，将从<br />团队管理、资源分配、数据分析、人员培养、信息决策、统筹部署，多维度进行考核与评判一年的工作成果与您的科学化管理能力。</li>*@
+
+                        @*</ul>*@
+                    @*</div>*@
+                    @*<div class="link-div">*@
+                        @*<a class="skip" onclick="skiplink()">SKIP</a>*@
+                        @*<a class="btn btn-4" id="btn_4" onclick="btn_4_click()">下一步</a>*@
+                    @*</div>*@
+                @*</div>*@
+
+            @*</div>*@
+            <div class="content divFifth originsmall" id="div_5">
+                <!-- <a class="btn btn-5" id="btn_5">查看</a> -->
+                <div class="leftdiv">
+                    <img width="90%" src=@{routes.Assets.versioned("images/version_2/start_left_4.png")} alt="firstpage">
+                </div>
+                <div class="rightdiv">
+                    <div class="right_text_5 right_text">
+                        <p class="text_title">公司战略安排通知：</p>
+                        <p>经理年终考核维度</p>
+                        <ul>
+                            <li>年终考核中，将从多个维度来考核与评估您的区域管理能力：</li>
+                            <ul class="some-dimension">
+                                <li>销售战略制定能力</li>
+                                <li>客户管理能力</li>
+                                <li>团队管理能力</li>
+                                <li>报表分析与信息决策能力</li>
+                                <li>市场洞察与应变能力</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="link-div">
+                        <a class="btn btn-5" id="btn_5" onclick="goHomePage()">开始部署</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="bottombtn" id="buttons">
+            <span class="hit-point on" index="1" ></span>
+            <span class="hit-point" index="2"></span>
+            <span class="hit-point" index="3"></span>
+            @*<span class="hit-point" index="4"></span>*@
+            <span class="hit-point" index="5"></span>
+        </div>
+        <div class="exit">
+            <a><img width="25" height="30" src=@{routes.Assets.versioned("images/version_2/start_icon.png")} alt="">退出模拟</a>
+        </div>
+    </div>
+    <script src="@routes.Assets.versioned("javascripts/version_2/start/start.js")" type="text/javascript" defer="defer"></script>
+}

@@ -1,0 +1,34 @@
+@(mb : String)(uuid : String)(phase : String)
+
+<aside class="main-sidebar">
+    <section class="sidebar">
+        <ul id="left-page" class="sidebar-menu" data-widget="tree">
+            <li class='@{if (mb == "market") "active"}' >
+                <a href='@{"/market/" + uuid + "/" + phase}' ><i class="fa fa-navicon"></i> <span>市场信息</span></a>
+            </li>
+            <li class='@{if (mb == "brd") "active"}' >
+                <a href='@{"/brd/" + uuid}' ><i class="fa fa-address-card-o"></i> <span>业务代表</span></a>
+            </li>
+            <li class='@{if (mb == "product") "active"}'>
+                <a href='@{"/product/" + uuid}' ><i class="fa fa-plus-square-o"></i> <span>产品</span></a>
+            </li>
+            <li class='treeview @{if (mb == "decision" || mb == "management") "active"}'>
+                <a href="javascript:;"><i class="fa fa-edit"></i> <span>决策</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class='@{if (mb == "decision") "active"}'><a href='@{"/decision/" + uuid + "/" + phase}' ><i class="fa fa-angle-double-right"></i>业务决策</a></li>
+                    <li class='@{if (mb == "management") "active"}'><a href='@{"/management/" + uuid + "/" + phase}' ><i class="fa fa-angle-double-right"></i>管理决策</a></li>
+                </ul>
+            </li>
+            <li class='@{if (mb == "report") "active"}'>
+                <a href='@{"/report/" + uuid + "/1"}' ><i class="fa fa-list-alt"></i> <span>报告</span></a>
+            </li>
+            <li>
+                <a href="javascript:;" pharbers-filter="help"><i class="fa fa-question"></i> <span>帮助</span></a>
+            </li>
+        </ul>
+    </section>
+</aside>

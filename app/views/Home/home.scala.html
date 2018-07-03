@@ -1,0 +1,12 @@
+@(mb : String)(uuid : String)(phrase : String)(ch : Html)
+
+@main("区域管理模拟平台") {
+    <div class="wrapper">
+        @Top.navigation_bar()
+        @Left.optional_bar(mb)(uuid)(if(phrase.isEmpty) "1" else phrase)
+        <div class="content-wrapper" pharbers-filter="div-content">
+            @ch
+        </div>
+        @Footer.footer()
+    </div>
+}

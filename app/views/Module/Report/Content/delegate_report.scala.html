@@ -1,0 +1,212 @@
+@(m: play.api.libs.json.JsValue)
+@import java.text.NumberFormat
+<div class="box-body">
+    <div style="text-align: left;margin-left: 3%">
+        <div style="width: 100%;height: auto;visibility: inherit;" class="datatables html-widget html-widget-output">
+            <div class="dataTables_wrapper no-footer">
+                <table class="display dataTable no-footer table-striped" role="grid">
+                    <caption>时间分配</caption>
+                    <thead style="background-color: rgb(65, 85, 93);color: rgb(255, 255, 255);">
+                        <tr role="row">
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;"> </th>
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">小宋</th>
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">小兰</th>
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">小木</th>
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">小白</th>
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">小青</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @{
+                            val rp = (m \ "report").asOpt[List[play.api.libs.json.JsValue]].get
+                            val tp = rp.find(p => (p \ "report_name").asOpt[String].get == "代表报告_时间分配").get
+                            val tmp = (tp \ "result").asOpt[List[play.api.libs.json.JsValue]].get
+
+                            tmp.map { iter =>
+                                <tr role="row">
+                                    <td class="dt-center">{(iter \ "general_names").asOpt[String].get}</td>
+                                    <td class="dt-center">{(iter \ "salesmen_first").asOpt[Int].get}</td>
+                                    <td class="dt-center">{(iter \ "salesmen_second").asOpt[Int].get}</td>
+                                    <td class="dt-center">{(iter \ "salesmen_third").asOpt[Int].get}</td>
+                                    <td class="dt-center">{(iter \ "salesmen_fourth").asOpt[Int].get}</td>
+                                    <td class="dt-center">{(iter \ "salesmen_fifth").asOpt[Int].get}</td>
+                                </tr>
+                            }
+                        }
+                   </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div style="text-align: left;margin-left: 3%">
+        <div style="width: 100%;height: auto;visibility: inherit;" class="datatables html-widget html-widget-output">
+            <div class="dataTables_wrapper no-footer">
+                <table class="display dataTable no-footer table-striped" role="grid">
+                    <caption>产品知识</caption>
+                    <thead style="background-color: rgb(65, 85, 93);color: rgb(255, 255, 255);">
+                        <tr role="row">
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;"> </th>
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">小宋</th>
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">小兰</th>
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">小木</th>
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">小白</th>
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">小青</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            val rp = (m \ "report").asOpt[List[play.api.libs.json.JsValue]].get
+                            val tp = rp.find(p => (p \ "report_name").asOpt[String].get == "代表报告_产品知识").get
+                            val tmp = (tp \ "result").asOpt[List[play.api.libs.json.JsValue]].get
+
+                            tmp.map { iter =>
+                                <tr role="row">
+                                <td class="dt-center">{(iter \ "general_names").asOpt[String].get}</td>
+                                <td class="dt-center">{(iter \ "salesmen_first").asOpt[Int].get}</td>
+                                <td class="dt-center">{(iter \ "salesmen_second").asOpt[Int].get}</td>
+                                <td class="dt-center">{(iter \ "salesmen_third").asOpt[Int].get}</td>
+                                <td class="dt-center">{(iter \ "salesmen_fourth").asOpt[Int].get}</td>
+                                <td class="dt-center">{(iter \ "salesmen_fifth").asOpt[Int].get}</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div style="text-align: left;margin-left: 3%">
+        <div style="width: 100%;height: auto;visibility: inherit;" class="datatables html-widget html-widget-output">
+            <div class="dataTables_wrapper no-footer">
+                <table class="display dataTable no-footer table-striped" role="grid">
+                    <caption>经验</caption>
+                    <thead style="background-color: rgb(65, 85, 93);color: rgb(255, 255, 255);">
+                        <tr role="row">
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;"> </th>
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">小宋</th>
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">小兰</th>
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">小木</th>
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">小白</th>
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">小青</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            val rp = (m \ "report").asOpt[List[play.api.libs.json.JsValue]].get
+                            val tp = rp.find(p => (p \ "report_name").asOpt[String].get == "代表报告_经验").get
+                            val tmp = (tp \ "result").asOpt[List[play.api.libs.json.JsValue]].get
+
+                            tmp.map { iter =>
+                                <tr role="row">
+                                <td class="dt-center">{(iter \ "general_names").asOpt[String].get}</td>
+                                <td class="dt-center">{
+                                    NumberFormat.getInstance().format((iter \ "salesmen_first").asOpt[Double].get)
+                                }</td>
+                                <td class="dt-center">{
+                                    NumberFormat.getInstance().format((iter \ "salesmen_second").asOpt[Double].get)
+                                }</td>
+                                <td class="dt-center">{
+                                    NumberFormat.getInstance().format((iter \ "salesmen_third").asOpt[Double].get)
+                                }</td>
+                                <td class="dt-center">{
+                                    NumberFormat.getInstance().format((iter \ "salesmen_fourth").asOpt[Double].get)
+                                }</td>
+                                <td class="dt-center">{
+                                    NumberFormat.getInstance().format((iter \ "salesmen_fifth").asOpt[Double].get)
+                                }</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div style="text-align: left;margin-left: 3%">
+        <div style="width: 100%;height: auto;visibility: inherit;" class="datatables html-widget html-widget-output">
+            <div class="dataTables_wrapper no-footer">
+                <table class="display dataTable no-footer table-striped" role="grid">
+                    <caption>销售技巧</caption>
+                    <thead style="background-color: rgb(65, 85, 93);color: rgb(255, 255, 255);">
+                        <tr role="row"><th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;"> </th>
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">小宋</th>
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">小兰</th>
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">小木</th>
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">小白</th>
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">小青</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            val rp = (m \ "report").asOpt[List[play.api.libs.json.JsValue]].get
+                            val tp = rp.find(p => (p \ "report_name").asOpt[String].get == "代表报告_销售技巧").get
+                            val tmp = (tp \ "result").asOpt[List[play.api.libs.json.JsValue]].get
+
+                            tmp.map { iter =>
+                                <tr role="row">
+                                <td class="dt-center">{(iter \ "general_names").asOpt[String].get}</td>
+                                <td class="dt-center">{(iter \ "salesmen_first").asOpt[Int].get}</td>
+                                <td class="dt-center">{(iter \ "salesmen_second").asOpt[Int].get}</td>
+                                <td class="dt-center">{(iter \ "salesmen_third").asOpt[Int].get}</td>
+                                <td class="dt-center">{(iter \ "salesmen_fourth").asOpt[Int].get}</td>
+                                <td class="dt-center">{(iter \ "salesmen_fifth").asOpt[Int].get}</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div style="text-align: left;margin-left: 3%">
+        <div style="width: 100%;height: auto;visibility: inherit;" class="datatables html-widget html-widget-output">
+            <div class="dataTables_wrapper no-footer">
+                <table class="display dataTable no-footer table-striped" role="grid">
+                    <caption>工作积极性</caption>
+                    <thead style="background-color: rgb(65, 85, 93);color: rgb(255, 255, 255);">
+                        <tr role="row">
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;"> </th>
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">小宋</th>
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">小兰</th>
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">小木</th>
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">小白</th>
+                            <th class="sorting_disabled dt-center" rowspan="1" colspan="1" style="width: 250px;">小青</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @{
+                            val rp = (m \ "report").asOpt[List[play.api.libs.json.JsValue]].get
+                            val tp = rp.find(p => (p \ "report_name").asOpt[String].get == "代表报告_工作积极性").get
+                            val tmp = (tp \ "result").asOpt[List[play.api.libs.json.JsValue]].get
+
+                            tmp.map { iter =>
+                                <tr role="row">
+                                <td class="dt-center">{(iter \ "general_names").asOpt[String].get}</td>
+                                <td class="dt-center">{(iter \ "salesmen_first").asOpt[Int].get}</td>
+                                <td class="dt-center">{(iter \ "salesmen_second").asOpt[Int].get}</td>
+                                <td class="dt-center">{(iter \ "salesmen_third").asOpt[Int].get}</td>
+                                <td class="dt-center">{(iter \ "salesmen_fourth").asOpt[Int].get}</td>
+                                <td class="dt-center">{(iter \ "salesmen_fifth").asOpt[Int].get}</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

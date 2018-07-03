@@ -1,0 +1,50 @@
+@(title: String)(content: Html)
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <title>@title</title>
+        @Resources.css()
+    </head>
+    <body class="application">
+        <div class="loading">
+            <div class='loader-ring'>
+            <div class='loader-ring-light'></div>
+            <div class='loader-ring-track'></div>
+                <img width="160"  src="@routes.Assets.versioned("images/version_2/logo_gray.png")" alt="loading" >
+            </div>
+        </div>
+        <nav class="navbar navbar-fixed-top header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-8 col-sm-8 tiemalogo-container">
+                            <div class="navbar-header">
+                                <p class="navbar-text">
+                                    @*<img src="@routes.Assets.versioned("images/version_2/pharbers_logo_white.png")" width="32" height="32">*@
+                                    <img src="@routes.Assets.versioned("images/version_2/tiema_logo.png")" width="260" height="37">
+                                </p>
+                            </div>
+                            @*<p class="navbar-text">PHARBERS<br>Territorial Manage Simulation</p>*@
+                        </div>
+                        <div class="col-md-2 col-md-offset-2 col-sm-2 col-sm-offset-2">
+                            <!-- <p class="navbar-text navbar-right" name="account"><span><i class="glyphicon glyphicon-chevron-down"></i></span></p><span><i class="glyphicon glyphicon-chevron-down"></i></span> -->
+                            <div class="navbar-text navbar-right navbar-exit"><p id="login-name"></p><span><i class="glyphicon glyphicon-chevron-down"></i></span></div>
+                            <div class="exit-area"><p>退出</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        @content
+        @Resources.script()
+        <script src="@routes.Assets.versioned("javascripts/version_2/application/application.js")" type="text/javascript" defer="defer"></script>
+
+        <script>
+                asset_resources = @routes.Assets.versioned("");
+        </script>
+    </body>
+</html>
