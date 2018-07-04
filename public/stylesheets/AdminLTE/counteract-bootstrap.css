@@ -1,0 +1,9 @@
+.clean-bootstrap-col-padding-left {
+    padding-left: 0;
+}
+.clean-bootstrap-col-padding-right {
+    padding-right: 0;
+}
+.clean-bootstrap-col-padding-all > [class*="col-"] {
+    padding: 0 ;
+}
