@@ -1,0 +1,133 @@
+html {
+    background-color: #373a44;
+}
+.login-wrapper {
+    height: 957px;
+    background-color: #434652;
+    background-image: url("/assets/images/version_2/login_bg.png");
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+.login-wrapper .login-content {
+    width: 800px;
+    height: 490px;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    border-radius: 15px;
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    -o-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    background: -webkit-linear-gradient(left bottom, #2d303e , #686b75); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(top right, #2d303e, #686b75); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(top right, #2d303e, #686b75); /* Firefox 3.6 - 15 */
+    background: linear-gradient(to top right, #2d303e , #686b75);
+    background-image: url("/assets/images/version_2/login_inside_bg.png");
+    -webkit-background-size: 100%;
+    background-size: 100% ;
+    -webkit-box-shadow: 4px 4px 10px 4px rgba(50, 50, 50,0.6);
+    -moz-box-shadow: 4px 4px 10px 4px rgba(50, 50, 50,0.6);
+    box-shadow: 4px 4px 10px 4px rgba(50, 50, 50,0.6);
+}
+.login-wrapper .login-content .login-left {
+    float: left;
+    width: 456px;
+    height: 100%;
+    line-height: 490px;
+    text-align: center;
+}
+.login-wrapper .login-content .login-left img {
+}
+.login-wrapper .login-content .login-right {
+    position: relative;
+    float: left;
+    width: 344px;
+    height: 100%;
+
+}
+.login-wrapper .login-content .login-right .login-right-inside {
+    position: absolute;
+    top: 50%;
+    height: 410px;
+    width: 100%;
+    padding:40px 37px 0;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+    border-left: 2px solid #686B74;
+}
+.login-wrapper .login-content .login-right .login-right-inside .login-title {
+    font-size: 2.0rem;
+    letter-spacing: 4.0px;
+    padding-left: 5px;
+    margin-bottom: 20px;
+    color:#fff;
+}
+.login-wrapper .login-content .login-right .login-right-inside .login-data {
+
+}
+.login-wrapper .login-content .login-right .login-right-inside .login-data input {
+    width: 100%;
+    height: 33px;
+    border:0;
+    padding-left: 20px;
+
+    border-radius: 5px;
+    font-size: 14px;
+    letter-spacing: 2.5px;
+    background-color: rgba(255,255,255,.3);
+    color:#fff;
+}
+
+.login-wrapper .login-content .login-right .login-right-inside .login-data input::placeholder {
+    color:#fff;
+}
+.login-wrapper .login-content .login-right .login-right-inside .login-data input::-webkit-input-placeholder {
+    color:#fff;
+}
+.login-wrapper .login-content .login-right .login-right-inside .login-data input:-ms-input-placeholder{
+    color:#fff;
+}
+.login-wrapper .login-content .login-right .login-right-inside .login-data input:-moz-placeholder{
+    color:#fff;
+}
+.login-wrapper .login-content .login-right .login-right-inside .login-data .login-user {
+    margin-bottom: 20px;
+}
+.login-wrapper .login-content .login-right .login-right-inside .login-data .login-forgot {
+    margin-top: 7px;
+    text-align: right;
+    font-size: 10px;
+    letter-spacing: 2.5px;
+}
+.login-wrapper .login-content .login-right .login-right-inside .login-data .login-forgot a{
+    font-size: 1.2rem;
+    color: #fff;
+}
+.login-wrapper .login-content .login-right .login-right-inside .login-data .login-forgot a:hover {
+    text-decoration: none;
+}
+.login-wrapper .login-content .login-right .btn-login {
+    position: absolute;
+    right: 37px;
+    bottom: 0;
+    width:115px;
+    height: 34px;
+    border-radius: 16.5px;
+    text-align: center;
+    line-height: 18px;
+    font-size: 14px;
+    letter-spacing: 2.5px;
+    color:#fff;
+    background-color: rgb(35,128,176);
+    -webkit-box-shadow: 2px 2px 8px 2px rgba(50, 50, 50,0.3);
+    -moz-box-shadow: 2px 2px 8px 2px rgba(50, 50, 50,0.3);
+    box-shadow: 2px 2px 8px 2px rgba(50, 50, 50,0.3);
+}
+.login-wrapper .login-content .login-right .btn-login:hover {
+    background-color: rgb(58, 114, 145);
+}

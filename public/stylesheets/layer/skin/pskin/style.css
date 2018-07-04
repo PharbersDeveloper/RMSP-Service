@@ -1,0 +1,69 @@
+body .layui-layer{
+    border-radius: 12px;
+    width: 380px;
+    background:#3a3c47;
+}
+body .layui-layer-lan  .layui-layer-title{
+    background:#484b5e;
+    border-radius: 10px 10px 0 0;
+    letter-spacing: 2.4px;
+}
+body .layui-layer-lan .layui-layer-content{
+    padding: 15px;
+    height: 120px;
+    letter-spacing: 1.8px;
+    background:#3a3c47;
+    color: #ffffff;
+}
+body .layui-layer-lan .layui-layer-content i{
+    display: none;
+}
+body .layui-layer-lan .layui-layer-btn{
+    border:0;
+    background:#3a3c47;
+    border-radius: 0 0 10px 10px;
+}
+body .layui-layer-lan  .layui-layer-btn a{
+    width: 70px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 15px;
+    letter-spacing: 1.8px;
+    text-align: center;
+    color: #ffffff;
+    border: 0;
+    background-color: #7196b6;
+}
+body .layer-ext-pskin  .layui-layer-title{
+    border-radius: 10px 10px 0 0;
+    letter-spacing: 2.4px;
+    border: 0;
+    background:#484b5e;
+    color: #ffffff;
+}
+body .layer-ext-pskin .layui-layer-content{
+    padding: 15px;
+    height: 120px;
+    letter-spacing: 1.8px;
+    background:#3a3c47;
+    color: #ffffff;
+}
+body .layer-ext-pskin .layui-layer-content i{
+    display: none;
+}
+body .layer-ext-pskin .layui-layer-btn{
+    border:0;
+    background:#3a3c47;
+    border-radius: 0 0 10px 10px;
+}
+body .layer-ext-pskin  .layui-layer-btn a{
+    width: 70px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 15px;
+    letter-spacing: 1.8px;
+    text-align: center;
+    color: #ffffff;
+    border: 0;
+    background-color: #7196b6;
+}

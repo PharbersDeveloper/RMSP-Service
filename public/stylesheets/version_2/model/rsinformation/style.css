@@ -1,0 +1,223 @@
+/* ::-webkit-scrollbar{
+  display:none;
+} */
+
+.resource-info {
+    background-color: #484C59;
+    border-radius: 5px;
+}
+.resource-info .resource-content {
+
+}
+.resource-info .resource-content .navbar-resource {
+    height: 70px;
+    position: relative;
+    z-index: 2;
+    padding: 15px;
+}
+
+
+.resource-info .resource-content .navbar-resource .navbar-btn {
+    margin: 0;
+}
+
+.resource-info .resource-content .navbar-resource .navbar-btn > button {
+    width: 190px;
+    height: 40px;
+    font-size:1.6rem;
+    letter-spacing: 3px;
+    background-color: #525565;
+    border-color: #525565;
+    color: #ADAFB6;
+    box-shadow: 0px 1px 10px #3C3F46;
+}
+.resource-info .resource-content .navbar-resource .navbar-btn > button:hover {
+    color: #E7E7E7;
+}
+.resource-info .resource-content .navbar-resource .navbar-btn > button.active {
+    color: #E7E7E7;
+    background-color: #588CAD;
+}
+
+.resource-info .resource-content .backup-btn {
+    width: 100px;
+    height: 40px;
+    margin-right: 20px;
+    border-radius: 20px;
+    letter-spacing: 2.5px;
+    margin-left: -15px;
+    box-shadow: 2px 2px 8px 2px rgba(50, 50, 50,0.3);
+    background-color: rgb(35,128,176);
+}
+
+.resource-info .resource-content .backup-btn:hover {
+    background-color: rgb(58, 114, 145);
+}
+
+.resource-info .resource-content .download-btn {
+    width: 150px;
+    height: 40px;
+    display: none;
+    margin-right: 20px;
+    border-radius: 20px;
+    letter-spacing: 2.5px;
+    margin-left: -15px;
+    box-shadow: 2px 2px 8px 2px rgba(50, 50, 50,0.3);
+    background-color: rgb(35,128,176);
+}
+
+.resource-info .resource-content .download-btn:hover {
+    background-color: rgb(58, 114, 145);
+}
+
+    /*TODO: 重构时废除*/
+.resource-info .resource-content .person-list {
+    width: 100%;
+    height: 700px;
+    overflow: hidden;
+    border-radius: 0 0 5px 5px;
+}
+
+.resource-info .resource-content .person-list > .person{
+    width: 101.3%;
+    height: 100%;
+    /* padding-top: 35px; */
+    /* padding-left: 80px; */
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.resource-info .resource-content .person-list > .person > .details{
+    height: 250px;
+    padding-top: 35px;
+    padding-left: 80px;
+}
+
+.resource-info .resource-content .person-list > .person > .details .describe {
+    width: 410px;
+    text-indent:2em;
+    margin-top: 20px;
+}
+
+.resource-info .resource-content .person-list > .person > .details .radar-map {
+    margin: -20px 0 0 75px;
+    width: 300px;
+}
+
+.resource-info .resource-content .person-list > .person > .details .person-name {
+    font-size: 2rem;
+    margin-top: 20px;
+    letter-spacing: 4px;
+}
+
+.resource-info .resource-content .person-list > .person > .details .media-left {
+    padding-right: 110px;
+}
+
+.resource-info .resource-content .person-list > .person > .details .media-body {
+    padding-right: 50px;
+}
+
+
+
+/*TODO: 重构时废除*/
+.resource-info .resource-content .hospital-list {
+    width: 100%;
+    height: 700px;
+    overflow: hidden;
+    border-radius: 0 0 5px 5px;
+}
+
+.resource-info .resource-content .hospital-list > .hospital{
+    width: 101.3%;
+    height: 100%;
+    /* padding-top: 35px; */
+    /* padding-left: 80px; */
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.resource-info .resource-content .hospital-list > .hospital > .details{
+    height: 250px;
+    padding-top: 35px;
+    padding-left: 80px;
+}
+
+.resource-info .resource-content .hospital-list > .hospital > .details .describe {
+    /*width: 410px;*/
+    text-indent:2rem;
+    margin-top: 20px;
+}
+
+.resource-info .resource-content .hospital-list > .hospital > .details .potential {
+    margin: 0 0 0 75px;
+    width: 300px;
+    margin-top: 20px;
+}
+
+.resource-info .resource-content .hospital-list > .hospital > .details .hospital-name {
+    font-size: 2rem;
+    margin-top: 20px;
+    letter-spacing: 4px;
+}
+
+.resource-info .resource-content .hospital-list > .hospital > .details .media-left {
+    padding-right: 110px;
+}
+
+.resource-info .resource-content .hospital-list > .hospital > .details .media-body {
+    padding-right: 0px;
+}
+.resource-info .resource-content .hospital-list > .hospital > .details .media-body:last-child {
+    padding-left: 120px;
+}
+.resource-info .resource-content .product-list {
+    height: 700px;
+    overflow: hidden;
+    border-radius: 0 0 5px 5px;
+}
+
+.resource-info .resource-content .product {
+    width: 101.3%;
+    height: 100%;
+    /* padding-top: 35px; */
+    /* padding-left: 80px; */
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.resource-info .resource-content .product-list .product table td, .resource-info .resource-content .product-list table th {
+    text-align: center;
+    font-size: 1.4rem;
+    letter-spacing: 0.25rem;
+    border: 0;
+}
+
+.resource-info .resource-content .product-list .product table tr td {
+    height: 165px;
+    vertical-align: middle;
+}
+
+.resource-info .resource-content .product-list .product table tr td.number {
+    font-size: 2rem;
+    letter-spacing: 0.5rem;
+}
+
+.resource-info .resource-content .product-list .product table tr td > span {
+    position: relative;
+    left: 10px;
+    top: 0px;
+    z-index: auto;
+}
+/*:not(:first-child)*/
+
+.resource-info .resource-content .product-list .product table tr:nth-child(odd) {
+    background-color: #555865;
+}
+.resource-info .resource-content .product-list .product table tr:nth-child(even) {
+    background-color: #484C59;
+}
+
+.resource-info .resource-content .details.even{
+    background-color: #545865;
+}

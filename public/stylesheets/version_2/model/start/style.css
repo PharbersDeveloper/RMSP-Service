@@ -1,0 +1,335 @@
+
+
+.start {
+    position: relative;
+    overflow: hidden;
+    height: 907px;
+    background-image: url("/assets/images/version_2/login_bg.png");
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+
+.start .divlist {
+    height: 907px;
+    width: 1370px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.start .divlist .content {
+    position: absolute;
+    top: 50%;
+    width: 945px;
+    height: 555px;
+    border-radius: 10px;
+    background-color:#282a38;
+    -webkit-box-shadow: 4px 4px 10px 4px rgba(50, 50, 50,0.6);
+    -moz-box-shadow: 4px 4px 10px 4px rgba(50, 50, 50,0.6);
+    box-shadow: 4px 4px 10px 4px rgba(50, 50, 50,0.6);
+}
+
+.start .divlist .content .leftdiv, .start .divlist .content .rightdiv {
+    display: inline-block;
+    height: 100%;
+
+}
+
+.start .divlist .content .leftdiv {
+    float: left;
+    width: 569px;
+    text-align: center;
+    border:0;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.start .divlist .content .rightdiv {
+    width: 376px;
+    border:0;
+    float: left;
+    border-radius: 10px;
+    background-color: #8b8e94;
+    background-image: url("/assets/images/version_2/start_right.png");
+    -webkit-background-size: 376px 555px;
+    background-size: 376px 555px;
+}
+
+.start .divFirst {
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transform-origin: 50% 0;
+    z-index: 4;
+    opacity: 1;
+}
+.start .divFirst .leftdiv {
+    background-image: url("/assets/images/version_2/start_left_1_bg.png");
+    background-size: cover;
+}
+/* .start .divFirst .leftdiv img:first-child {
+    position: absolute;
+    left: 0;
+    transform: translateY(0);
+    top:54px;
+} */
+.start .content .leftdiv img{
+    position:relative;
+    top:50%;
+    transform: translateY(-50%);
+
+}
+.start .divFirst .rightdiv .right_avatar {
+    height: 200px;
+    text-align: center;
+}
+.start .divFirst .rightdiv .right_avatar .img {
+    width: 100px;
+    height: 100px;
+}
+.start .divFirst .rightdiv .right_text_1 {
+    height: 310px;
+    padding:0 35px ;
+    color:#fff;
+    font-size: 14px;
+    letter-spacing: 1.8px;
+}
+.start .divFirst .rightdiv .right_text_1 p:first-child {
+    margin-bottom: 20px;
+}
+.start .divFirst .rightdiv .right_text_1 p {
+    line-height: 3.0rem;
+    margin:0;
+}
+.start .divSecond {
+    transform-origin: 50% 0;
+    transform: scale(0.8) translateY(-50%);
+    z-index: 2;
+    opacity: 0.6;
+}
+.start .content .rightdiv .right_text {
+    height: 505px;
+    padding:40px 25px;
+    color:#fff;
+    font-size: 14px;
+}
+.start .content .rightdiv .right_text .text_title {
+    margin:0;
+    font-size: 24px;
+    letter-spacing: 2.4px;
+    line-height: 40px;
+    font-weight: 500;
+
+}
+.start .content .rightdiv .right_text p:nth-child(2){
+    font-size: 14px;
+    letter-spacing: 1.8px;
+    line-height: 30px;
+}
+.start .content .rightdiv .right_text ul {
+    padding-left: 20px;
+}
+.start .content .rightdiv .right_text ul li{
+    padding-bottom: 20px;
+    list-style-type: disc;
+    line-height: 30px;
+    letter-spacing: 1.8px;
+}
+.start .content .rightdiv .right_text_5 ul ul.some-dimension {
+
+}
+.start .content .rightdiv .right_text_5 ul ul.some-dimension li {
+    list-style-type: square;
+    padding-bottom: 0;
+}
+.start .divThird {
+    transform-origin: 50% 0;
+    transform: scale(0.8) translateY(-50%);
+    opacity: 0;
+}
+
+.start .divFourth {
+    transform-origin: 50% 0;
+    transform: scale(0.8) translateY(-50%);
+    opacity: 0;
+}
+
+.start .divFifth {
+    background: lightyellow;
+    transform-origin: 50% 0;
+    transform: scale(0.8) translateY(-50%);
+    opacity: 0;
+}
+
+.start .content .rightdiv .link-div {
+    position: absolute;
+    right: 15px;
+    bottom: 15px;
+    height: 45px;
+    border-radius: 10px;
+    line-height: 45px;
+}
+.start .link-div a {
+    color: #fff;
+}
+.start .link-div .skip {
+    display: inline-block;
+    font-size: 1.4rem;
+    cursor: pointer;
+    padding-right: 25px;
+    line-height: 100%;
+    letter-spacing: 2px;
+}
+
+.start .link-div .skip:hover {
+    color:#4488a7;
+}
+
+.start .link-div .btn {
+    display: inline-block;
+    width: 100px;
+    height: 40px;
+    background-color: rgb(35,128,176);
+    font-size:1.4rem;
+    line-height: 28px;
+    border-radius: 20px;
+    letter-spacing: 2.5px;
+    -webkit-box-shadow: 2px 2px 8px 2px rgba(50, 50, 50,0.3);
+    -moz-box-shadow: 2px 2px 8px 2px rgba(50, 50, 50,0.3);
+    box-shadow: 2px 2px 8px 2px rgba(50, 50, 50,0.3);
+}
+
+.start .link-div .btn:hover {
+    background-color:rgb(58, 114, 145);
+}
+
+.start .leftdiv {
+    left: -40%;
+}
+
+.origindivstyle {
+    animation: tobigger .6s;
+    animation-fill-mode: forwards;
+    z-index: 2;
+}
+
+.originsmall {
+    /*left: 80%;*/
+    right:-506px
+}
+
+.scaledivstyle {
+    animation: tosmaller .6s;
+    animation-fill-mode: forwards;
+    transform-origin: 50% 0;
+    transform: scale(0.8) translateY(-50%);
+}
+
+.start .bottombtn {
+    position: absolute;
+    bottom: 120px;
+    z-index: 2;
+    height: 10px;
+    width: 130px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.start .bottombtn span {
+    float: left;
+    margin-right: 30px;
+    width: 10px;
+    height: 10px;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.start .bottombtn span:last-child {
+    margin-right: 0px;
+
+}
+.start .exit {
+    display: none;
+    position: fixed;
+    left: 50px;
+    right: 50px;
+    width:128px;
+    height: 45px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.start .exit a {
+    font-size: 1.8rem;
+    color:#fff;
+}
+.start .exit a:hover {
+    text-decoration: none;
+}
+.on {
+    background: #fff;
+}
+
+.rightsmaller {
+    animation: torightsmaller 0.6s;
+    animation-fill-mode: forwards;
+}
+
+.rightbigger {
+    animation: torightbigger .6s;
+    animation-fill-mode: forwards;
+}
+
+/* animation */
+
+@keyframes tosmaller {
+    from {
+        transform: scale(1) translate(-50%, -50%);
+        left: 50%;
+        top: 50%;
+    }
+    to {
+        transform: scale(0.8) translateY(-50%);
+        /*left: -30%;*/
+        left: -506px;
+
+    }
+}
+
+@keyframes torightsmaller {
+    from {
+        transform: scale(1) translate(50%, -50%);
+        /*left: 50%;*/
+        right:50%;
+        /* top: 50%; */
+    }
+    to {
+        transform: scale(0.8) translateY(-50%);
+        /*left: 80%;*/
+        right:-506px;
+    }
+}
+
+@keyframes torightbigger {
+    from {
+        transform: scale(0.8) translateY(-50%);
+        /*left: -30%;*/
+        left: -506px;
+    }
+    to {
+        transform: scale(1) translate(-50%, -50%);
+        left: 50%;
+        /* top: 50%; */
+    }
+}
+
+@keyframes tobigger {
+    from {
+        transform: scale(0.8) translateY(-50%);
+        /*left: 80%;*/
+        right:-506px;
+    }
+    to {
+        transform: scale(1) translate(50%, -50%);
+        /*left: 50%;*/
+        right:50%;
+        top: 50%;
+    }
+}
