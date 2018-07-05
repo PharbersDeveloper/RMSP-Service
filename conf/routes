@@ -2,33 +2,6 @@
 # This file defines all application routes (Higher priority routes first)
 # https://www.playframework.com/documentation/latest/ScalaRouting
 # ~~~~
-
-#GET     /                           controllers.RMSPRoutesController.login
-#GET     /login                      controllers.RMSPRoutesController.login
-#GET     /register                   controllers.RMSPRoutesController.register
-#GET     /index                      controllers.RMSPRoutesController.index(uuid = "")
-#GET     /index/:uuid                controllers.RMSPRoutesController.index(uuid)
-#GET     /brd                        controllers.RMSPRoutesController.brd(uuid = "")
-#GET     /brd/:uuid                  controllers.RMSPRoutesController.brd(uuid)
-#GET     /product                    controllers.RMSPRoutesController.product(uuid = "")
-#GET     /product/:uuid              controllers.RMSPRoutesController.product(uuid)
-#GET     /market                     controllers.RMSPRoutesController.market(uuid = "", phrase = "1")
-#GET     /market/:uuid/:phrase       controllers.RMSPRoutesController.market(uuid, phrase)
-#GET     /decision                   controllers.RMSPRoutesController.decision(uuid = "", phrase = "1")
-#GET     /decision/:uuid/:phrase     controllers.RMSPRoutesController.decision(uuid, phrase)
-#GET     /management                 controllers.RMSPRoutesController.management(uuid = "", phrase = "1")
-#GET     /management/:uuid/:phrase   controllers.RMSPRoutesController.management(uuid, phrase)
-#GET     /report                     controllers.RMSPRoutesController.report(uuid = "", phrase = "1")
-#GET     /report/:uuid/:phrase       controllers.RMSPRoutesController.report(uuid, phrase)
-#
-#GET     /phase_error/:uuid/:phase   controllers.RMSPRoutesController.phase_error(uuid, phase)
-#
-#GET     /takenew                    controllers.RMSPRoutesController.takenew
-#GET     /takelast/:uuid             controllers.RMSPRoutesController.takelast(uuid)
-
-# version 2.0
-#GET     /                           controllers.RMSPRoutesControllerV2.indexV2
-
 GET     /start                      controllers.RMSPRoutesControllerV2.start
 GET     /transition/:uuid/:phrase   controllers.RMSPRoutesControllerV2.transition(uuid, phrase)
 
