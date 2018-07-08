@@ -22,8 +22,8 @@
                         <tr>
                             <td></td>
                             <td>原始值</td>
+                            <td>上个周期</td>
                             <td>周期(1)</td>
-                            <td>周期(2)</td>
                         </tr>
                         @{
                             val reVal = (report \ "report").as[List[JsValue]]
@@ -85,7 +85,7 @@
                                     if((score \ "phase0").as[Int] != -1) (totalScore \ "phase0").as[Int]
                                 }</td>
                                 <td>{
-                                    (score \ "phase1").as[Double]
+                                    if((score \ "phase1").as[Int] != -1) (score \ "phase1").as[Double]
                                 }</td>
                                 <td>{
                                     if((score \ "phase2").as[Int] != -1) (score \ "phase2").as[Double]
@@ -97,7 +97,7 @@
                                     if((totalScore \ "phase0").as[Int] != -1) (totalScore \ "phase0").as[Int]
                                 }</td>
                                 <td>{
-                                    (totalScore \ "phase1").as[Int]
+                                    if((totalScore \ "phase1").as[Int] != -1) (totalScore \ "phase1").as[Int]
                                 }</td>
                                 <td>{
                                     if((totalScore \ "phase2").as[Int] != -1) (totalScore \ "phase2").as[Int]
@@ -592,9 +592,6 @@
                             <td>医院</td>
                             <td>因素</td>
                             <td>口服抗生药</td>
-                            <td>一代降糖药</td>
-                            <td>三代降糖药</td>
-                            <td>皮肤药</td>
                             <td>总体</td>
                         </tr>
                     </table>
@@ -614,30 +611,6 @@
                                                     <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                     <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                     <td>{(resourceAllotItem \ "product_first").asOpt[String].get}</td>
-                                                    <td>{
-                                                        if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                                            NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                                                        } else {
-                                                            (resourceAllotItem \ "product_second").asOpt[String].get
-                                                        }
-
-                                                    }</td>
-                                                    <td>{
-                                                        if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                                            NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                                                        } else {
-                                                            (resourceAllotItem \ "product_third").asOpt[String].get
-                                                        }
-
-                                                    }</td>
-                                                    <td>{
-                                                        if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                                            NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                                                        } else {
-                                                            (resourceAllotItem \ "product_fourth").asOpt[String].get
-                                                        }
-
-                                                    }</td>
                                                     <td>{(resourceAllotItem \ "overall").asOpt[String].get}</td>
                                                  </tr>
                                             }
@@ -659,30 +632,6 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get.dropRight(3)}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                                                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                                                              } else {
-                                                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                                                              }
-
-                                                          }</td>
-                                                            <td>{
-                                                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                                                              } else {
-                                                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                                                              }
-
-                                                          }</td>
-                                                            <td>{
-                                                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                                                              } else {
-                                                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                                                              }
-
-                                                          }</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -704,30 +653,6 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get.dropRight(3)}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -749,30 +674,6 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -794,30 +695,6 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -839,30 +716,6 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -884,30 +737,6 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -929,30 +758,7 @@
                                                                 <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                                 <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                                 <td>{(resourceAllotItem \ "product_first").asOpt[String].get}</td>
-                                                                <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                                <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                                <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                                
                                                                 <td>{(resourceAllotItem \ "overall").asOpt[String].get}</td>
                                                             </tr>
                                                     }
@@ -974,30 +780,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get.dropRight(3)}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -1019,30 +802,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get.dropRight(3)}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -1064,30 +824,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -1109,30 +846,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -1154,30 +868,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -1199,30 +890,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -1244,30 +912,7 @@
                                                                 <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                                 <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                                 <td>{(resourceAllotItem \ "product_first").asOpt[String].get}</td>
-                                                                <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                                <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                                <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                                
                                                                 <td>{(resourceAllotItem \ "overall").asOpt[String].get}</td>
                                                             </tr>
                                                     }
@@ -1289,30 +934,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get.dropRight(3)}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -1334,30 +956,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get.dropRight(3)}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -1379,30 +978,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -1424,30 +1000,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -1469,30 +1022,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -1514,30 +1044,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -1559,30 +1066,7 @@
                                                                 <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                                 <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                                 <td>{(resourceAllotItem \ "product_first").asOpt[String].get}</td>
-                                                                <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                                <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                                <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                                
                                                                 <td>{(resourceAllotItem \ "overall").asOpt[String].get}</td>
                                                             </tr>
                                                     }
@@ -1604,30 +1088,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get.dropRight(3)}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -1649,30 +1110,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get.dropRight(3)}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -1694,30 +1132,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -1739,30 +1154,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -1784,30 +1176,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -1829,30 +1198,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -1874,30 +1220,7 @@
                                                                 <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                                 <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                                 <td>{(resourceAllotItem \ "product_first").asOpt[String].get}</td>
-                                                                <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                                <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                                <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                                
                                                                 <td>{(resourceAllotItem \ "overall").asOpt[String].get}</td>
                                                             </tr>
                                                     }
@@ -1919,30 +1242,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get.dropRight(3)}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -1964,30 +1264,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get.dropRight(3)}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -2009,30 +1286,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -2054,30 +1308,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -2099,30 +1330,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -2144,30 +1352,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -2189,30 +1374,7 @@
                                                                 <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                                 <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                                 <td>{(resourceAllotItem \ "product_first").asOpt[String].get}</td>
-                                                                <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                                <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                                <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                                
                                                                 <td>{(resourceAllotItem \ "overall").asOpt[String].get}</td>
                                                             </tr>
                                                     }
@@ -2234,30 +1396,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get.dropRight(3)}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -2279,30 +1418,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get.dropRight(3)}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -2324,30 +1440,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -2369,30 +1462,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -2414,30 +1484,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -2459,30 +1506,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -2504,30 +1528,7 @@
                                                                 <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                                 <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                                 <td>{(resourceAllotItem \ "product_first").asOpt[String].get}</td>
-                                                                <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                                <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                                <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                                
                                                                 <td>{(resourceAllotItem \ "overall").asOpt[String].get}</td>
                                                             </tr>
                                                     }
@@ -2549,30 +1550,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get.dropRight(3)}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -2594,30 +1572,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get.dropRight(3)}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -2639,30 +1594,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -2684,30 +1616,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -2729,30 +1638,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -2774,30 +1660,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -2819,30 +1682,7 @@
                                                                 <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                                 <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                                 <td>{(resourceAllotItem \ "product_first").asOpt[String].get}</td>
-                                                                <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                                <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                                <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                                
                                                                 <td>{(resourceAllotItem \ "overall").asOpt[String].get}</td>
                                                             </tr>
                                                     }
@@ -2864,30 +1704,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get.dropRight(3)}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -2909,30 +1726,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get.dropRight(3)}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -2954,30 +1748,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -2999,30 +1770,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -3044,30 +1792,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -3089,30 +1814,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -3134,30 +1836,7 @@
                                                                 <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                                 <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                                 <td>{(resourceAllotItem \ "product_first").asOpt[String].get}</td>
-                                                                <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                                <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                                <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                                
                                                                 <td>{(resourceAllotItem \ "overall").asOpt[String].get}</td>
                                                             </tr>
                                                     }
@@ -3179,30 +1858,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get.dropRight(3)}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -3224,30 +1880,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get.dropRight(3)}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -3269,30 +1902,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -3314,30 +1924,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -3359,30 +1946,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -3404,30 +1968,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -3449,30 +1990,7 @@
                                                                 <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                                 <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                                 <td>{(resourceAllotItem \ "product_first").asOpt[String].get}</td>
-                                                                <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                                <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                                <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                                
                                                                 <td>{(resourceAllotItem \ "overall").asOpt[String].get}</td>
                                                             </tr>
                                                     }
@@ -3494,30 +2012,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get.dropRight(3)}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -3539,30 +2034,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get.dropRight(3)}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -3584,30 +2056,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -3629,30 +2078,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -3674,30 +2100,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }
@@ -3719,30 +2122,7 @@
                                                             <td>{(resourceAllotItem \ "hosp_name").asOpt[String].get}</td>
                                                             <td>{(resourceAllotItem \ "factor").asOpt[String].get}</td>
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "product_first").asOpt[String].get.toDouble)}</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_second").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_second").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_second").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_third").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_third").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_third").asOpt[String].get
-                              }
-
-                          }</td>
-                                                            <td>{
-                              if(regex().findFirstMatchIn((resourceAllotItem \ "product_fourth").asOpt[String].get).isDefined) {
-                                  NumberFormat.getInstance().format((resourceAllotItem \ "product_fourth").asOpt[String].get.toDouble)
-                              } else {
-                                  (resourceAllotItem \ "product_fourth").asOpt[String].get
-                              }
-
-                          }</td>
+                                                            
                                                             <td>{NumberFormat.getInstance().format((resourceAllotItem \ "overall").asOpt[String].get.toDouble)}</td>
                                                             </tr>
                                                     }

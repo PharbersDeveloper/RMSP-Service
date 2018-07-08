@@ -253,6 +253,12 @@
         $('div[name="input-box"]').hide();
         $('div[name="answer-tab"]').hide();
         $('div[name="resource-info"]').show();
+        $.each(window.resinformation.barLines, function(i,v) {
+            v.resize();
+            $(window).resize(function() {
+                v.resize();
+            });
+        });
     };
 
     // 简单切换HospitalInfo 多的情况有性能问题，后续重构再改吧
@@ -964,6 +970,8 @@
         events: {
             // 答题页 查看详情按钮
             $('button[name="details-btn"]').click(function() {
+
+
                 detailsBtn();
             });
 

@@ -105,7 +105,7 @@
             var condition = f.parameterPrefixModule.conditions(
                 {
                     "uuid": $.cookie("uuid"),
-                    "phase_key": "final"
+                    "phase_key": "phase_2"
                 });
             var c = JSON.stringify(condition);
 

@@ -18,6 +18,10 @@ trait productsData {
             "prod_insurance" -> toJson(obj.getAs[String]("prod_insurance").get),
             "prod_cat" -> toJson(obj.getAs[String]("prod_cat").get),
             "prod_competition" -> toJson(obj.getAs[String]("prod_competition").get),
+            "indicators" -> toJson(obj.getAs[String]("indicators").get),
+            "indicators_sales" -> toJson(obj.getAs[String]("indicators_sales").get),
+            "features" -> toJson(obj.getAs[String]("features").get),
+            "recent_situation" -> toJson(obj.getAs[String]("recent_situation").get),
             "date" -> toJson(obj.getAs[Number]("date").get.longValue)
         )
     }

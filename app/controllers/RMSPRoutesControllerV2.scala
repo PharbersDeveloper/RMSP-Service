@@ -88,21 +88,34 @@ class RMSPRoutesControllerV2 @Inject()(as_inject: ActorSystem, dbt: dbInstanceMa
 		else phrase)
 		val pi = p.toInt
 
-		val flag = checkInputPhase(uuid, pi)
-		if (!flag._1) Redirect("/phase_error/" + uuid + "/" + phrase)
-		else {
-			getUserCookie(request) {
-				val market = markets(uuid, phrase) // 包含医院新闻，医院潜力 列表形式
-				val product = products(uuid) // 产品列表
-				val salesman = brd(uuid) // 代表们的详细介绍
-				val decision = decisions(uuid, phrase) //总预算，各个医院基本信息与潜力，代表、上次输入
-				val management = managements(uuid, phrase)// 人员培训 上次输入
-				val report = getReport(uuid, "1") // 获取report
-
-				Ok(views.html.version_2.model.home.template(uuid, phrase, market("news"),
-					product("product"), salesman("salesman"), decision("budget"),
-					decision("hospital").as[List[JsValue]], decision("decisioInputs").as[List[JsValue]], management("manageInput").as[List[JsValue]], flag, report))
-			}
+//		val flag = checkInputPhase(uuid, pi)
+//		if (!flag._1) Redirect("/phase_error/" + uuid + "/" + phrase)
+//		else {
+//			getUserCookie(request) {
+//				val market = markets(uuid, phrase) // 包含医院新闻，医院潜力 列表形式
+//				val product = products(uuid) // 产品列表
+//				val salesman = brd(uuid) // 代表们的详细介绍
+//				val decision = decisions(uuid, phrase) //总预算，各个医院基本信息与潜力，代表、上次输入
+//				val management = managements(uuid, phrase)// 人员培训 上次输入
+//				val report = getReport(uuid, "1") // 获取report
+//
+//				Ok(views.html.version_2.model.home.template(uuid, phrase, market("news"),
+//					product("product"), salesman("salesman"), decision("budget"),
+//					decision("hospital").as[List[JsValue]], decision("decisioInputs").as[List[JsValue]], management("manageInput").as[List[JsValue]], flag, report))
+//			}
+//		}
+		getUserCookie(request) {
+			
+			val market = markets(uuid, "1") // 包含医院新闻，医院潜力 列表形式
+			val product = products(uuid) // 产品列表
+			val salesman = brd(uuid) // 代表们的详细介绍
+			val decision = decisions(uuid, phrase) //总预算，各个医院基本信息与潜力，代表、上次输入
+			val management = managements(uuid, phrase)// 人员培训 上次输入
+			val report = getReport("cebe92eb-ad0f-4053-a1c6-8aaa1594a480", "1") // 获取report
+			
+			Ok(views.html.version_2.model.home.template(uuid, phrase, market("news"),
+				product("product"), salesman("salesman"), salesman("team_info"), decision("budget"),
+				decision("hospital").as[List[JsValue]], decision("decisioInputs").as[List[JsValue]], management("manageInput").as[List[JsValue]], (true, 2), report))
 		}
 	}
 
@@ -154,7 +167,6 @@ class RMSPRoutesControllerV2 @Inject()(as_inject: ActorSystem, dbt: dbInstanceMa
 					:: productInProposal(jv)
 					:: msg_CommonResultMessage() :: Nil, None)(CommonModules(Some(Map("db" -> dbt, "att" -> att))))
 			)
-
 		Map("product" -> (reVal \ "result" \ "products").asOpt[List[JsValue]].get)
 	}
 
@@ -165,7 +177,7 @@ class RMSPRoutesControllerV2 @Inject()(as_inject: ActorSystem, dbt: dbInstanceMa
 					:: salesMenInProposal(jv)
 					:: msg_CommonResultMessage() :: Nil, None)(CommonModules(Some(Map("db" -> dbt, "att" -> att))))
 			)
-		Map("salesman" -> (reVal \ "result" \ "salesmen").asOpt[List[JsValue]].get)
+		Map("salesman" -> (reVal \ "result" \ "salesmen").asOpt[List[JsValue]].get, "team_info" -> List((reVal \ "result" \ "team_info").as[JsValue]))
 	}
 
 	def decisions(uuid : String, phrase : String): String Map JsValue = {
@@ -224,7 +236,8 @@ class RMSPRoutesControllerV2 @Inject()(as_inject: ActorSystem, dbt: dbInstanceMa
 					:: queryUserInputInOpPhase(jv2)
 					:: msg_CommonResultMessage() :: Nil, None)(CommonModules(Some(Map("db" -> dbt, "att" -> att))))
 			)
-
+		
+		
 		if ((reVal \ "status").asOpt[String].get == "ok" &&
 			(reVal1 \ "status").asOpt[String].get == "ok" &&
 			(reVal2 \ "status").asOpt[String].get == "ok" &&
@@ -242,14 +255,23 @@ class RMSPRoutesControllerV2 @Inject()(as_inject: ActorSystem, dbt: dbInstanceMa
 
 			val tmp =
 				tmp1 zip tmp2 map { x =>
+
 					toJson(Map(
 						"hosp_code" -> toJson((x._1 \ "hosp_code").asOpt[String].get),
 						"hosp_name" -> toJson((x._1 \ "hosp_name").asOpt[String].get),
 						"hosp_cat" -> toJson((x._1 \ "hosp_cat").asOpt[String].get),
-						"口服抗生素" -> toJson((x._1 \ "口服抗生素").asOpt[String].get :: ((x._2) \ "口服抗生素").asOpt[String].get :: Nil),
-						"一代降糖药" -> toJson((x._1 \ "一代降糖药").asOpt[String].get :: ((x._2) \ "一代降糖药").asOpt[String].get :: Nil),
-						"三代降糖药" -> toJson((x._1 \ "三代降糖药").asOpt[String].get :: ((x._2) \ "三代降糖药").asOpt[String].get :: Nil),
-						"皮肤药" -> toJson((x._1 \ "皮肤药").asOpt[String].get :: ((x._2) \ "皮肤药").asOpt[String].get :: Nil)
+						"口服抗生素" -> toJson((x._1 \ "口服抗生素").asOpt[String].get :: (x._2 \ "口服抗生素").asOpt[String].get :: Nil),
+//						"一代降糖药" -> toJson((x._1 \ "一代降糖药").asOpt[String].get :: (x._2 \ "一代降糖药").asOpt[String].get :: Nil),
+//						"三代降糖药" -> toJson((x._1 \ "三代降糖药").asOpt[String].get :: (x._2 \ "三代降糖药").asOpt[String].get :: Nil),
+//						"皮肤药" -> toJson((x._1 \ "皮肤药").asOpt[String].get :: (x._2 \ "皮肤药").asOpt[String].get :: Nil),
+						"create_time" -> toJson((x._2 \ "create_time").asOpt[String].get),
+						"type" -> toJson((x._2 \ "type").asOpt[String].get),
+						"bed_number" -> toJson((x._2 \ "bed_number").asOpt[String].get),
+						"department" -> toJson((x._2 \ "department").asOpt[String].get),
+						"pay_power" -> toJson((x._2 \ "pay_power").asOpt[String].get),
+						"dynamic" -> toJson((x._2 \ "dynamic").asOpt[String].get),
+						"phase1" -> toJson((x._2 \ "phase1").asOpt[String].get),
+						"phase2" -> toJson((x._2 \ "phase2").asOpt[String].get)
 					))
 				}
 
@@ -342,8 +364,8 @@ class RMSPRoutesControllerV2 @Inject()(as_inject: ActorSystem, dbt: dbInstanceMa
 						:: msg_CommonResultMessage() :: Nil, None)(CommonModules(Some(Map("db" -> dbt, "att" -> att))))
 				)
 			}
-
-			if ((reVal \ "status").asOpt[String].get == "ok") Redirect("/home/" + uid + "/1")
+			
+			if ((reVal \ "status").asOpt[String].get == "ok") Redirect("/home/" + uid + "/2")
 			else Redirect("/login")
 		}
 	}

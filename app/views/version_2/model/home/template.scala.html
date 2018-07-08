@@ -2,7 +2,7 @@
 @import play.api.libs.json.JsValue
 @*uuid、期数、医院新闻、产品、代表 , 总预算，医院列表, decision输入, management输入, 进行到周期几, 报告*@
 @(uuid: String, phrase: String, hosp_news: JsValue,
-        product: List[JsValue], salesman: List[JsValue], totalBudget: JsValue,
+        product: List[JsValue], salesman: List[JsValue], salesman_team: List[JsValue], totalBudget: JsValue,
         hosp_list: List[JsValue], decisioInputs: List[JsValue], manageInputs: List[JsValue], checkInputPhase: (Boolean, Int), report: Option[JsValue])
 
 @*************************************
@@ -27,7 +27,7 @@
                     <div class="header">
                         <div class="row head-describe box bg">
                             <div class="col-md-12">
-                                <div class="col-md-5 col-sm-5 col-xs-5">周期(@{phrase})&nbsp;&nbsp;100天计划部署</div>
+                                <div class="col-md-5 col-sm-5 col-xs-5">周期(1)&nbsp;&nbsp;100天计划部署</div>
                                 <div class="col-md-7 col-sm-7 col-xs-7 text-right" >
                                     <div class="config" name="toggle-import-export">
                                         <i class="glyphicon glyphicon-cog"></i>
@@ -53,7 +53,7 @@
                                     <p class="text-right">
                                         <span class="number-size-lg">
                                             @{
-                                                val num = (totalBudget \ phrase \ "budget").asOpt[String].map (x => x).getOrElse("")
+                                                val num = (totalBudget \ phrase \ "one_product_budget").asOpt[String].map (x => x).getOrElse("")
                                                 NumberFormat.getInstance().format(num.toDouble)
                                             }
                                         </span>
@@ -111,7 +111,7 @@
                                 }
                             </ul>
                             <button class="arrow-left" name="btn-left"><-</button>
-                            <button class="arrow-right" name="btn-right">-></button>
+                            <button class="arrow-right" name="btn-right">-></buttonhosp-budget box bg>
                         </div>
                         <div class="row hosp-array-masklayer"></div>
                     </div>
@@ -173,173 +173,44 @@
                                                 </div>
                                             </div>
                                             <div class="hosp-budget box bg" name="hosp-budget">
-                                                <ul>
-                                                    <li>
-                                                        <ul>
-                                                            <li class="left-title">&nbsp;</li>
-                                                            <li class="left-title">药品潜力</li>
-                                                            <li class="left-title">上期销售额</li>
-                                                            <li class="left-title">指标设定</li>
-                                                            <li class="left-title">沟通时间</li>
-                                                        </ul>
-                                                    </li>
-                                                    <li>
-                                                        <ul>
-                                                            <li class="top-tetile">口服抗生素</li>
-                                                            <li>
-                                                                <span class="hosp-budget-number">@{NumberFormat.getInstance().format((hosp._1 \ "口服抗生素").asOpt[List[String]].get.tail.head.toDouble)}</span>
-                                                                <span>元</span>
-                                                            </li>
-                                                            <li>
-                                                                <span class="hosp-budget-number">@{NumberFormat.getInstance().format((hosp._1 \ "口服抗生素").asOpt[List[String]].get.head.replace(",", "").toDouble)}</span>
-                                                                <span>元</span>
-                                                            </li>
+                                                <div class="home-textarea-describe">
+                                                    <table>
+                                                        <tr>
+                                                            <td>药品名称</td>
+                                                            <td>药品潜力</td>
+                                                            <td>上期销售额</td>
+                                                            <td>指标设定</td>
+                                                            <td>沟通时间</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>口服抗生素</td>
+                                                            <td>@{NumberFormat.getInstance().format((hosp._1 \ "口服抗生素").asOpt[List[String]].get.tail.head.toDouble)}</td>
+                                                            <td>@{NumberFormat.getInstance().format((hosp._1 \ "口服抗生素").asOpt[List[String]].get.head.replace(",", "").toDouble)}</td>
                                                             @decisioInputs.filter(f => (f \ "hosp_code").as[Int] == (hosp._1 \ "hosp_code").as[String].toInt).map { data =>
-                                                                <li>
-                                                                    <input type="text" name="prod_value"
-                                                                            @{if(checkInputPhase._2 > phrase.toInt) {"disabled=disabled"} else {}}
-                                                                            hospital-code="@{(hosp._1 \ "hosp_code").as[String]}"
-                                                                            hospital-name="@{(hosp._1 \ "hosp_name").as[String]}"
-                                                                            pharbers-type="@{(data \ "sales").as[List[String Map JsValue]].find(f => f("prod_name").as[String] == "口服抗生素").get("prod_name").as[String]}"
-                                                                            value="@{
-                                                                                val sales = (data \ "sales").as[List[String Map JsValue]].find(f => f("prod_name").as[String] == "口服抗生素").get("prod_value").as[Double]
-                                                                                if(sales == 0) {""} else {numberFormat(sales)}
-                                                                            }"
-                                                                            data-value=0/>&nbsp;元
-                                                                </li>
+                                                                <td><input type="text" name="prod_value"
+                                                                    @{if(checkInputPhase._2 > phrase.toInt) {"disabled=disabled"} else {}}
+                                                                hospital-code="@{(hosp._1 \ "hosp_code").as[String]}"
+                                                                hospital-name="@{(hosp._1 \ "hosp_name").as[String]}"
+                                                                pharbers-type="@{(data \ "sales").as[List[String Map JsValue]].find(f => f("prod_name").as[String] == "口服抗生素").get("prod_name").as[String]}"
+                                                                value="@{
+                                                                    val sales = (data \ "sales").as[List[String Map JsValue]].find(f => f("prod_name").as[String] == "口服抗生素").get("prod_value").as[Double]
+                                                                    if(sales == 0) {""} else {numberFormat(sales)}
+                                                                }"
+                                                                data-value=0/></td>
 
-                                                                <li>
-                                                                    <input type="text" name="prod_hours"
-                                                                            @{if(checkInputPhase._2 > phrase.toInt) {"disabled=disabled"} else {}}
-                                                                            hospital-code="@{(hosp._1 \ "hosp_code").as[String]}"
-                                                                            hospital-name="@{(hosp._1 \ "hosp_name").as[String]}"
-                                                                            pharbers-type="@{(data \ "visit_hours").as[List[String Map JsValue]].find(f => f("prod_name").as[String] == "口服抗生素").get("prod_name").as[String]}"
-                                                                            value="@{
-                                                                                val hours = (data \ "visit_hours").as[List[String Map JsValue]].find(f => f("prod_name").as[String] == "口服抗生素").get("prod_hours").as[Double]
-                                                                                if(hours == 0) {""} else {numberFormat(hours)}
-                                                                            }"/>&nbsp;天
-                                                                </li>
+                                                                <td><input type="text" name="prod_hours"
+                                                                    @{if(checkInputPhase._2 > phrase.toInt) {"disabled=disabled"} else {}}
+                                                                hospital-code="@{(hosp._1 \ "hosp_code").as[String]}"
+                                                                hospital-name="@{(hosp._1 \ "hosp_name").as[String]}"
+                                                                pharbers-type="@{(data \ "visit_hours").as[List[String Map JsValue]].find(f => f("prod_name").as[String] == "口服抗生素").get("prod_name").as[String]}"
+                                                                value="@{
+                                                                    val hours = (data \ "visit_hours").as[List[String Map JsValue]].find(f => f("prod_name").as[String] == "口服抗生素").get("prod_hours").as[Double]
+                                                                    if(hours == 0) {""} else {numberFormat(hours)}
+                                                                }"/></td>
                                                             }
-                                                        </ul>
-                                                    </li>
-                                                    <li>
-                                                        <ul>
-                                                            <li class="top-tetile">一代降糖药</li>
-                                                            <li>
-                                                                <span class="hosp-budget-number">@{NumberFormat.getInstance().format((hosp._1 \ "一代降糖药").asOpt[List[String]].get.tail.head.toDouble)}</span>
-                                                                <span>元</span>
-                                                            </li>
-                                                            <li>
-                                                                <span class="hosp-budget-number">@{NumberFormat.getInstance().format((hosp._1 \ "一代降糖药").asOpt[List[String]].get.head.replace(",", "").toDouble)}</span>
-                                                                <span>元</span>
-                                                            </li>
-                                                            @decisioInputs.filter(f => (f \ "hosp_code").as[Int] == (hosp._1 \ "hosp_code").as[String].toInt).map { data =>
-                                                                <li>
-                                                                    <input type="text" name="prod_value"
-                                                                            @{if(checkInputPhase._2 > phrase.toInt) {"disabled=disabled"} else {}}
-                                                                            hospital-code="@{(hosp._1 \ "hosp_code").as[String]}"
-                                                                            hospital-name="@{(hosp._1 \ "hosp_name").as[String]}"
-                                                                            pharbers-type="@{(data \ "sales").as[List[String Map JsValue]].find(f => f("prod_name").as[String] == "一代降糖药").get("prod_name").as[String]}"
-                                                                            value="@{
-                                                                                val sales = (data \ "sales").as[List[String Map JsValue]].find(f => f("prod_name").as[String] == "一代降糖药").get("prod_value").as[Double]
-                                                                                if(sales == 0) {""} else {numberFormat(sales)}
-                                                                            }"
-                                                                            data-value=0/>&nbsp;元
-                                                                </li>
-
-                                                                <li>
-                                                                    <input type="text" name="prod_hours"
-                                                                            @{if(checkInputPhase._2 > phrase.toInt) {"disabled=disabled"} else {}}
-                                                                            hospital-code="@{(hosp._1 \ "hosp_code").as[String]}"
-                                                                            hospital-name="@{(hosp._1 \ "hosp_name").as[String]}"
-                                                                            pharbers-type="@{(data \ "visit_hours").as[List[String Map JsValue]].find(f => f("prod_name").as[String] == "一代降糖药").get("prod_name").as[String]}"
-                                                                            value="@{
-                                                                                val hours = (data \ "visit_hours").as[List[String Map JsValue]].find(f => f("prod_name").as[String] == "一代降糖药").get("prod_hours").as[Double]
-                                                                                if(hours == 0) {""} else {numberFormat(hours)}
-                                                                            }"/>&nbsp;天
-                                                                </li>
-                                                            }
-                                                        </ul>
-                                                    </li>
-                                                    <li>
-                                                        <ul>
-                                                            <li class="top-tetile">三代降糖药</li>
-                                                            <li>
-                                                                <span class="hosp-budget-number">@{NumberFormat.getInstance().format((hosp._1 \ "三代降糖药").asOpt[List[String]].get.tail.head.toDouble)}</span>
-                                                                <span>元</span>
-                                                            </li>
-                                                            <li>
-                                                                <span class="hosp-budget-number">@{NumberFormat.getInstance().format((hosp._1 \ "三代降糖药").asOpt[List[String]].get.head.replace(",", "").toDouble)}</span>
-                                                                <span>元</span>
-                                                            </li>
-                                                            @decisioInputs.filter(f => (f \ "hosp_code").as[Int] == (hosp._1 \ "hosp_code").as[String].toInt).map { data =>
-                                                                <li>
-                                                                    <input type="text" name="prod_value"
-                                                                            @{if(checkInputPhase._2 > phrase.toInt) {"disabled=disabled"} else {}}
-                                                                            hospital-code="@{(hosp._1 \ "hosp_code").as[String]}"
-                                                                            hospital-name="@{(hosp._1 \ "hosp_name").as[String]}"
-                                                                            pharbers-type="@{(data \ "sales").as[List[String Map JsValue]].find(f => f("prod_name").as[String] == "三代降糖药").get("prod_name").as[String]}"
-                                                                            value="@{
-                                                                                val sales = (data \ "sales").as[List[String Map JsValue]].find(f => f("prod_name").as[String] == "三代降糖药").get("prod_value").as[Double]
-                                                                                if(sales == 0) {""} else {numberFormat(sales)}
-                                                                            }"
-                                                                            data-value=0/>&nbsp;元
-                                                                </li>
-
-                                                                <li>
-                                                                    <input type="text" name="prod_hours"
-                                                                            @{if(checkInputPhase._2 > phrase.toInt) {"disabled=disabled"} else {}}
-                                                                            hospital-code="@{(hosp._1 \ "hosp_code").as[String]}"
-                                                                            hospital-name="@{(hosp._1 \ "hosp_name").as[String]}"
-                                                                            pharbers-type="@{(data \ "visit_hours").as[List[String Map JsValue]].find(f => f("prod_name").as[String] == "三代降糖药").get("prod_name").as[String]}"
-                                                                            value="@{
-                                                                                val hours = (data \ "visit_hours").as[List[String Map JsValue]].find(f => f("prod_name").as[String] == "三代降糖药").get("prod_hours").as[Double]
-                                                                                if(hours == 0) {""} else {numberFormat(hours)}
-                                                                            }"/>&nbsp;天
-                                                                </li>
-                                                            }
-                                                        </ul>
-                                                    </li>
-                                                    <li>
-                                                        <ul>
-                                                            <li class="top-tetile">皮肤药</li>
-                                                            <li>
-                                                                <span class="hosp-budget-number">@if((hosp._1 \ "皮肤药").asOpt[List[String]].get.tail.head.isEmpty) {0} else {@{NumberFormat.getInstance().format((hosp._1 \ "皮肤药").asOpt[List[String]].get.tail.head.toDouble)}}</span>
-                                                                <span>元</span>
-                                                            </li>
-                                                            <li>
-                                                                <span class="hosp-budget-number">@{NumberFormat.getInstance().format((hosp._1 \ "皮肤药").asOpt[List[String]].get.head.replace(",", "").toDouble)}</span>
-                                                                <span>元</span>
-                                                            </li>
-                                                            @decisioInputs.filter(f => (f \ "hosp_code").as[Int] == (hosp._1 \ "hosp_code").as[String].toInt).map { data =>
-                                                                <li>
-                                                                    <input type="text" name="prod_value" @if(((data \ "hosp_name").as[String] == "人民医院" || (data \ "hosp_name").as[String] == "军区医院" || (data \ "hosp_name").as[String] == "中日医院" || (data \ "hosp_name").as[String] == "西河医院") && phrase == "2") {} else {disabled="disabled"}
-                                                                            @{if(checkInputPhase._2 > phrase.toInt) {"disabled=disabled"} else {}}
-                                                                            hospital-code="@{(hosp._1 \ "hosp_code").as[String]}"
-                                                                            hospital-name="@{(hosp._1 \ "hosp_name").as[String]}"
-                                                                            pharbers-type="@{(data \ "sales").as[List[String Map JsValue]].find(f => f("prod_name").as[String] == "皮肤药").get("prod_name").as[String]}"
-                                                                            value="@{
-                                                                                val sales = (data \ "sales").as[List[String Map JsValue]].find(f => f("prod_name").as[String] == "皮肤药").get("prod_value").as[Double]
-                                                                                if(sales == 0) {""} else {numberFormat(sales)}
-                                                                            }"
-                                                                            data-value=0/>&nbsp;元
-                                                                </li>
-
-                                                                <li>
-                                                                    <input type="text" name="prod_hours" @if(((data \ "hosp_name").as[String] == "人民医院" || (data \ "hosp_name").as[String] == "军区医院" || (data \ "hosp_name").as[String] == "中日医院" || (data \ "hosp_name").as[String] == "西河医院") && phrase == "2") {} else {disabled="disabled"}
-                                                                            @{if(checkInputPhase._2 > phrase.toInt) {"disabled=disabled"} else {}}
-                                                                            hospital-code="@{(hosp._1 \ "hosp_code").as[String]}"
-                                                                            hospital-name="@{(hosp._1 \ "hosp_name").as[String]}"
-                                                                            pharbers-type="@{(data \ "visit_hours").as[List[String Map JsValue]].find(f => f("prod_name").as[String] == "皮肤药").get("prod_name").as[String]}"
-                                                                            value="@{
-                                                                                val hours = (data \ "visit_hours").as[List[String Map JsValue]].find(f => f("prod_name").as[String] == "皮肤药").get("prod_hours").as[Double];
-                                                                                if(hours == 0) {""} else {numberFormat(hours)}
-                                                                            }"/>&nbsp;天
-                                                                </li>
-                                                            }
-                                                        </ul>
-                                                    </li>
-                                                </ul>
+                                                        </tr>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -646,7 +517,7 @@
 
             <!--资源管理详情-->
             <div class="row resource-info" name="resource-info" style="display:none;">
-                @version_2.model.rsinformation.template(uuid, phrase, salesman, hosp_news, hosp_list, product, report)
+                @version_2.model.rsinformation.template(uuid, phrase, salesman, salesman_team, hosp_news, hosp_list, product, report)
             </div>
         </div>
     </div>

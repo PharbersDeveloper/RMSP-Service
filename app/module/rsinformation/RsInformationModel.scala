@@ -83,7 +83,6 @@ object RsInformationModel extends ModuleTrait with RsInformationData {
 			(Some(Map("data" -> toJson(resVal))), None)
 		} catch {
 			case ex: Exception =>
-				println(ex.getMessage)
 				(None, Some(ErrorCode.errorToJson(ex.getMessage)))
 		}
 	}

@@ -163,7 +163,6 @@ object userInputModule extends ModuleTrait {
             val db = conn.queryDBInstance("stp").get
 
             import inner_trait.c2d
-
             db.insertObject(data, "inputs", "uuid")
 
             (Some(Map("input_create" -> toJson("success"))), None)

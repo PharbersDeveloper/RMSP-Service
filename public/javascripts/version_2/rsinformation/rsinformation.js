@@ -1,4 +1,4 @@
-(function($, w){
+var resinformation = (function($, w){
     var overflowTableContainer = $(".inside-div");
     var overflowTableContainerEle = overflowTableContainer[0];
     var tableHeade = $(".overflow-table-head");
@@ -6,6 +6,15 @@
     var tablelen = table.length;
     var oldTableWidth = 0;
     var scrollBarLength = 0;
+    var barLines = [];
+
+    var personMaping = [
+        {name: "小宋", alias: "salesmen_first"},
+        {name: "小兰", alias: "salesmen_second"},
+        {name: "小木", alias: "salesmen_third"},
+        {name: "小白", alias: "salesmen_fourth"},
+        {name: "小青", alias: "salesmen_fifth"}
+    ];
     // 判断是哪个有滚动条的表格显示
     function whichTable() {
         try {
@@ -48,26 +57,42 @@
         // download-btn
         var $div = $('div[name="resource-info"]');
         if($div.css("display") === "block") {
-            if(identify === "代表信息") {
+            if(identify === "指标任务") {
+                $div.find(".indicators-list").show();
+                $div.find(".person-list").hide();
+                $div.find(".hospital-list").hide();
+                $div.find(".product-list").hide();
+                $div.find(".report-list").hide();
+                $div.find(".download-btn").hide();
+            } else if(identify === "团队信息") {
+                $div.find(".indicators-list").hide();
                 $div.find(".person-list").show();
                 $div.find(".hospital-list").hide();
                 $div.find(".product-list").hide();
                 $div.find(".report-list").hide();
                 $div.find(".download-btn").hide();
+                $.each(barLines, function(i,v) {
+                    v.resize();
+                });
             } else if(identify === "医院信息"){
+                $div.find(".indicators-list").hide();
                 $div.find(".hospital-list").show();
                 $div.find(".person-list").hide();
                 $div.find(".product-list").hide();
                 $div.find(".report-list").hide();
-                $div.find(".download-btn").show();
+                $.each(barLines, function(i,v) {
+                    v.resize();
+                });
+                // $div.find(".download-btn").show();
             } else if(identify === "产品信息"){
+                $div.find(".indicators-list").hide();
                 $div.find(".hospital-list").hide();
                 $div.find(".person-list").hide();
                 $div.find(".product-list").show();
                 $div.find(".report-list").hide();
                 $div.find(".download-btn").hide();
             } else {
-
+                $div.find(".indicators-list").hide();
                 $div.find(".hospital-list").hide();
                 $div.find(".person-list").hide();
                 $div.find(".product-list").hide();
@@ -79,208 +104,208 @@
         }
     };
 
-    function getPersonRadarMapData(data) {
+    var personBar = function(identify) {
+        var salesmen_skills = JSON.parse($("#salesmen_skills").val());
+        var salesmen_knowledge = JSON.parse($("#salesmen_knowledge").val());
+        var salesmen_positive = JSON.parse($("#salesmen_positive").val());
 
-        return [
-            {
-                value : data.cur,
-                name : '当期',
-                itemStyle: {
-                    normal: {
-                        color: '#0E86A4'
-                    }
-                }
-            },
-            {
-                value : data.pre,
-                name : '上期',
-                itemStyle: {
-                    normal: {
-                        color: '#A6A921'
-                    }
-                }
-            }
-        ];
-    }
+        var data = [];
+        var phase1_data = [];
 
-    var personRadarMap = function(identify, data) {
-        var radarmap = echarts.init($('.person-list div[name="'+ identify +'"]')[0]);
-        var lineStyle = {
-            normal: {
-                width: 2,
-                opacity: 0.9
+        var aliasObject = $(personMaping).filter(function(index, elem) {return elem.name ===  identify}).toArray()[0];
+        $.each(salesmen_skills, function(i, v) {
+           if (v.general_names === "当期销售技巧(指数)") {
+                data.push(v[""+aliasObject.alias+""]);
+           } else {
+                phase1_data.push(v[""+aliasObject.alias+""]);
+           }
+        });
+
+        $.each(salesmen_knowledge, function(i, v) {
+            if (v.general_names === "当期产品知识(指数)") {
+                data.push(v[""+aliasObject.alias+""]);
+            } else {
+                phase1_data.push(v[""+aliasObject.alias+""]);
             }
-        };
+        });
+
+        $.each(salesmen_positive, function(i, v) {
+            if (v.general_names === "当期工作积极性(指数)") {
+                data.push(v[""+aliasObject.alias+""]);
+            } else {
+                phase1_data.push(v[""+aliasObject.alias+""]);
+            }
+        });
+
+        var bar = echarts.init($('.person-list div[name="'+ identify +'"]')[0]);
         var option = {
+            grid: {left: '20%'},
             tooltip: {
-                confine: true
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    crossStyle: {
+                        color: '#3398DB'
+                    }
+                }
             },
-            title: {},
+            label:{
+                normal:{
+                    show: true,
+                    textStyle:{color:'#3398DB'}
+                }
+            },
             legend: {
-                top: 'top',
-                left: 'right',
-                orient: 'vertical',
-                data: ['当期', '上期'],
-                itemGap: 20,
-                icon:'circle',
+                icon: 'circle',
+                right: '1%',
+                data:['初始值','周期一'],
                 textStyle: {
-                    color: '#fff',
-                    fontSize: 10
-                },
-                // selectedMode: 'single'
+                    color: '#fff'
+                }
             },
-            radar: {
-                indicator: [
-                    {name: '销售技巧', max: 100},
-                    {name: '产品知识', max: 100},
-                    {name: '工作积极性', max: 100}
-                ],
-                center: ['48%', '55%'],
-                radius: 75,
-                shape: 'circle',
-                splitNumber: 5,
-                name: {
+            xAxis: [{
+                    type: 'category',
+                    data: ['销售技巧','产品知识', '工作积极性'],
+                    axisPointer: {type: 'shadow'},
+                    axisLabel: {
+                        textStyle: {
+                            color: '#fff'
+                        }
+                    }
+                }],
+            yAxis: {
+                type: 'value',
+                min: 0,
+                axisLabel: {
                     textStyle: {
-                        fontSize: 10,
-                        color: 'rgb(236, 236, 236)'
-                    }
-                },
-                splitLine: {
-                    lineStyle: {
-                        color: [
-                            new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                                "offset": 0,
-                                "color": '#2496dc',
-
-                            }, {
-                                "offset": 1,
-                                "color": '#FE0059'
-                            }]),
-
-                            new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                                "offset": 0,
-                                "color": '#FE601B',
-
-                            }, {
-                                "offset": 1,
-                                "color": '#FE0059'
-                            }]),
-
-                            new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                                "offset": 0,
-                                "color": '#FE601B',
-
-                            }, {
-                                "offset": 1,
-                                "color": '#00E8F8'
-                            }])
-
-                        ]
-                        // color: [
-                        //     'rgba(238, 197, 102, 0.1)', 'rgba(238, 197, 102, 0.2)',
-                        //     'rgba(238, 197, 102, 0.4)', 'rgba(238, 197, 102, 0.6)',
-                        //     'rgba(238, 197, 102, 0.8)', 'rgba(238, 197, 102, 1)'
-                        // ].reverse()
-                    }
-                },
-                splitArea: {
-                    show: false
-                },
-                axisLine: {
-                    lineStyle: {
-                        color: 'rgba(238, 197, 102, 0.5)'
+                        color: '#fff'
                     }
                 }
             },
             series: [
                 {
-                    name: '人物评分',
-                    type: 'radar',
-                    symbol: 'none',
-                    lineStyle: lineStyle,
-                    areaStyle: {normal: {}},
-                    data : getPersonRadarMapData(data)
+                    name: '初始值',
+                    type: 'bar',
+                    itemStyle:{
+                        normal:{
+                            color:'#3784DD'
+                        }
+                    },
+                    barWidth: 20,
+                    data: data
+                },
+                {
+                    name: '周期一',
+                    type: 'bar',
+                    itemStyle:{
+                        normal:{
+                            color:'#30E1BA'
+                        }
+                    },
+                    barWidth: 20,
+                    data: phase1_data
                 }
             ]
         };
-        radarmap.setOption(option);
+        bar.setOption(option);
+
+        barLines.push(bar);
     };
 
-    function radarMapData() {
-        var phrase = $('input[name="phrase"]').val();
-        if (phrase === "1") {
-            f.ajaxModule.baseCall('/salesmen/init/radarmap', JSON.stringify({"phrase": phrase}), 'POST', function(r) {
-                if (r.status === 'ok') {
-                   $.each(r.result.data, function(i, v){
-                       var data = {
-                           "cur": [0, 0, 0],
-                           "pre": [v.salesValue, v.productValue, v.workValue]
-                       };
-                       personRadarMap(v.name, data)
-                   });
+    var hospital_pro_bar = function(identify) {
+        var bar = echarts.init($('.hospital-list div[name="'+ identify +'"]')[0]);
+
+        var phase1 = [];
+        var phase2 = [];
+        var textarea = JSON.parse($('.hospital-list textarea[name="'+identify+'"]').val());
+        phase1.push(textarea[0]);
+        phase2.push(textarea[1]);
+        var option = {
+            grid: {left: '20%'},
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    crossStyle: {
+                        color: '#3398DB'
+                    }
                 }
-            });
-        } else {
-            var salesmen = ["小宋", "小兰", "小木", "小白", "小青"];
-            var radar = $('div[name="radar-values"]').children();
-            var product = radar.filter(function(i, dom){return $(dom).attr("name") === "代表报告_产品知识"});
-            var experience = radar.filter(function(i, dom){return $(dom).attr("name") === "代表报告_经验"});
-            var sales = radar.filter(function(i, dom){return $(dom).attr("name") === "代表报告_销售技巧"});
-            var work = radar.filter(function(i, dom){return $(dom).attr("name") === "代表报告_工作积极性"});
-            function preData(name) {
-                var pValue = product.children().filter(function(index, dom){return $(dom).attr("name") === "pre"})
-                    .children().filter(function(index, dom){return $(dom).attr("name") === name}).text();
+            },
+            label:{
+                normal:{
+                    show: true,
+                    textStyle:{color:'#3398DB'}
+                }
+            },
+            legend: {
+                icon: 'circle',
+                right: '1%',
+                data:['初始值','周期一'],
+                textStyle: {
+                    color: '#fff'
+                }
+            },
+            xAxis: [{
+                type: 'category',
+                data: ['口服抗生素'],
+                axisPointer: {type: 'shadow'},
+                axisLabel: {
+                    textStyle: {
+                        color: '#fff'
+                    }
+                }
+            }],
+            yAxis: {
+                type: 'value',
+                min: 0,
+                axisLabel: {
+                    textStyle: {
+                        color: '#fff'
+                    }
+                }
+            },
+            series: [
+                {
+                    name: '初始值',
+                    type: 'bar',
+                    itemStyle:{
+                        normal:{
+                            color:'#3784DD'
+                        }
+                    },
+                    barWidth: 40,
+                    data: phase1
+                },
+                {
+                    name: '周期一',
+                    type: 'bar',
+                    itemStyle:{
+                        normal:{
+                            color:'#30E1BA'
+                        }
+                    },
+                    barWidth: 40,
+                    data: phase2
+                }
+            ]
+        };
+        bar.setOption(option);
 
-                var eValue = experience.children().filter(function(index, dom){return $(dom).attr("name") === "pre"})
-                    .children().filter(function(index, dom){return $(dom).attr("name") === name}).text();
-
-                var sValue = sales.children().filter(function(index, dom){return $(dom).attr("name") === "pre"})
-                    .children().filter(function(index, dom){return $(dom).attr("name") === name}).text();
-
-                var wValue = work.children().filter(function(index, dom){return $(dom).attr("name") === "pre"})
-                    .children().filter(function(index, dom){return $(dom).attr("name") === name}).text();
-
-                return [parseInt(sValue), parseInt(pValue), parseInt(wValue)]
-            }
-            function curData(name) {
-                var pValue = product.children().filter(function(index, dom){return $(dom).attr("name") === "cur"})
-                    .children().filter(function(index, dom){return $(dom).attr("name") === name}).text();
-
-                var eValue = experience.children().filter(function(index, dom){return $(dom).attr("name") === "cur"})
-                    .children().filter(function(index, dom){return $(dom).attr("name") === name}).text();
-
-                var sValue = sales.children().filter(function(index, dom){return $(dom).attr("name") === "cur"})
-                    .children().filter(function(index, dom){return $(dom).attr("name") === name}).text();
-
-                var wValue = work.children().filter(function(index, dom){return $(dom).attr("name") === "cur"})
-                    .children().filter(function(index, dom){return $(dom).attr("name") === name}).text();
-
-                return [parseInt(sValue), parseInt(pValue), parseInt(wValue)]
-            }
-
-            $.each(salesmen, function(i, v){
-                var data = {
-                    "cur": curData(v),
-                    "pre": preData(v)
-                };
-                // var data = {
-                //     "cur": [0, 0, 0],
-                //     "pre": [0, 0, 0]
-                // };
-                // console.info(data)
-                personRadarMap(v, data);
-            });
-        }
+        barLines.push(bar);
     }
 
     $(function(){
 
         init: {
-            radarMapData()
-            // var person = ["小宋", "小兰", "小木", "小白", "小青"];
-            // $.each(person, function(i, v){
-            //     personRadarMap(v)
-            // });
+            var person = ["小宋", "小兰", "小木", "小白", "小青"];
+            $.each(person, function(i, v){
+                personBar(v)
+            });
+
+            var hospital = ["人民医院", "军区医院", "中日医院", "铁路医院", "海港医院","第六医院", "小营医院", "西河医院", "光华医院", "大学医院"];
+            $.each(hospital, function(i, v){
+                hospital_pro_bar(v)
+            });
         }
         events: {
             //资源页面 收起按钮
@@ -315,4 +340,7 @@
 
         }
     });
+    return {
+        "barLines": barLines
+    }
 })(jQuery, window);

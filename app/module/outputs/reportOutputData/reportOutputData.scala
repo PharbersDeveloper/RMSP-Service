@@ -109,9 +109,9 @@ trait reportOutputData {
                     "hosp_name" -> toJson(tmp.getAs[String]("hosp_name").get),
                     "factor" -> toJson(tmp.getAs[String]("factor").get),
                     "product_first" -> toJson(tmp.getAs[String]("product_first").get),
-                    "product_second" -> toJson(tmp.getAs[String]("product_second").get),
-                    "product_third" -> toJson(tmp.getAs[String]("product_third").get),
-                    "product_fourth" -> toJson(tmp.getAs[String]("product_fourth").get),
+//                    "product_second" -> toJson(tmp.getAs[String]("product_second").get),
+//                    "product_third" -> toJson(tmp.getAs[String]("product_third").get),
+//                    "product_fourth" -> toJson(tmp.getAs[String]("product_fourth").get),
                     "overall" -> toJson(tmp.getAs[String]("overall").get)
                 )
             } ::

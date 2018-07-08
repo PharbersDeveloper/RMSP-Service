@@ -57,11 +57,17 @@ object DefaultValuesModule extends ModuleTrait {
             val db = conn.queryDBInstance("stp").get
 
             import inner_trait.salesmen_d2m
-
-            val reVal = db.queryMultipleObject(DBObject(), "salesmen")
-
+            import inner_trait.default_report
+            import inner_trait.team_info
+            
+            val reVal = db.queryMultipleObject(DBObject(), "salesmen")(salesmen_d2m)
+            val reVal2 = db.queryObject(DBObject("uuid" -> "cebe92eb-ad0f-4053-a1c6-8aaa1594a480"), "report")(default_report)
+            
+            val reVal3 = db.queryObject(DBObject(), "team_info")(team_info)
+            
             (Some(Map(
-                "salesmen" -> toJson(reVal)
+                "salesmen" -> toJson(reVal),
+                "team_info" -> toJson(reVal3.get ++: reVal2.get)
             )), None)
 
         } catch {
@@ -122,7 +128,12 @@ object DefaultValuesModule extends ModuleTrait {
                 import inner_trait.product_m2d
                 db.queryMultipleObject(DBObject(), "products")
             }
-
+            
+            val constrats = {
+                import inner_trait.hospital_constrats_d2m
+                db.queryMultipleObject(DBObject(), "constrats", take = 100)(hospital_constrats_d2m)
+            }
+            
             val reVal = tmp map { m =>
                 m._1 -> m._2.asOpt[List[JsValue]].get.map { iter =>
                     val hosp_code = (iter \ "hosp_code").asOpt[String].get
@@ -135,14 +146,25 @@ object DefaultValuesModule extends ModuleTrait {
                         } ++
                         hospitals.find (p => p.get("hosp_code").get.asOpt[String].get == hosp_code).
                             map { x =>
+                                val potential = constrats.find(f => f("hosp_code").as[String] == hosp_code && f("prod_code").as[String] == "1")
                                 Map("hosp_name" -> x.get("hosp_name").get,
                                     "hosp_area" -> x.get("hosp_area").get,
-                                    "hosp_cat" -> x.get("hosp_cat").get)
+                                    "hosp_cat" -> x.get("hosp_cat").get,
+                                    "create_time" -> x.get("create_time").get,
+                                    "type" -> x.get("type").get,
+                                    "bed_number" -> x.get("bed_number").get,
+                                    "department" -> x.get("department").get,
+                                    "pay_power" -> x.get("pay_power").get,
+                                    "dynamic" -> x.get("dynamic").get,
+                                    "phase1" -> potential.get("phrase_1"),
+                                    "phase2" -> potential.get("phrase_2")
+                                )
                             }.getOrElse(throw new Exception())
                     )
                 }
             }
 
+            
             (Some(Map(
                 "hospital_potential" -> toJson(reVal)
             )), None)
@@ -170,18 +192,20 @@ object DefaultValuesModule extends ModuleTrait {
                         import inner_trait.d2m_hospdata_stage
                         val preVal = db.queryMultipleObject(DBObject(), "preresult")(d2m_hospdata_stage(_, phrase))
                         
+                        
                         import inner_trait.d2m_predata_stage
-                        val reVal = db.queryMultipleObject(DBObject("uuid" -> (data \ "condition" \ "uuid").as[String]), "report")(d2m_predata_stage).head("data").as[String Map List[String Map String]]
+                        val reVal = db.queryMultipleObject(DBObject("uuid" -> "cebe92eb-ad0f-4053-a1c6-8aaa1594a480"), "report")(d2m_predata_stage).head("data").as[String Map List[String Map String]]
+                        
                         reVal.map { x =>
                             val pharse = preVal.find(f => f("hosp_code").as[String] == x._1).get("phrase").as[String]
                             Map(
                                 "hosp_code" -> toJson(x._1),
                                 "phrase" -> toJson(pharse),
-                                "total" -> toJson(x._2.find(f => f("prod_name") == "总体").get("current_revenue")),
+//                                "total" -> toJson(x._2.find(f => f("prod_name") == "总体").get("current_revenue")),
                                 "1" -> toJson(x._2.find(f => f("prod_name") == "口服抗生素").get("current_revenue")),
-                                "2" -> toJson(x._2.find(f => f("prod_name") == "一代降糖药").get("current_revenue")),
-                                "3" -> toJson(x._2.find(f => f("prod_name") == "三代降糖药").get("current_revenue")),
-                                "4" -> toJson(x._2.find(f => f("prod_name") == "皮肤药").get("current_revenue")),
+//                                "2" -> toJson(x._2.find(f => f("prod_name") == "一代降糖药").get("current_revenue")),
+//                                "3" -> toJson(x._2.find(f => f("prod_name") == "三代降糖药").get("current_revenue")),
+//                                "4" -> toJson(x._2.find(f => f("prod_name") == "皮肤药").get("current_revenue")),
                                 "date" -> toJson(0)
                             )
                         }.toList.sortBy(s => s("hosp_code").as[String].toInt)
@@ -194,7 +218,7 @@ object DefaultValuesModule extends ModuleTrait {
                 import inner_trait.product_m2d
                 db.queryMultipleObject(DBObject(), "products")
             }
-
+            
             val hospitals = {
                 import inner_trait.hospital_d2m
                 db.queryMultipleObject(DBObject(), "hospitals")
@@ -219,14 +243,13 @@ object DefaultValuesModule extends ModuleTrait {
                     )
                 }
             }
-            
 
             (Some(Map(
                 "preresult" -> toJson(reVal)
             )), None)
         } catch {
             case ex: Exception =>
-                println(s"fuck === >${ex.getMessage}")
+                println(ex.getMessage)
                 (None, Some(ErrorCode.errorToJson(ex.getMessage)))
         }
     }

@@ -81,7 +81,7 @@ object reportOutputModule extends ModuleTrait {
 
             import inner_trait.dc
             import inner_trait.d2m
-
+            
             db.queryObject(data, "report").map { x =>
                 x.get("report").get.asOpt[List[JsValue]].get.filter { iter =>
                     (iter \ "phase").asOpt[Int].get == (data \ "phase").asOpt[Int].get
@@ -91,7 +91,9 @@ object reportOutputModule extends ModuleTrait {
             }
 
         } catch {
-            case ex: Exception => (None, Some(ErrorCode.errorToJson(ex.getMessage)))
+            case ex: Exception =>
+                println(ex.getMessage)
+                (None, Some(ErrorCode.errorToJson(ex.getMessage)))
         }
     }
 }

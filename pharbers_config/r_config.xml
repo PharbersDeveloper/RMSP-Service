@@ -15,7 +15,9 @@
         <program value=""/>
     </program-path>
     <r-path>
-        <rfile value="/Users/qianpeng/Desktop/stp_handler.R"/>
+        <!--<rfile value="/Users/qianpeng/Desktop/R文件/stp_handler.R"/>-->
+        <!--<rfile value="/Users/qianpeng/Desktop/R文件/stp_handler_one_product.R"/>-->
+        <rfile value="/Users/qianpeng/Desktop/R文件/stp_handler_one_product_bak.R"/>
     </r-path>
     <excel-path>
         <report value="/Users/qianpeng/Desktop/write_excel.R"/>
