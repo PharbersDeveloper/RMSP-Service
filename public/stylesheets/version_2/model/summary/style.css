@@ -479,3 +479,8 @@ div[class^="img-"] {
     top: 80px;
     left: 475px;
 }
+
+/*新增关键指数的在单一产品下垂直居中*/
+.ul-vertical-center {
+    margin-top: 50px;
+}
