@@ -57,7 +57,7 @@
         left: 0 !important;
     }
     .home .bottom .personal-training .input-manager table tr:first-child td {
-        padding: 2px 15px 0 !important;
+        padding: 2px 10px 0 !important;
     }
 
 
@@ -789,6 +789,7 @@ html::-webkit-scrollbar{width:0px}
     width: 951px;
     background-color: #5A5D6C;
     border-radius: 10px;
+    letter-spacing: 2px;
 }
 
 .home .hosp-budget > .home-textarea-describe > table {
@@ -961,7 +962,7 @@ html::-webkit-scrollbar{width:0px}
 }
 
 .home .bottom .personal-training .input-manager table tr:first-child td {
-    padding: 13px 15px 0px !important;
+    padding: 13px 15px 0;
 }
 .home .bottom .personal-training .input-manager table tr:last-child td:first-child {
     margin-right: 18px;

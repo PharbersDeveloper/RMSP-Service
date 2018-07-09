@@ -28,7 +28,7 @@
 
 .resource-info hr {
     width: 99%;
-    border: .5px dashed #858585;
+    border: .9px dashed #858585;
 }
 
 .bottom-details {
@@ -152,7 +152,7 @@
     /*height: 250px;*/
     /*padding-top: 35px;*/
     /*padding-left: 80px;*/
-    width: 100px;
+    width: 110px;
     display: inline-block;
     margin: 0 40px 0 0 ;
 }
@@ -292,7 +292,7 @@
     /*height: 250px;*/
     /*padding-top: 35px;*/
     /*padding-left: 80px;*/
-    width: 100px;
+    width: 105px;
     display: inline-block;
     margin: 0 40px 0 0 ;
 }
@@ -344,10 +344,19 @@
     /*height: 250px;*/
     /*padding-top: 35px;*/
     /*padding-left: 80px;*/
-    width: 80px;
+    width: 85px;
     display: inline-block;
-    margin: 0 40px 0 0 ;
+    /*margin: 0 40px 0 0 ;*/
 }
+
+/*.resource-info .resource-content .details li span:last-child{*/
+    /*!*height: 250px;*!*/
+    /*!*padding-top: 35px;*!*/
+    /*!*padding-left: 80px;*!*/
+    /*width: 300px;*/
+    /*display: inline-block;*/
+    /*!*margin: 0 40px 0 0 ;*!*/
+/*}*/
 
 .resource-info .resource-content .product .product-info {
     text-align: center;
@@ -360,6 +369,7 @@
 
 .resource-info .resource-content .product .product-describe {
     margin: 45px 0 0 0;
+    width: 500px;
 }
 
 .resource-info .resource-content .product .product-describe li {
@@ -386,7 +396,7 @@
 .resource-info .resource-content .product-list .product table tr td > span {
     position: relative;
     left: 10px;
-    top: 0px;
+    top: 0;
     z-index: auto;
 }
 /*:not(:first-child)*/
@@ -400,4 +410,8 @@
 
 .resource-info .resource-content .details.even{
     background-color: #545865;
+}
+
+.resource-info .content-details {
+    letter-spacing: 3px;
 }

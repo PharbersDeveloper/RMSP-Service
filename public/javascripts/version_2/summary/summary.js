@@ -54,7 +54,7 @@
                 }
             },
             axisLabel: {
-                interval:0,
+                interval:0
                 // rotate:-10
             },
             splitLine:{show: true},
@@ -87,7 +87,7 @@
                 [5,'A'],
                 [6,'C'],
                 [7,'B'],
-                [8,'B'],
+                [8,'B']
                 // 'S', 'A', 'B', 'C', 'D','A','B'
             ],
             // symbolSize: symbolSize,
@@ -98,7 +98,6 @@
 
     line_chart.setOption(option, true);
 
-    // console.info($('#sales-ratio').text())
 
     $(function(){
         init: {
@@ -112,7 +111,7 @@
             f.ajaxModule.baseCall("/summary/query", c, "POST", function(rd) {
                 if ( rd.status === 'ok') {
                     $('#total-sales').text(f.thousandsModule.formatNum(rd.result.data.total_sales.total));
-                    $('#sales-ratio').text(parseFloat(f.thousandsModule.formatNum(rd.result.data.total_sales.uplift_ratio)).toFixed(2)+"%");
+                    $('#sales-ratio').text(new Number(parseFloat(f.thousandsModule.formatNum(rd.result.data.total_sales.uplift_ratio)).toFixed(1))+"%");
                     if(rd.result.data.total_sales.uplift_ratio < 0) {
                         $('#sales-ratio').css("color","red")
                     } else {
@@ -120,7 +119,7 @@
                     };
 
                     $('#team-ability').text(f.thousandsModule.formatNum(rd.result.data.team_ability.team_ability));
-                    $('#ability-ratio').text(parseFloat(f.thousandsModule.formatNum(rd.result.data.team_ability.uplift_ratio)).toFixed(2)+"%");
+                    $('#ability-ratio').text(new Number(parseFloat(f.thousandsModule.formatNum(rd.result.data.team_ability.uplift_ratio)).toFixed(1))+"%");
                     if(rd.result.data.team_ability.uplift_ratio < 0) {
                         $('#ability-ratio').css("color","red")
                     } else {
@@ -129,21 +128,20 @@
 
                     $.each(rd.result.data.team_achievement, function(i, v){
                         $('#team-achievement').append('<li>'+v.product_name+'</li>');
-                        $('#achievement-radio').append('<li>'+parseFloat(v.achievement_ratio).toFixed(2)+"%"+'</li>');
+                        $('#achievement-radio').append('<li>'+new Number(parseFloat(v.achievement_ratio).toFixed(1))+"%"+'</li>');
 
                     });
                     $.each(rd.result.data.market_share, function (i, v) {
                         $('#product-name').append('<li>'+v.product_name+'</li>');
-                        $('#market-share').append('<li>'+parseFloat(v.market_share).toFixed(2)+"%"+'</li>');
+                        $('#market-share').append('<li>'+new Number(parseFloat(v.market_share).toFixed(1))+"%"+'</li>');
                         // $('#uplift-ratio').append('<li>'+parseFloat(v.uplift_ratio).toFixed(2)+"%"+'</li>');
                         if(v.uplift_ratio < 0) {
-                            $('#uplift-ratio').append('<li style="color:red">'+parseFloat(v.uplift_ratio).toFixed(2)+"%"+'</li>');
+                            $('#uplift-ratio').append('<li style="color:red">'+new Number(parseFloat(v.uplift_ratio).toFixed(1))+"%"+'</li>');
                         } else {
-                            $('#uplift-ratio').append('<li style="color:#60B3AD">'+parseFloat(v.uplift_ratio).toFixed(2)+"%"+'</li>');
+                            $('#uplift-ratio').append('<li style="color:#60B3AD">'+new Number(parseFloat(v.uplift_ratio).toFixed(1))+"%"+'</li>');
                         }
                     });
                     $('#overall_score').attr("src",'/assets/images/version_2/'+ rd.result.data.overall_score + ".png");
-                    console.info()
                     if(rd.result.data.overall_score == "bronze") {
                         $('#logo-name').text("英勇青铜");
                     } else if(rd.result.data.overall_score == "gold") {
@@ -165,16 +163,8 @@
                         var grade = '/assets/images/version_2/' + v.comments.tips + ".png";
                         var title = '/assets/images/version_2/' + v.name + "-" + v.comments.tips + ".png";
                         var radar = '/assets/images/version_2/d'+ v.comments.tips + ".png";
-                        $('#radar-img').find('.radar-img1').attr("src",radar_img[0]);
-                        $('#radar-img').find('.radar-img2').attr("src",radar_img[1]);
-                        $('#radar-img').find('.radar-img3').attr("src",radar_img[2]);
-                        $('#radar-img').find('.radar-img4').attr("src",radar_img[3]);
-                        $('#radar-img').find('.radar-img5').attr("src",radar_img[4]);
-                        $('#radar-img').find('.radar-img6').attr("src",radar_img[5]);
-                        $('#radar-img').find('.radar-img7').attr("src",radar_img[6]);
-                        $('#radar-img').find('.radar-img8').attr("src",radar_img[7]);
-                        $('#radar-img').find('.radar-img9').attr("src",radar_img[radar_img.length-1]);
                         radar_img.push([radar]);
+
                         // // $('#radar-img').find('img').attr("src",radar);
                         // // console.info($('#radar-img').find('img'))
                         // console.info(radar_img.length-1)
@@ -207,13 +197,37 @@
                         line.push([v.name,v.comments.tips])
                     });
 
-                    data.push({"value": value});
+
+
+                    var radar_img_0 = radar_img[0];
+                    var radar_img_slice = radar_img.slice(1).reverse();
+                    radar_img_slice.unshift(radar_img_0);
+
+                    $('#radar-img').find('.radar-img1').attr("src",radar_img_slice[0]);
+                    $('#radar-img').find('.radar-img2').attr("src",radar_img_slice[1]);
+                    $('#radar-img').find('.radar-img3').attr("src",radar_img_slice[2]);
+                    $('#radar-img').find('.radar-img4').attr("src",radar_img_slice[3]);
+                    $('#radar-img').find('.radar-img5').attr("src",radar_img_slice[4]);
+                    $('#radar-img').find('.radar-img6').attr("src",radar_img_slice[5]);
+                    $('#radar-img').find('.radar-img7').attr("src",radar_img_slice[6]);
+                    $('#radar-img').find('.radar-img8').attr("src",radar_img_slice[7]);
+                    $('#radar-img').find('.radar-img9').attr("src",radar_img_slice[radar_img_slice.length-1]);
+
+                    var indicator_0 = indicator[0];
+                    var indicator_slice = indicator.slice(1).reverse();    //unshift
+                    indicator_slice.unshift(indicator_0);
+
+                    var value_0 = value[0];
+                    var value_slice = value.slice(1).reverse();    //unshift
+                    value_slice.unshift(value_0);
+
+                    data.push({"value": value_slice});
                     myChart.setOption({
                         tooltip: {
                             trigger: 'axis'
                         },
                         radar: {
-                            indicator: indicator,
+                            indicator: indicator_slice,
                             center: ['50%','45%'],
                             radius: '70%',
                             name: {
@@ -384,39 +398,14 @@
                 }
             });
 
+            $('div[name="jump-tab"] a').attr("href", "/report/" + $.cookie("uuid") + "/2")
         }
 
         events: {
-            //导出Excel
-            // $('#exportExcel').click(function(){
-            //
-            //     f.alert.loading(true);
-            //     setTimeout(function(){
-            //         f.alert.loading(false);
-            //         layer.alert('已下载');
-            //     },1000)
-            //
-            //
-            // });
-            // // 显示导出/导入excel区域按钮
-            // $('div[name = "toggle-export"]').click(function(e) {
-            //     $('div[name="area-export"]').toggle();
-            //     $(document).one("click", function(){
-            //         $('div[name="area-export"]').hide();
-            //     });
-            //     e.stopPropagation();
-            // });
-            //
-            // // 导入/导出区域的按钮冒泡阻止
-            // $('div[name="area-export"]').click(function(e) {
-            //     e.stopPropagation();
-            // });
-            //
-            // $('button[name="go-phrase"]').click(function(){
-            //     // w.location.href = "/home/" + $('input[name="uuid"]').val() + "/2"
-            //     w.location.href = "/transition/" + $('input[name="uuid"]').val() + "/"+ $('input[name="phrase"]').val()
-            // });
-
+            $('button[name="detail-report"]').click(function(e) {
+                e.stopPropagation();
+               $('div[name="jump-tab"] a')[0].click();
+            });
         }
     });
 
