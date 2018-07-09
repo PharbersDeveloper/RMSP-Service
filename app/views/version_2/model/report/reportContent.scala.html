@@ -22,7 +22,7 @@
                         <tr>
                             <td></td>
                             <td>原始值</td>
-                            <td>上个周期</td>
+                            <td>当期</td>
                             <td>周期(1)</td>
                         </tr>
                         @{
@@ -337,6 +337,24 @@
                               </tr>
 
 
+                        }
+                        @{
+                            val tmp = (report \ "report").asOpt[List[JsValue]].get
+                            val salesMenAllotTime = tmp.find(f => (f \ "report_name" ).as[String] == "代表报告_时间分配").get
+                            val days = (salesMenAllotTime \ "result").as[List[JsValue]].find(f => (f \ "general_names").as[String] == "能力辅导(天)").get
+                            val firstdays = (days \ "salesmen_first").asOpt[Int].get
+                            val seconddays = (days \ "salesmen_second").asOpt[Int].get
+                            val thirddays= (days \ "salesmen_third").asOpt[Int].get
+                            val fourthdays = (days \ "salesmen_fourth").asOpt[Int].get
+                            val fifthdays = (days \ "salesmen_fifth").asOpt[Int].get
+                                <tr>
+                                <td>能力辅导</td>
+                                <td>{firstdays}</td>
+                                <td>{seconddays}</td>
+                                <td>{thirddays}</td>
+                                <td>{fourthdays}</td>
+                                <td>{fifthdays}</td>
+                                </tr>
                         }
 
                     @{
@@ -2162,10 +2180,10 @@
                         <select class="prod" name="sales-report-prod">
                             <option selected="selected"   value='p_all'>ALL</option>
                             <option value="p_1">口服抗生素</option>
-                            <option value="p_2">一代降糖药</option>
-                            <option value="p_3">三代降糖药</option>
-                            <option value="p_4">皮肤药</option>
-                            <option value="p_5">总体</option>
+                            @*<option value="p_2">一代降糖药</option>*@
+                            @*<option value="p_3">三代降糖药</option>*@
+                            @*<option value="p_4">皮肤药</option>*@
+                            @*<option value="p_5">总体</option>*@
 
 
                         </select>
@@ -3393,10 +3411,10 @@
                         <select class="prod" name="salesman-sale-report-prod">
                             <option selected="selected"   value='p_all'>ALL</option>
                             <option value="p_1">口服抗生素</option>
-                            <option value="p_2">一代降糖药</option>
-                            <option value="p_3">三代降糖药</option>
-                            <option value="p_4">皮肤药</option>
-                            <option value="p_5">总体</option>
+                            @*<option value="p_2">一代降糖药</option>*@
+                            @*<option value="p_3">三代降糖药</option>*@
+                            @*<option value="p_4">皮肤药</option>*@
+                            @*<option value="p_5">总体</option>*@
 
 
                         </select>
