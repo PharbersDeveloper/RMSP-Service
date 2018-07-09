@@ -115,25 +115,25 @@ var resinformation = (function($, w){
         var aliasObject = $(personMaping).filter(function(index, elem) {return elem.name ===  identify}).toArray()[0];
         $.each(salesmen_skills, function(i, v) {
            if (v.general_names === "当期销售技巧(指数)") {
-                data.push(v[""+aliasObject.alias+""]);
+               phase1_data.push(v[""+aliasObject.alias+""]);
            } else {
-                phase1_data.push(v[""+aliasObject.alias+""]);
+               data.push(v[""+aliasObject.alias+""]);
            }
         });
 
         $.each(salesmen_knowledge, function(i, v) {
             if (v.general_names === "当期产品知识(指数)") {
-                data.push(v[""+aliasObject.alias+""]);
-            } else {
                 phase1_data.push(v[""+aliasObject.alias+""]);
+            } else {
+                data.push(v[""+aliasObject.alias+""]);
             }
         });
 
         $.each(salesmen_positive, function(i, v) {
             if (v.general_names === "当期工作积极性(指数)") {
-                data.push(v[""+aliasObject.alias+""]);
-            } else {
                 phase1_data.push(v[""+aliasObject.alias+""]);
+            } else {
+                data.push(v[""+aliasObject.alias+""]);
             }
         });
 
@@ -158,7 +158,7 @@ var resinformation = (function($, w){
             legend: {
                 icon: 'circle',
                 right: '1%',
-                data:['初始值','周期一'],
+                data:['初始值','当期'],
                 textStyle: {
                     color: '#fff'
                 }
@@ -195,7 +195,7 @@ var resinformation = (function($, w){
                     data: data
                 },
                 {
-                    name: '周期一',
+                    name: '当期',
                     type: 'bar',
                     itemStyle:{
                         normal:{
@@ -234,13 +234,16 @@ var resinformation = (function($, w){
             label:{
                 normal:{
                     show: true,
+                    formatter: function(elem) {
+                        return f.thousandsModule.formatNum(elem.value)
+                    },
                     textStyle:{color:'#3398DB'}
                 }
             },
             legend: {
                 icon: 'circle',
                 right: '1%',
-                data:['初始值','周期一'],
+                data:['初始值','当期'],
                 textStyle: {
                     color: '#fff'
                 }
@@ -273,18 +276,20 @@ var resinformation = (function($, w){
                             color:'#3784DD'
                         }
                     },
-                    barWidth: 40,
+                    // batGap: 80,
+                    barWidth: 50,
                     data: phase1
                 },
                 {
-                    name: '周期一',
+                    name: '当期',
                     type: 'bar',
                     itemStyle:{
                         normal:{
                             color:'#30E1BA'
                         }
                     },
-                    barWidth: 40,
+                    // batGap: 80,
+                    barWidth: 50,
                     data: phase2
                 }
             ]

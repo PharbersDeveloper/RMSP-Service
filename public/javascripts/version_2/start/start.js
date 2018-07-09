@@ -8,12 +8,12 @@
         $(".start").height(startScreenHeight);
     };
     var btn_1 = document.getElementById('btn_1');
-    var btn_2 = document.getElementById('btn_2');
+    // var btn_2 = document.getElementById('btn_2');
     var btn_3 = document.getElementById('btn_3');
     // var btn_4 = document.getElementById('btn_4');
     var btn_5 = document.getElementById('btn_5');
     var div_1 = document.getElementById("div_1");
-    var div_2 = document.getElementById("div_2");
+    // var div_2 = document.getElementById("div_2");
     var div_3 = document.getElementById("div_3");
     // var div_4 = document.getElementById("div_4");
     var div_5 = document.getElementById("div_5");
@@ -73,14 +73,21 @@ function goHomePage() {
         div_1.classList.add('scaledivstyle');
         div_1.classList.remove("rightbigger");
         div_1.style.opacity = 0.6;
-        div_2.classList.add("origindivstyle");
-        div_2.classList.remove("scaledivstyle", "rightsmaller", "originsmall");
-        div_2.style.zIndex = 4;
-        div_2.style.opacity = 1;
-        div_3.classList.add("originsmall");
-        div_3.style.zIndex = 3;
-        div_3.style.opacity = 0.6;
-        div_5.style.opacity = 0;
+        // div_2.classList.add("origindivstyle");
+        // div_2.classList.remove("scaledivstyle", "rightsmaller", "originsmall");
+        // div_2.style.zIndex = 4;
+        // div_2.style.opacity = 1;
+        div_3.classList.add("origindivstyle");
+        div_3.classList.remove("scaledivstyle", "rightsmaller", "originsmall");
+        div_3.style.zIndex = 4;
+        div_3.style.opacity = 1;
+        // div_3.classList.add("originsmall");
+        // div_3.style.zIndex = 3;
+        // div_3.style.opacity = 0.6;
+        div_5.classList.add("originsmall");
+        div_5.style.zIndex = 3;
+        div_5.style.opacity = 0.6;
+        // div_5.style.opacity = 0;
         changeSpanStyle(1);
     };
 
@@ -120,8 +127,8 @@ function goHomePage() {
     function btn_3_click(){
         div_1.style.zIndex = 1;
         div_1.style.opacity = 0;
-        div_2.style.zIndex = 1;
-        div_2.style.opacity = 0;
+        // div_2.style.zIndex = 1;
+        // div_2.style.opacity = 0;
         div_3.style.zIndex = 3;
         div_3.style.opacity = 0.6;
         div_3.classList.remove("rightbigger","origindivstyle");
@@ -132,8 +139,9 @@ function goHomePage() {
         div_5.style.opacity = 1;
         // div_5.classList.add("originsmall");
         // div_5.style.zIndex = 3;
-        changeSpanStyle(3);
-};
+        changeSpanStyle(2);
+
+    };
 
 // // fourth btn:btn_4
 //     function btn_4_click(){
@@ -166,7 +174,8 @@ function goHomePage() {
         }
         //  小圆点逻辑的判断
         for (var i = 0; i < len; i++) {
-            // console.log("for is running")
+            console.log("for is running");
+            console.log(i);
             (function(i) {
                 spans[i].addEventListener("click", function() {
                     for (var x = 0; x < len; x++) {
@@ -200,7 +209,7 @@ function goHomePage() {
                             contentdiv[i + 1].classList.add("originsmall");
                         } else {
                             contentdiv[i].classList.add("rightbigger");
-                            contentdiv[i + 2].style.zIndex = 2;
+                            // contentdiv[i + 2].style.zIndex = 2;
                             contentdiv[i + 1].classList.add("rightsmaller");
                         }
                     } else if (i == 2) {
@@ -216,7 +225,7 @@ function goHomePage() {
                         console.log(pointIndex);
                         if (pointIndex < i) {
                             contentdiv[i].classList.add("origindivstyle");
-                            contentdiv[i + 1].classList.add("originsmall");
+                            // contentdiv[i + 1].classList.add("originsmall");
                         } else {
                             contentdiv[i].classList.add("rightbigger");
                             contentdiv[i + 1].classList.remove("rightbigger", "origindivstyle", "scaledivstyle", "rightsmaller", "originsmall")
