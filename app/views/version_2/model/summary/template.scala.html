@@ -9,15 +9,11 @@
                         <div class="row head-describe">
                             <div class="col-md-12 box bg">
                                 <div class="col-md-5 col-sm-5 col-xs-5">测评报告</div>
-                                <div class="col-md-7 col-sm-7 col-xs-7 text-right" >
-                                    @*<div class="config" name="toggle-export">*@
-                                        @*<i class="glyphicon glyphicon-cog"></i>*@
-                                        @*<div class="config-toggle-content" name="area-export">*@
-                                            @*<p id="exportExcel">下载报告</p>*@
-                                        @*</div>*@
-                                    @*</div>*@
-
-                                    <div class="timer" style="display: none;"><i class="glyphicon glyphicon-time"></i><span>00:00</span></div>
+                                <div class="col-md-2 col-sm-2 col-xs-2 col-md-offset-5 text-right" >
+                                    <div name="jump-tab" style="display: none;">
+                                        <a target="_blank">详细报告</a>
+                                    </div>
+                                    <button class="btn btn-primary btn-md check-result-btn" style="height: 30px;" name="detail-report" type="button"><span>销售结果</span></button>
                                 </div>
                             </div>
                         </div>
@@ -71,13 +67,13 @@
                                 <ul>
                                     <li>团队指标达成率</li>
                                 </ul>
-                                <ul class="area-left" id="team-achievement">
+                                <ul class="area-left ul-vertical-center" id="team-achievement">
                                     @*<li>口服抗生素</li>*@
                                     @*<li>一代降糖藥</li>*@
                                     @*<li>三代降糖藥</li>*@
                                     @*<li>皮膚藥</li>*@
                                 </ul>
-                                <ul class="area-right" id="achievement-radio">
+                                <ul class="area-right ul-vertical-center" id="achievement-radio">
                                     @*<li>113%</li>*@
                                     @*<li>113%</li>*@
                                     @*<li>113%</li>*@
@@ -89,19 +85,19 @@
                                 <ul>
                                     <li>份额</li>
                                 </ul>
-                                <ul class="area-left" id="product-name">
+                                <ul class="area-left ul-vertical-center" id="product-name">
                                     @*<li>口服抗生素</li>*@
                                     @*<li>一代降糖藥</li>*@
                                     @*<li>三代降糖藥</li>*@
                                     @*<li>皮膚藥</li>*@
                                 </ul>
-                                <ul class="area-right area-right-two" id="uplift-ratio">
+                                <ul class="area-right area-right-two ul-vertical-center" id="uplift-ratio">
                                     @*<li>+12.4%</li>*@
                                     @*<li>+12.4%</li>*@
                                     @*<li>+12.4%</li>*@
                                     @*<li>+12.4%</li>*@
                                 </ul>
-                                <ul class="area-right" id="market-share">
+                                <ul class="area-right ul-vertical-center" id="market-share">
                                     @*<li>113%</li>*@
                                     @*<li>113%</li>*@
                                     @*<li>113%</li>*@
@@ -226,29 +222,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div description="资源分配与优化" class="abs">
-                                <div class="left">
-                                    <h2>资源分配与优化</h2>
-                                    <div class="img">
-                                        <img name="grade" src="#" alt="">
-                                    </div>
-                                </div>
-                                <div class="right">
-                                    <div class="text">
-                                        <p class="title">考核点</p>
-                                        <ul>
-                                            <li>熟悉、掌握资源的分配方法。</li>
-                                            <li>能综合销售任务全局状况，在资源有限的情况下，良好的权衡，做出恰当的资源配置方案。</li>
-                                            <li>优化资源配置，确保每一份资源被高效利用。</li>
-                                        </ul>
-                                        <p class="title">能力解读</p>
-                                        <p class="status" name="explain">您還需要花更多的精力，完善自己在报表与数据解读上的能力，透过科学化的分析，能使您在部署战略上，了解全局现状，洞察问题关键，您還需要花更多的精力，完善自己在报表与数据解读上的能力，透过科学化的分析，能使您在部署战略上，了解全局现状，洞察问题关键，您還需要花更多的精力，完善自己在报表与数据解读上的能力，透过科学化的分析，能使您在部署战略上，了解全局现状，洞察问题关键，预判发展趋势。從數據中你將收穫宏觀的視野,掌握全局。</p>
-                                    </div>
-                                    <div class="img" name="title">
-
-                                    </div>
-                                </div>
-                            </div>
                             <div description="销售计划部署" class="abs">
                                 <div class="left">
                                     <h2>销售计划部署</h2>
@@ -266,6 +239,29 @@
                                         </ul>
                                         <p class="title">能力解读</p>
                                         <p class="status" name="explain">预判发展趋势。從數據中你將收穫宏觀的視野,掌握全局。</p>
+                                    </div>
+                                    <div class="img" name="title">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div description="资源分配与优化" class="abs">
+                                <div class="left">
+                                    <h2>资源分配与优化</h2>
+                                    <div class="img">
+                                        <img name="grade" src="#" alt="">
+                                    </div>
+                                </div>
+                                <div class="right">
+                                    <div class="text">
+                                        <p class="title">考核点</p>
+                                        <ul>
+                                            <li>熟悉、掌握资源的分配方法。</li>
+                                            <li>能综合销售任务全局状况，在资源有限的情况下，良好的权衡，做出恰当的资源配置方案。</li>
+                                            <li>优化资源配置，确保每一份资源被高效利用。</li>
+                                        </ul>
+                                        <p class="title">能力解读</p>
+                                        <p class="status" name="explain">您還需要花更多的精力，完善自己在报表与数据解读上的能力，透过科学化的分析，能使您在部署战略上，了解全局现状，洞察问题关键，您還需要花更多的精力，完善自己在报表与数据解读上的能力，透过科学化的分析，能使您在部署战略上，了解全局现状，洞察问题关键，您還需要花更多的精力，完善自己在报表与数据解读上的能力，透过科学化的分析，能使您在部署战略上，了解全局现状，洞察问题关键，预判发展趋势。從數據中你將收穫宏觀的視野,掌握全局。</p>
                                     </div>
                                     <div class="img" name="title">
 

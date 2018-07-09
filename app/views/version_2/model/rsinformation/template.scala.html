@@ -3,147 +3,191 @@
 @import play.api.libs.json.JsValue
 
 @(uuid: String, phrase: String, salesman: List[JsValue], salesman_team: List[JsValue], hosp_new: JsValue, hosp_list: List[JsValue], product: List[JsValue], report: Option[JsValue])
-@numberFormat(d: AnyVal) = @{
-    val numberFormat = NumberFormat.getInstance()
-    numberFormat.setGroupingUsed(true)
-    numberFormat.format(d)
-}
-<input type="hidden" name="uuid" value="@{uuid}">
-<input type="hidden" name="phrase" value="@{phrase}">
-<div class="resource-content">
-    <div class="navbar-resource">
-        <div class="col-md-9 col-sm-9 col-xs-9">
-            <div class="btn-group navbar-btn" name="navbar-btn" role="group">
-                <button type="button" class="btn btn-default" name="indicators-info-btn">指标任务</button>
-                <button type="button" class="btn btn-default" name="hosp-info-btn">医院信息</button>
-                <button type="button" class="btn btn-default active" name="delegate-info-btn">团队信息</button>
-                <button type="button" class="btn btn-default" name="product-info-btn">产品信息</button>
-                <button type="button" class="btn btn-default" name="history-info-btn">历史销售数据</button>
+    @numberFormat(d: AnyVal) = @{
+        val numberFormat = NumberFormat.getInstance()
+        numberFormat.setGroupingUsed(true)
+        numberFormat.format(d)
+    }
 
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-3 col-xs-3 text-right">
-            <button class="btn btn-primary btn-md download-btn" type="button" id="download-btn">下载医院数据</button>
-            <button class="btn btn-primary btn-md backup-btn" type="button" id="backup-btn">收起</button>
-        </div>
-    </div>
-    <div class="indicators-list" style="display:none;">
-        <div class="indicators">
-        @product.filter(x => (x \ "prod_name").as[String] == "口服抗生素").map { pro =>
-            <div class="details">
-               <div class="col-xs-2 col-sm-2 col-md-2 ">
-                   <div class="indicators-info text-center">
-                       <p><img class="img-rounded" src=@{"/assets/images/version_2/"+(pro \ "prod_name").as[String]+".png"} width="100" height="100"></p>
-                       <p>@{(pro \ "prod_brand").as[String]}</p>
-                       <p>@{(pro \ "prod_name").as[String]}</p>
-                   </div>
-               </div>
-                <div class="col-xs-4 col-sm-4 col-md-4 ">
-                    <div class="current-indicators text-center">
-                        <p>当期指标</p>
-                        <p class="indicators-number">@{numberFormat((pro \ "indicators_sales").as[String].toDouble)}</p>
-                    </div>
-                </div>
-                <div class="col-xs-6 col-sm-6 col-md-6 ">
-                    <div class="indicators-describe">
-                        <p>指标说明</p>
-                        <p class="content">@{(pro \ "indicators").as[String]}</p>
-                    </div>
+    <input type="hidden" name="uuid" value="@{
+        uuid
+    }">
+    <input type="hidden" name="phrase" value="@{
+        phrase
+    }">
+    <div class="resource-content">
+        <div class="navbar-resource">
+            <div class="col-md-9 col-sm-9 col-xs-9">
+                <div class="btn-group navbar-btn" name="navbar-btn" role="group">
+                    <button type="button" class="btn btn-default" name="indicators-info-btn">指标任务</button>
+                    <button type="button" class="btn btn-default" name="hosp-info-btn">医院信息</button>
+                    <button type="button" class="btn btn-default active" name="delegate-info-btn">团队信息</button>
+                    <button type="button" class="btn btn-default" name="product-info-btn">产品信息</button>
+                    <button type="button" class="btn btn-default" name="history-info-btn">历史销售数据</button>
+
                 </div>
             </div>
-        }
+            <div class="col-md-3 col-sm-3 col-xs-3 text-right">
+                <button class="btn btn-primary btn-md download-btn" type="button" id="download-btn">下载医院数据</button>
+                <button class="btn btn-primary btn-md backup-btn" type="button" id="backup-btn">收起</button>
+            </div>
         </div>
-    </div>
-    <div class="hospital-list" style="display:none;">
-        <div class="hospital">
-            @{
-                hosp_list.zipWithIndex.map { x =>
-                    (hosp_new \ "1").as[List[JsValue]].find(f => (f \ "hosp_code").as[String] == (x._1 \ "hosp_code").as[String]).map { f =>
-                        val fh = "&";
-                        <div class="details" >
+
+        <div class="content-details">
+            <div class="indicators-list" style="display: none;">
+                <div class="indicators">
+                @product.filter(x => (x \ "prod_name").as[String] == "口服抗生素").map { pro =>
+                    <div class="details">
+                        <div class="col-xs-2 col-sm-2 col-md-2 ">
+                            <div class="indicators-info text-center">
+                                <p><img class="img-rounded" src=@{
+                                    "/assets/images/version_2/" + (pro \ "prod_name").as[String] + ".png"
+                                } width="100" height="100"></p>
+                                <p>@{
+                                    (pro \ "prod_brand").as[String]
+                                }</p>
+                                <p>@{
+                                    (pro \ "prod_name").as[String]
+                                }</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4 ">
+                            <div class="current-indicators text-center">
+                                <p>当期指标</p>
+                                <p class="indicators-number">@{
+                                    numberFormat((pro \ "indicators_sales").as[String].toDouble)
+                                }</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 ">
+                            <div class="indicators-describe">
+                                <p>指标说明</p>
+                                <p class="content">@{
+                                    (pro \ "indicators").as[String]
+                                }</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+                </div>
+            </div>
+            <div class="hospital-list" style="display: none;">
+                <div class="hospital">
+                @{
+                    hosp_list.zipWithIndex.map { x =>
+                        (hosp_new \ "1").as[List[JsValue]].find(f => (f \ "hosp_code").as[String] == (x._1 \ "hosp_code").as[String]).map { f =>
+                            val fh = "&";
+                            <div class="details">
                             <div class="top-details">
-                                <div class="col-xs-2 col-sm-2 col-md-2">
-                                    <div class="hospital-info">
-                                        <span>{(x._1 \ "hosp_name").as[String]}</span>
-                                        <img class="media-object img-rounded" src={"/assets/images/version_2/"+(x._1 \ "hosp_name").as[String]+".jpg"}  width="120" height="120" alt="医院" />
-                                    </div>
-                                </div>
-                                <div class="col-xs-4 col-sm-4 col-md-4">
-                                    <div class="hospital-describe">
-                                        <ul>
-                                            <li><span>成立时间</span> <span>{(x._1 \ "create_time").as[String]}</span></li>
-                                            <li><span>医院类型</span> <span>{(x._1 \ "type").as[String]}</span> </li>
-                                            <li><span>医院等级</span> <span>{(x._1 \ "hosp_cat").as[String]}</span> </li>
-                                            <li><span>病床数量</span> <span>{(x._1 \ "bed_number").as[String]}</span> </li>
-                                            <li><span>重点科室</span> <span>{(x._1 \ "department").as[String]}</span></li>
-                                            <li><span>患者支付能力</span> <span>{(x._1 \ "pay_power").as[String]}</span> </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-xs-6 col-sm-6 col-md-6">
-                                    <div class="textarea-describe" style="height: 240px;">
-                                        <div style="width: 100%; height: 115%;" name={(x._1 \ "hosp_name").as[String]}></div>
-                                    </div>
-                                </div>
+                            <div class="col-xs-2 col-sm-2 col-md-2">
+                            <div class="hospital-info">
+                            <span>{(x._1 \ "hosp_name").as[String]}</span>
+                                <img class="media-object img-rounded" src={"/assets/images/version_2/" + (x._1 \ "hosp_name").as[String] + ".jpg"} width="120" height="120" alt="医院"/>
                             </div>
-                            <hr/>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4">
+                            <div class="hospital-describe">
+                            <ul>
+                            <li>
+                            <span>成立时间</span>
+                            <span>{(x._1 \ "create_time").as[String]}</span>
+                            </li>
+                            <li>
+                            <span>医院类型</span>
+                            <span>{(x._1 \ "type").as[String]}</span>
+                            </li>
+                            <li>
+                            <span>医院等级</span>
+                            <span>{(x._1 \ "hosp_cat").as[String]}</span>
+                            </li>
+                            <li>
+                            <span>病床数量</span>
+                            <span>{(x._1 \ "bed_number").as[String]}</span>
+                            </li>
+                            <li>
+                            <span>重点科室</span>
+                            <span>{(x._1 \ "department").as[String]}</span>
+                            </li>
+                            <li>
+                            <span>患者支付能力</span>
+                            <span>{(x._1 \ "pay_power").as[String]}</span>
+                            </li>
+                            </ul>
+                            </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                            <div class="textarea-describe" style="height: 240px;">
+                            <div style="width: 100%; height: 115%;" name={(x._1 \ "hosp_name").as[String]}></div>
+                            </div>
+                            </div>
+                            </div>
+                                <hr/>
                             <div class="bottom-details">
-                                <div class="col-xs-2 col-sm-2 col-md-2 text-center">
-                                    <div class="hospital-tip">
-                                        <p>新闻动态</p>
-                                        <p>{fh}</p>
-                                        <p>用药理念</p>
-                                    </div>
-                                </div>
-                                <div class="col-xs-2 col-sm-2 col-md-10">
-                                    <div class="hospital-tip">
-                                        <p>&nbsp;</p>
-                                        <p>{(x._1 \ "dynamic").as[String]}</p>
-                                        <p>&nbsp;</p>
-                                    </div>
+                            <div class="col-xs-2 col-sm-2 col-md-2 text-center">
+                            <div class="hospital-tip">
+                            <p>新闻动态</p>
+                            <p>{fh}</p>
+                            <p>用药理念</p>
+                            </div>
+                            </div>
+                            <div class="col-xs-2 col-sm-2 col-md-10">
+                            <div class="hospital-tip">
+                            <p>&nbsp;</p>
+                            <p>{(x._1 \ "dynamic").as[String]}</p>
+                            <p>&nbsp;</p>
+                            </div>
+                            </div>
+                            </div>
+                            </div>
+                            <textarea style="display: none;" name={(x._1 \ "hosp_name").as[String]}>
+                            [
+                            {(x._1 \ "phase1").as[String]}
+                            ,
+                            {(x._1 \ "phase2").as[String]}
+                            ]
+                            </textarea>
+                        }
+                    }
+                }
+                </div>
+                    <!--<div class="hospital">
 
-                                </div>
-                            </div>
-                        </div>
-                        <textarea style="display: none;" name={(x._1 \ "hosp_name").as[String]}>[{(x._1 \ "phase1").as[String]}, {(x._1 \ "phase2").as[String]}]</textarea>
-                    }
-                }
-            }
-        </div>
-        <!--<div class="hospital">
-            @{
-                hosp_list.zipWithIndex.map { x =>
-                    (hosp_new \ "1").as[List[JsValue]].find(f => (f \ "hosp_code").as[String] == (x._1 \ "hosp_code").as[String]).map { f =>
-                        <div class="details" >
+                @{
+                    hosp_list.zipWithIndex.map { x =>
+                        (hosp_new \ "1").as[List[JsValue]].find(f => (f \ "hosp_code").as[String] == (x._1 \ "hosp_code").as[String]).map { f =>
+                            <div class="details">
                             <div class="media">
-                                <div class="media-left">
-                                    <a href="#">
-                                        <img class="media-object img-rounded" src={"/assets/images/version_2/"+(x._1 \ "hosp_name").as[String]+".jpg"}  width="120" height="120" alt="医院" />
-                                    </a>
-                                    <p class="text-center hospital-name">{(x._1 \ "hosp_name").as[String]}</p>
-                                </div>
-                                <div class="media-body">
-                                    <p class="media-heading">医院概况</p>
-                                    <p class="describe">
-                                        {(f \ "phrase").as[String]}
-                                    </p>
-                                </div>
-                                <div class="media-body">
-                                    <p class="media-heading">药品潜力</p>
-                                    <div class="potential">
-                                        <p>口服抗生素：{NumberFormat.getInstance().format((x._1 \ "口服抗生素").as[List[String]].tail.head.toDouble)}</p>
-                                    </div>
-                                </div>
+                            <div class="media-left">
+                            <a href="#">
+                                <img class="media-object img-rounded" src={"/assets/images/version_2/" + (x._1 \ "hosp_name").as[String] + ".jpg"} width="120" height="120" alt="医院"/>
+                            </a>
+                            <p class="text-center hospital-name">{(x._1 \ "hosp_name").as[String]}</p>
                             </div>
-                        </div>
+                            <div class="media-body">
+                            <p class="media-heading">医院概况</p>
+                            <p class="describe">
+                            {(f \ "phrase").as[String]}
+                            </p>
+                            </div>
+                            <div class="media-body">
+                            <p class="media-heading">药品潜力</p>
+                            <div class="potential">
+                            <p>
+                            口服抗生素：
+                            {NumberFormat.getInstance().format((x._1 \ "口服抗生素").as[List[String]].tail.head.toDouble)}
+                            </p>
+                            </div>
+                            </div>
+                            </div>
+                            </div>
+                        }
                     }
                 }
-            }
-        </div>-->
-    </div>
-    <div class="person-list">
-        <div class="person">
-            <div class="details">
+            </div>-->
+        </div>
+        <div class="person-list">
+            <div class="person">
+                <div class="details">
                 @{
                     salesman_team.map { x =>
                         <textarea style="display: none" id="salesmen_skills">{(x \ "salesmen_skills").as[JsValue].toString}</textarea>
@@ -160,12 +204,30 @@
                         <div class="col-xs-10 col-sm-10 col-md-10">
                         <div class="team-describe">
                         <ul>
-                        <li><span>成立时间 </span> <span> {(x \ "creation_time").as[String]}</span></li>
-                        <li><span>人数 </span> <span> {(x \ "people_number").as[String]}</span></li>
-                        <li><span>整体销售经验 </span> <span> {(x \ "experience").as[String]}</span></li>
-                        <li><span>原先负责产品 </span> <span> {(x \ "former_prod").as[String]}</span></li>
-                        <li><span>区域熟悉度 </span> <span> {(x \ "area_familiarity").as[String]}</span></li>
-                        <li><span>区域概况 </span> <span> {(x \ "area_survey").as[String]}</span></li>
+                        <li>
+                        <span>成立时间</span>
+                        <span>{(x \ "creation_time").as[String]}</span>
+                        </li>
+                        <li>
+                        <span>人数</span>
+                        <span>{(x \ "people_number").as[String]}</span>
+                        </li>
+                        <li>
+                        <span>整体销售经验</span>
+                        <span>{(x \ "experience").as[String]}</span>
+                        </li>
+                        <li>
+                        <span>原先负责产品</span>
+                        <span>{(x \ "former_prod").as[String]}</span>
+                        </li>
+                        <li>
+                        <span>区域熟悉度</span>
+                        <span>{(x \ "area_familiarity").as[String]}</span>
+                        </li>
+                        <li>
+                        <span>区域概况</span>
+                        <span>{(x \ "area_survey").as[String]}</span>
+                        </li>
                         </ul>
                         </div>
                         </div>
@@ -179,229 +241,253 @@
                         </div>
                         <div class="col-xs-10 col-sm-10 col-md-10">
                         <div class="team-context">
-                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                        在医改合规政策下，大家都感到十分恐慌，对于未来职业发展感到迷茫。
+                        公司强调对于新人的培养，希望借由团队培养，降低人员流动率，降低企业由于人员流失所导致的损耗。
                         </div>
                         </div>
                         </div>
                     }
                 }
 
-            </div>
-            @salesman.zipWithIndex.reverse.map { person =>
-                <div class="details">
-                    <div class="top-details">
-                        <div class="col-xs-2 col-sm-2 col-md-2 text-center">
-                            <div class="person-info">
-                                <img class="img-circle" src="@{routes.Assets.versioned("images/version_2/"+(person._1 \ "name").asOpt[String].get+".png")}" width="120" height="120" alt="人">
-                                <p>@{(person._1 \ "name").asOpt[String]}</p>
+                </div>
+                @salesman.zipWithIndex.reverse.map { person =>
+                    <div class="details">
+                        <div class="top-details">
+                            <div class="col-xs-2 col-sm-2 col-md-2 text-center">
+                                <div class="person-info">
+                                    <img class="img-circle" src="@{
+                                        routes.Assets.versioned("images/version_2/" + (person._1 \ "name").asOpt[String].get + ".png")
+                                    }" width="120" height="120" alt="人">
+                                    <p>@{
+                                        (person._1 \ "name").asOpt[String]
+                                    }</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <div class="person-describe">
+                                    <ul>
+                                        <li><span>年龄</span> <span>@{
+                                            (person._1 \ "age").asOpt[Int]
+                                        }</span></li>
+                                        <li><span>学历</span> <span>@{
+                                            (person._1 \ "education").asOpt[String]
+                                        }</span></li>
+                                        <li><span>专业背景</span> <span>@{
+                                            (person._1 \ "professional").asOpt[String]
+                                        }</span></li>
+                                        <li><span>工作年限</span> <span>@{
+                                            (person._1 \ "seniority").asOpt[String]
+                                        }</span></li>
+                                        <li><span>入职时间</span> <span>@{
+                                            (person._1 \ "entry_time").asOpt[String]
+                                        }</span></li>
+                                        <li><span>业务经验</span> <span>@{
+                                            (person._1 \ "professional_exper").asOpt[String]
+                                        }</span></li>
+                                        <li><span>销售技巧</span> <span>@{
+                                            (person._1 \ "sales_skills").asOpt[String]
+                                        }</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4">
+                                <div class="textarea-describe" style="height: 240px;">
+                                    <div style="width: 100%;
+                                        height: 115%;" name=@{
+                                        (person._1 \ "name").asOpt[String]
+                                    }></div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-xs-6 col-sm-6 col-md-6">
-                            <div class="person-describe">
-                                <ul>
-                                    <li><span>年龄</span> <span>@{(person._1 \ "age").asOpt[Int]}</span></li>
-                                    <li><span>学历</span> <span>@{(person._1 \ "education").asOpt[String]}</span></li>
-                                    <li><span>专业背景</span> <span>@{(person._1 \ "professional").asOpt[String]}</span></li>
-                                    <li><span>工作年限</span> <span>@{(person._1 \ "seniority").asOpt[String]}</span></li>
-                                    <li><span>入职时间</span> <span>@{(person._1 \ "entry_time").asOpt[String]}</span></li>
-                                    <li><span>业务经验</span> <span>@{(person._1 \ "professional_exper").asOpt[String]}</span></li>
-                                    <li><span>销售技巧</span> <span>@{(person._1 \ "sales_skills").asOpt[String]}</span></li>
-                                </ul>
+                        <hr>
+                        <div class="bottom-details">
+                            <div class="col-xs-2 col-sm-2 col-md-2 text-center">
+                                <div class="team-tip">
+                                    近期动态
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-xs-4 col-sm-4 col-md-4">
-                            <div class="textarea-describe" style="height: 240px;">
-                                <div style="width: 100%; height: 115%;" name=@{(person._1 \ "name").asOpt[String]}></div>
+                            <div class="col-xs-10 col-sm-10 col-md-10">
+                                <div class="team-context">
+                                @{
+                                    (person._1 \ "recent_situation").asOpt[String]
+                                }
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <hr>
-                    <div class="bottom-details">
-                        <div class="col-xs-2 col-sm-2 col-md-2 text-center">
-                            <div class="team-tip">
-                                近期动态
-                            </div>
+                }
+            </div>
+                <!--<div class="person">
+
+            @salesman.zipWithIndex.reverse.map { person =>
+                <div class="details">
+                    <div class="media">
+                        <div class="media-left">
+                            <a href="#">
+                                <img class="media-object img-circle" src="@{
+                                    routes.Assets.versioned("images/version_2/" + (person._1 \ "name").asOpt[String].get + ".png")
+                                }" width="140" height="140" alt="人">
+                            </a>
+                            <p class="text-center person-name">@{
+                                (person._1 \ "name").asOpt[String]
+                            }</p>
                         </div>
-                        <div class="col-xs-10 col-sm-10 col-md-10">
-                            <div class="team-context">
-                                @{(person._1 \ "recent_situation").asOpt[String]}
+                        <div class="media-body">
+                            <p class="media-heading">代表概况</p>
+                            <p class="describe">
+                            @{
+                                (person._1 \ "skills").as[String] + (person._1 \ "description").as[String] + (person._1 \ "motivation").as[String]
+                            }
+                            </p>
+                        </div>
+                        <div class="media-body">
+                            <p class="media-heading">能力值</p>
+                            <div class="radar-map">
+                                <div name="@{
+                                    (person._1 \ "name").asOpt[String]
+                                }" style="width : 280px ; height : 200px ;"></div>
+                                @*<img src="@{routes.Assets.versioned("images/version_2/"+(phrase)+"-"+(person._1 \ "name").asOpt[String].get+".png")}" width="280" height="192">*@
                             </div>
                         </div>
                     </div>
                 </div>
             }
-        </div>
-        <!--<div class="person">
-            @salesman.zipWithIndex.reverse.map { person =>
+        </div>-->
+    </div>
+    <div class="product-list" style="display: none;">
+        <div class="product">
+        @product.filter(x => (x \ "prod_name").as[String] == "口服抗生素").map { pro =>
             <div class="details">
-                <div class="media">
-                    <div class="media-left">
-                        <a href="#">
-                            <img class="media-object img-circle" src="@{routes.Assets.versioned("images/version_2/"+(person._1 \ "name").asOpt[String].get+".png")}" width="140" height="140" alt="人">
-                        </a>
-                        <p class="text-center person-name">@{(person._1 \ "name").asOpt[String]}</p>
+                <div class="top-details">
+                    <div class="col-xs-2 col-sm-2 col-md-2">
+                        <div class="product-info">
+                            <img class="img-rounded" src=@{
+                                "/assets/images/version_2/" + (pro \ "prod_name").as[String] + ".png"
+                            } width="100" height="100">
+                            <br>
+                            <br>
+                            @{
+                                (pro \ "prod_brand").as[String]
+                            }
+                        </div>
                     </div>
-                    <div class="media-body">
-                        <p class="media-heading">代表概况</p>
-                        <p class="describe">
+                    <div class="col-xs-4 col-sm-4 col-md-4">
+                        <div class="product-describe">
+                            <ul>
+                                <li><span>类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别</span> <span>@{
+                                    (pro \ "prod_name").as[String]
+                                }</span> </li>
+                                <li style="height: 40px; width: 360px">
+                                    <span>治疗领域</span>
+                                    <div style="width: 270px; float: right;">@{(pro \ "therapeutic_area").as[String]}</div>
+                                    @*<span style="width: 270px; line-height: 15px; display: inline-block;"></span>*@
+                                </li>
+                                <li><span>上市时间</span> <span>@{
+                                    (pro \ "prod_sales_time").as[String]
+                                }</span> </li>
+                                <li><span>医保类型</span> <span>@{
+                                    (pro \ "prod_insurance").as[String]
+                                }</span> </li>
+                                <li><span>研发类型</span> <span>@{
+                                    (pro \ "prod_cat").as[String]
+                                }</span></li>
+                                <li><span>产品特点</span> <span>@{
+                                    (pro \ "features").as[String]
+                                }</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-2 col-sm-2 col-md-2">
+                        <div class="product-describe">
+                            <ul>
+                                <li><span>公司考核价</span> <span style="margin-left: 10px">@{
+                                    (pro \ "prod_unit_price").as[String]
+                                }</span></li>
+                                <li><span>成本单位</span> <span style="margin-left: 10px">@{
+                                    (pro \ "prod_unit_cost").as[String]
+                                }</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-4 col-sm-4 col-md-4">
+                        <div class="textarea-describe">
+                            <p style="padding: 10px 0 20px 10px;">竞品信息</p>
+                            <p style="padding: 10px 0 0 40px">@{
+                                (pro \ "prod_competition").as[String]
+                            }</p>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="bottom-details">
+                    <div class="col-xs-2 col-sm-2 col-md-2 text-center">
+                        <div class="product-tip">
+                            药品动态
+                        </div>
+                    </div>
+                    <div class="col-xs-10 col-sm-10 col-md-10 text-left">
+                        <div class="product-tip">
                         @{
-                            (person._1 \ "skills").as[String] + (person._1 \ "description").as[String] + (person._1 \ "motivation").as[String]
+                            (pro \ "recent_situation").as[String]
                         }
-                        </p>
-                    </div>
-                    <div class="media-body">
-                        <p class="media-heading">能力值</p>
-                        <div class="radar-map">
-                            <div name="@{(person._1 \ "name").asOpt[String]}" style="width: 280px; height: 200px;"></div>
-                            @*<img src="@{routes.Assets.versioned("images/version_2/"+(phrase)+"-"+(person._1 \ "name").asOpt[String].get+".png")}" width="280" height="192">*@
                         </div>
                     </div>
                 </div>
             </div>
         }
-        </div>-->
-    </div>
-    <div class="product-list" style="display:none;">
-        <!--<div class="table-responsive" style="padding: 0 0 0 5px;">
-            <table class="table">
-                <tr>
-                    <th style="width:156px;">药品类别/名称</th>
-                    <th style="width:156px;">产品展示</th>
-                    <th style="width:156px;">上市时间</th>
-                    <th style="width:156px;">公司考核价</th>
-                    <th style="width:156px;">单位成本</th>
-                    <th style="width:156px;">医保</th>
-                    <th style="width:156px;">类型</th>
-                    <th style="width:273px;">竞品信息</th>
-                </tr>
-            </table>
-        </div>-->
-        <div class="product">
-            @product.filter(x => (x \ "prod_name").as[String] == "口服抗生素").map { pro =>
-                <div class="details">
-                    <div class="top-details">
-                        <div class="col-xs-2 col-sm-2 col-md-2">
-                            <div class="product-info">
-                                <img class="img-rounded" src=@{"/assets/images/version_2/"+(pro \ "prod_name").as[String]+".png"} width="100" height="100">
-                                <br>
-                                <br>
-                                @{(pro \ "prod_brand").as[String]}
-                            </div>
-                        </div>
-                        <div class="col-xs-3 col-sm-3 col-md-3">
-                            <div class="product-describe">
-                                <ul>
-                                    <li><span>类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别</span> <span>@{(pro \ "prod_name").as[String]}</span> </li>
-                                    <li><span>治疗领域</span> <span></span></li>
-                                    <li><span>上市时间</span> <span>@{(pro \ "prod_sales_time").as[String]}</span> </li>
-                                    <li><span>医保类型</span> <span>@{(pro \ "prod_insurance").as[String]}</span> </li>
-                                    <li><span>研发类型</span> <span>@{(pro \ "prod_cat").as[String]}</span></li>
-                                    <li><span>产品特点</span> <span>@{(pro \ "features").as[String]}</span></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-xs-3 col-sm-3 col-md-3">
-                            <div class="product-describe">
-                                <ul>
-                                    <li><span>公司考核价</span> <span>@{(pro \ "prod_unit_price").as[String]}</span></li>
-                                    <li><span>成本单位</span> <span>@{(pro \ "prod_unit_cost").as[String]}</span></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-xs-4 col-sm-4 col-md-4">
-                            <div class="textarea-describe">
-                                @{(pro \ "prod_competition").as[String]}
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="bottom-details">
-                        <div class="col-xs-2 col-sm-2 col-md-2 text-center">
-                            <div class="product-tip">
-                                药品动态
-                            </div>
-                        </div>
-                        <div class="col-xs-10 col-sm-10 col-md-10 text-left">
-                            <div class="product-tip">
-                                @{(pro \ "recent_situation").as[String]}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
-            <!--<div class="table-responsive">
-                <table class="table">
-                    @product.map { pro =>
-                        <tr>
-                            <td style="width:155px;" align="center">
-                                @{(pro \ "prod_name").as[String]}
-                                <br>
-                                @{(pro \ "prod_brand").as[String]}
-                            </td>
-                            <td style="width:156px;" align="center"><img class="img-rounded" src=@{"/assets/images/version_2/"+(pro \ "prod_name").as[String]+".png"} alt="" width="100" height="100"></td>
-                            <td style="width:156px;" class="number">@{(pro \ "prod_sales_time").as[String]}</td>
-                            <td style="width:156px;" class="number">@{(pro \ "prod_unit_price").as[String]}元</td>
-                            <td style="width:156px;" class="number">@{(pro \ "prod_unit_cost").as[String]}元</td>
-                            <td style="width:156px;" class="number">@{(pro \ "prod_insurance").as[String]}</td>
-                            <td style="width:156px;" class="number">@{(pro \ "prod_cat").as[String]}</td>
-                            <td style="width:273px;">
-                                <p style="text-align: left; padding:0 25px;">@{(pro \ "prod_competition").as[String]}</p>
-                            </td>
-                        </tr>
-                    }
-                </table>
-            </div>-->
         </div>
     </div>
     <div class="report-list" style="display: none;">
-        @if((report.get \ "report").as[List[JsValue]].nonEmpty) {
-            <div name="radar-values" style="display: none;">
-                @{
-                    val tmp = (report.get \ "report").asOpt[List[JsValue]].get
-                    val hash = Map("report_name" -> "代表报告_产品知识", "general_names" -> "产品知识(指数)") ::
-                                Map("report_name" -> "代表报告_经验", "general_names" -> "经验") ::
-                                Map("report_name" -> "代表报告_销售技巧", "general_names" -> "销售技巧(指数)") ::
-                                Map("report_name" -> "代表报告_工作积极性", "general_names" -> "工作积极性(指数)") :: Nil
-                    hash.map{ x =>
-                        val content = (tmp.find(f => (f \ "report_name").as[String] == x("report_name")).get \ "result")
-                                        .as[List[JsValue]]
+    @if((report.get \ "report").as[List[JsValue]].nonEmpty) {
+        <div name="radar-values" style="display: none;">
+        @{
+            val tmp = (report.get \ "report").asOpt[List[JsValue]].get
+            val hash = Map("report_name" -> "代表报告_产品知识", "general_names" -> "产品知识(指数)") ::
+                    Map("report_name" -> "代表报告_经验", "general_names" -> "经验") ::
+                            Map("report_name" -> "代表报告_销售技巧", "general_names" -> "销售技巧(指数)") ::
+                                    Map("report_name" -> "代表报告_工作积极性", "general_names" -> "工作积极性(指数)") :: Nil
+            hash.map { x =>
+                val content = (tmp.find(f => (f \ "report_name").as[String] == x("report_name")).get \ "result")
+                        .as[List[JsValue]]
 
 
-                        val pre = content.find(f => (f \ "general_names").as[String] == ("前期"+x("general_names"))).get
-                        val cur = content.find(f => (f \ "general_names").as[String] == ("当期"+x("general_names"))).get
-                        <div name={x("report_name")} style="display: none;">
-                            <div name="pre">
-                                <span name="小宋">{(pre \ "salesmen_first").asOpt[Int].get}</span>
-                                <span name="小兰">{(pre \ "salesmen_second").asOpt[Int].get}</span>
-                                <span name="小木">{(pre \ "salesmen_third").asOpt[Int].get}</span>
-                                <span name="小白">{(pre \ "salesmen_fourth").asOpt[Int].get}</span>
-                                <span name="小青">{(pre \ "salesmen_fifth").asOpt[Int].get}</span>
-                            </div>
-                            <div name="cur">
-                                <span name="小宋">{(cur \ "salesmen_first").asOpt[Int].get}</span>
-                                <span name="小兰">{(cur \ "salesmen_second").asOpt[Int].get}</span>
-                                <span name="小木">{(cur \ "salesmen_third").asOpt[Int].get}</span>
-                                <span name="小白">{(cur \ "salesmen_fourth").asOpt[Int].get}</span>
-                                <span name="小青">{(cur \ "salesmen_fifth").asOpt[Int].get}</span>
-                            </div>
-                        </div>
-                    }
-                }
-            </div>
-            <div class="home">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div style="padding: 0 5px;">
-                                @version_2.model.report.reportContent(uuid, phrase, report.get)
-                            </div>
+                val pre = content.find(f => (f \ "general_names").as[String] == ("前期" + x("general_names"))).get
+                val cur = content.find(f => (f \ "general_names").as[String] == ("当期" + x("general_names"))).get
+                <div name={x("report_name")} style="display: none;">
+                <div name="pre">
+                <span name="小宋">{(pre \ "salesmen_first").asOpt[Int].get}</span>
+                <span name="小兰">{(pre \ "salesmen_second").asOpt[Int].get}</span>
+                <span name="小木">{(pre \ "salesmen_third").asOpt[Int].get}</span>
+                <span name="小白">{(pre \ "salesmen_fourth").asOpt[Int].get}</span>
+                <span name="小青">{(pre \ "salesmen_fifth").asOpt[Int].get}</span>
+                </div>
+                <div name="cur">
+                <span name="小宋">{(cur \ "salesmen_first").asOpt[Int].get}</span>
+                <span name="小兰">{(cur \ "salesmen_second").asOpt[Int].get}</span>
+                <span name="小木">{(cur \ "salesmen_third").asOpt[Int].get}</span>
+                <span name="小白">{(cur \ "salesmen_fourth").asOpt[Int].get}</span>
+                <span name="小青">{(cur \ "salesmen_fifth").asOpt[Int].get}</span>
+                </div>
+                </div>
+            }
+        }
+        </div>
+        <div class="home">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div style="padding: 0 5px;">
+                        @version_2.model.report.reportContent(uuid, phrase, report.get)
                         </div>
                     </div>
                 </div>
             </div>
-        } else{}
+        </div>
+    } else {}
     </div>
-</div>
+    </div>
 
-<script src="@routes.Assets.versioned("javascripts/version_2/rsinformation/rsinformation.js")" type="text/javascript" defer="defer"></script>
-<script src="@routes.Assets.versioned("javascripts/version_2/report/report.js")" type="text/javascript" defer="defer"></script>
+    </div>
+
+    <script src="@routes.Assets.versioned("javascripts/version_2/rsinformation/rsinformation.js")" type="text/javascript" defer="defer"></script>
+    <script src="@routes.Assets.versioned("javascripts/version_2/report/report.js")" type="text/javascript" defer="defer"></script>

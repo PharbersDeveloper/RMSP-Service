@@ -23,28 +23,28 @@
                     </div>
                 </div>
             </div>
-            <div class="content divSecond originsmall" id="div_2">
-                <!-- <a class="btn btn-2" id="btn_2">下一步</a> -->
-                <div class="leftdiv">
-                    <img width="90%"  src=@{routes.Assets.versioned("images/version_2/start_left_2.png")} alt="secondpage">
-                </div>
-                <div class="rightdiv">
-                    <div class="right_text_2 right_text">
-                        <p class="text_title">公司战略安排通知：</p>
-                        <p>年度计划安排</p>
-                        <ul>
-                            <li>全年,将分为两个周期(上半年与下半年),每个周期为100个有效工作日。</li>
-                            <li>在每一周期结束后,将产生计划执行结果,统计本周期的销售表现及团队发展情况。</li>
-                            <li>上个周期中的销售计划执行结果，将对下个周期造成影响。</li>
-                        </ul>
-                    </div>
-                    <div class="link-div">
-                        <a class="skip" onclick="skiplink()">SKIP</a>
-                        <a class="btn btn-2" id="btn_2" onclick="btn_2_click()">下一步</a>
-                    </div>
-                </div>
+            @*<div class="content divSecond originsmall" id="div_2">*@
+                @*<!-- <a class="btn btn-2" id="btn_2">下一步</a> -->*@
+                @*<div class="leftdiv">*@
+                    @*<img width="90%"  src=@{routes.Assets.versioned("images/version_2/start_left_2.png")} alt="secondpage">*@
+                @*</div>*@
+                @*<div class="rightdiv">*@
+                    @*<div class="right_text_2 right_text">*@
+                        @*<p class="text_title">公司战略安排通知：</p>*@
+                        @*<p>年度计划安排</p>*@
+                        @*<ul>*@
+                            @*<li>全年,将分为两个周期(上半年与下半年),每个周期为100个有效工作日。</li>*@
+                            @*<li>在每一周期结束后,将产生计划执行结果,统计本周期的销售表现及团队发展情况。</li>*@
+                            @*<li>上个周期中的销售计划执行结果，将对下个周期造成影响。</li>*@
+                        @*</ul>*@
+                    @*</div>*@
+                    @*<div class="link-div">*@
+                        @*<a class="skip" onclick="skiplink()">SKIP</a>*@
+                        @*<a class="btn btn-2" id="btn_2" onclick="btn_2_click()">下一步</a>*@
+                    @*</div>*@
+                @*</div>*@
 
-            </div>
+            @*</div>*@
             <div class="content divThird originsmall" id="div_3">
                 <!-- <a class="btn btn-6" id="btn_3">下一步</a> -->
                 <div class="leftdiv">
@@ -99,11 +99,15 @@
                         <ul>
                             <li>年终考核中，将从多个维度来考核与评估您的区域管理能力：</li>
                             <ul class="some-dimension">
-                                <li>销售战略制定能力</li>
-                                <li>客户管理能力</li>
-                                <li>团队管理能力</li>
-                                <li>报表分析与信息决策能力</li>
-                                <li>市场洞察与应变能力</li>
+                                <li>报表分析与决策</li>
+                                <li>市场洞察力</li>
+                                <li>目标分级</li>
+                                <li>公司占率执行力</li>
+                                <li>资源分配与优化</li>
+                                <li>销售计划部署</li>
+                                <li>领导力</li>
+                                <li>管理能力</li>
+                                <li>人才培养</li>
                             </ul>
                         </ul>
                     </div>
@@ -116,7 +120,7 @@
         </div>
         <div class="bottombtn" id="buttons">
             <span class="hit-point on" index="1" ></span>
-            <span class="hit-point" index="2"></span>
+            @*<span class="hit-point" index="2"></span>*@
             <span class="hit-point" index="3"></span>
             @*<span class="hit-point" index="4"></span>*@
             <span class="hit-point" index="5"></span>
