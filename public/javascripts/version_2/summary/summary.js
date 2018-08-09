@@ -119,12 +119,12 @@
                     };
 
                     $('#team-ability').text(f.thousandsModule.formatNum(rd.result.data.team_ability.team_ability));
-                    $('#ability-ratio').text(new Number(parseFloat(f.thousandsModule.formatNum(rd.result.data.team_ability.uplift_ratio)).toFixed(1))+"%");
-                    if(rd.result.data.team_ability.uplift_ratio < 0) {
-                        $('#ability-ratio').css("color","red")
-                    } else {
-                        $('#ability-ratio-i').css("color","#60b3ad")
-                    };
+                    // $('#ability-ratio').text(new Number(parseFloat(f.thousandsModule.formatNum(rd.result.data.team_ability.uplift_ratio)).toFixed(1))+"%");
+                    // if(rd.result.data.team_ability.uplift_ratio < 0) {
+                    //     $('#ability-ratio').css("color","red")
+                    // } else {
+                    //     $('#ability-ratio-i').css("color","#60b3ad")
+                    // };
 
                     $.each(rd.result.data.team_achievement, function(i, v){
                         $('#team-achievement').append('<li>'+v.product_name+'</li>');
