@@ -212,7 +212,7 @@
                 trigger: 'item',
                 formatter: "{a} <br/>{b}: {c} ({d}%)"
             },
-            color: ['#00ACFF', '#356BFF', '#6BD8FA', '#D6E9F7', '#374066', '#DCDBDC'],
+            color: ['#00c7a8', '#356BFF', '#6BD8FA', '#01b652', '#c85014', '#DCDBDC'],
             series: [
                 {
                     name:'分配时间',

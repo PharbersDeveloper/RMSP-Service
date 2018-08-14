@@ -920,7 +920,8 @@ html::-webkit-scrollbar{width:0px}
 }
 
 .home .bottom .personal-training td.assist-tag > div.tag {
-    background-color: #00ACFF;
+    /*background-color: #00ACFF;*/
+    background-color: #00c7a8;
 }
 
 .home .bottom .personal-training td.training-tag > div.tag {
@@ -932,7 +933,8 @@ html::-webkit-scrollbar{width:0px}
 }
 
 .home .bottom .personal-training td.kpi-tag > div.tag {
-    background-color: #D6E9F7;
+    /*background-color: #D6E9F7;*/
+    background-color: #01b652;
     position: relative;
     z-index: auto;
     top: 0;
@@ -940,7 +942,8 @@ html::-webkit-scrollbar{width:0px}
 }
 
 .home .bottom .personal-training td.administrativ-tag > div.tag {
-    background-color: #374066;
+    /*background-color: #374066;*/
+    background-color: #c85014;
     position: relative;
     z-index: auto;
     top: 0;

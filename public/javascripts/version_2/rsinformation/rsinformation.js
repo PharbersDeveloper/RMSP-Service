@@ -139,6 +139,13 @@ var resinformation = (function($, w){
 
         var bar = echarts.init($('.person-list div[name="'+ identify +'"]')[0]);
         var option = {
+            title: {
+                show: true,
+                textStyle: {
+                    color: '#fff'
+                },
+                text: '代表能力值'
+            },
             grid: {left: '20%'},
             tooltip: {
                 trigger: 'axis',
@@ -157,8 +164,9 @@ var resinformation = (function($, w){
             },
             legend: {
                 icon: 'circle',
-                right: '1%',
-                data:['初始值','当期'],
+                itemGap: 20,
+                right: '10%',
+                data: ['2017下半年','2018上半年'],
                 textStyle: {
                     color: '#fff'
                 }
@@ -184,7 +192,7 @@ var resinformation = (function($, w){
             },
             series: [
                 {
-                    name: '初始值',
+                    name: '2017下半年',
                     type: 'bar',
                     itemStyle:{
                         normal:{
@@ -195,7 +203,7 @@ var resinformation = (function($, w){
                     data: data
                 },
                 {
-                    name: '当期',
+                    name: '2018上半年',
                     type: 'bar',
                     itemStyle:{
                         normal:{
@@ -221,9 +229,29 @@ var resinformation = (function($, w){
         phase1.push(textarea[0]);
         phase2.push(textarea[1]);
         var option = {
+            title: {
+                show: true,
+                textStyle: {
+                    color: '#fff'
+                },
+                text: '药品潜力'
+            },
             grid: {left: '20%'},
             tooltip: {
-                trigger: 'axis',
+                trigger: 'axis',//'{b0}: {c0}<br />{b1}: {c1}'
+                formatter: function(parameters){
+                    // console.info(parameters);
+                    var div = "<div>";
+                    $.each(parameters, function(i, v){
+                        div += v.marker + "&nbsp;";
+                        div += v.name + "&nbsp;&nbsp;";
+                        div += f.thousandsModule.formatNum(v.value) + "元";
+                        div += "<br/>"
+                    });
+                    div += "</div>";
+                    // console.info(div)
+                    return div;
+                },
                 axisPointer: {
                     type: 'cross',
                     crossStyle: {
@@ -235,15 +263,16 @@ var resinformation = (function($, w){
                 normal:{
                     show: true,
                     formatter: function(elem) {
-                        return f.thousandsModule.formatNum(elem.value)
+                        return f.thousandsModule.formatNum(elem.value) + "元"
                     },
                     textStyle:{color:'#3398DB'}
                 }
             },
             legend: {
                 icon: 'circle',
-                right: '1%',
-                data:['初始值','当期'],
+                itemGap: 20,
+                right: '10%',
+                data:['2017下半年','2018上半年'],
                 textStyle: {
                     color: '#fff'
                 }
@@ -269,7 +298,7 @@ var resinformation = (function($, w){
             },
             series: [
                 {
-                    name: '初始值',
+                    name: '2017下半年',
                     type: 'bar',
                     itemStyle:{
                         normal:{
@@ -281,7 +310,7 @@ var resinformation = (function($, w){
                     data: phase1
                 },
                 {
-                    name: '当期',
+                    name: '2018上半年',
                     type: 'bar',
                     itemStyle:{
                         normal:{

@@ -4,7 +4,7 @@ html {
 .login-wrapper {
     height: 957px;
     background-color: #434652;
-    background-image: url("/assets/images/version_2/login_bg.png");
+    /*background-image: url("/assets/images/version_2/login_bg.png");*/
     -webkit-background-size: cover;
     background-size: cover;
 }

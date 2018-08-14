@@ -27,7 +27,7 @@
                     <div class="header">
                         <div class="row head-describe box bg">
                             <div class="col-md-12">
-                                <div class="col-md-5 col-sm-5 col-xs-5">周期(1)&nbsp;&nbsp;100工作日计划部署</div>
+                                <div class="col-md-5 col-sm-5 col-xs-5">2018年下半年&nbsp;100工作日计划部署</div>
                                 <div class="col-md-7 col-sm-7 col-xs-7 text-right" >
                                     <div class="config" name="toggle-import-export">
                                         <i class="glyphicon glyphicon-cog"></i>
@@ -398,14 +398,14 @@
                                             <div class="input-display-inside input-display-inside-left">
                                                 <table class="text-display">
                                                     <tr>
-                                                        <td class="assist-tag"><div class="tag"></div></td>
-                                                        <td class="name-tips">协助拜访</td>
+                                                        <td style="display: none;" class="assist-tag"><div class="tag"></div></td>
+                                                        <td style="display: none;" class="name-tips">协助拜访</td>
                                                         <td class="kpi-tag"><div class="tag"></div></td>
                                                         <td class="name-tips">KPI分析</td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="assist-tag"></td>
-                                                        <td><span class="big-text" name="visit-days">0</span>天</td>
+                                                        <td style="display: none;" class="assist-tag"></td>
+                                                        <td style="display: none;" ><span class="big-text" name="visit-days">0</span>天</td>
                                                         <td class="kpi-tag"></td>
                                                         <td>
                                                             @manageInputs.filter(f => (f \ "project_name").as[String] == "KPI 报告分析").map { data =>
@@ -436,14 +436,14 @@
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="training-tag"><div class="tag"></div></td>
-                                                        <td class="name-tips">能力辅导</td>
+                                                        <td style="display: none;" class="training-tag"><div class="tag"></div></td>
+                                                        <td style="display: none;" class="name-tips">能力辅导</td>
                                                         <td class="administrativ-tag"><div class="tag"></div></td>
                                                         <td class="name-tips">行政工作</td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="training-tag"></td>
-                                                        <td><span class="big-text" name="coach-days">0</span>天</td>
+                                                        <td style="display: none;" class="training-tag"></td>
+                                                        <td style="display: none;" ><span class="big-text" name="coach-days">0</span>天</td>
                                                         <td class="administrativ-tag"></td>
                                                         <td>
                                                             @manageInputs.filter(f => (f \ "project_name").as[String] == "行政工作").map { data =>
@@ -475,14 +475,14 @@
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="meeting-tag"><div class="tag"></div></td>
-                                                        <td class="name-tips">例会/团建</td>
+                                                        <td style="display: none;" class="meeting-tag"><div class="tag"></div></td>
+                                                        <td style="display: none;" class="name-tips">例会/团建</td>
                                                         <td class="undistributed-tag"><div class="tag"></div></td>
                                                         <td class="name-tips">未分配</td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="meeting-tag"></td>
-                                                        <td><span class="big-text" name="meeting-days">0</span>天</td>
+                                                        <td style="display: none;" class="meeting-tag"></td>
+                                                        <td style="display: none;" ><span class="big-text" name="meeting-days">0</span>天</td>
                                                         <td class="undistributed-tag"></td>
                                                         <td><span class="big-text" name="other-days">100</span>天</td>
                                                     </tr>
