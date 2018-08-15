@@ -62,7 +62,7 @@
     opacity: 1;
 }
 .start .divFirst .leftdiv {
-    background-image: url("/assets/images/version_2/start_left_1_bg.png");
+    /*background-image: url("/assets/images/version_2/start_left_1_bg.png");*/
     background-size: cover;
 }
 /* .start .divFirst .leftdiv img:first-child {
