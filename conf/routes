@@ -21,7 +21,7 @@ GET     /takelast/:uuid             controllers.RMSPRoutesControllerV2.takelast(
 GET     /report                     controllers.RMSPRoutesControllerV2.report(uuid = "", phrase = "1")
 GET     /report/:uuid/:phrase       controllers.RMSPRoutesControllerV2.report(uuid, phrase)
 
-GET     /summary                    controllers.RMSPRoutesControllerV2.summary
+GET     /summary/:uuid              controllers.RMSPRoutesControllerV2.summary(uuid)
 
 POST    /decision/proceed           controllers.RMSPRoutesController.updatedecision
 POST    /management/proceed         controllers.RMSPRoutesController.updatemanagement

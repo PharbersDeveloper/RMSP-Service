@@ -49,6 +49,12 @@ libraryDependencies ++= Seq(
 	"com.pharbers" % "errorcode" % "0.2",
 	"net.debasishg" % "redisclient_2.11" % "3.4",
 	"org.apache.commons" % "commons-email" % "1.4",
+	
+//	"com.itextpdf" % "itextpdf" % "5.5.6",
+//	"com.itextpdf.tool" % "xmlworker" % "5.5.6",
+//	"com.itextpdf" % "itext-asian" % "5.2.0",
+//	"org.xhtmlrenderer" % "core-renderer" % "R8",
+	
 	"org.specs2" %% "specs2-core" % "3.9.1" % "test"
 )
 

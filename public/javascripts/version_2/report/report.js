@@ -309,7 +309,7 @@
                 // layer.alert('即将推出');
                 f.alert.loading(true);
                 setTimeout(function () {
-                    w.location.href = "/summary";
+                    w.location.href = "/summary/"+$('input:hidden[name="uuid"]').val() ;
                 },1000);
                 setTimeout(function () {
                     f.alert.loading(false);

@@ -1251,7 +1251,7 @@
                                             setTimeout(function () {
                                                 f.alert.loading(false);
                                                 // f.alert.alert_success("消息", "模拟成功");
-                                                w.location = "/summary"
+                                                w.location = "/summary/"+ $('input:hidden[name="uuid"]').val()
                                                 // setTimeout(function(){
                                                 //     w.location = "/report/" + $('input:hidden[name="uuid"]').val() + "/" + $('input:hidden[name="phase"]').val();
                                                 // }, 1000)

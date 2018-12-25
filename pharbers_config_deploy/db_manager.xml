@@ -1,0 +1,5 @@
+<pharbers-modules>
+    <mongodb-connect-nodes>
+        <connect-config-path name="stp" value="pharbers_config/stp_connect.xml" />
+    </mongodb-connect-nodes>
+</pharbers-modules>

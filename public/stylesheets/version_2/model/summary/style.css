@@ -1,3 +1,10 @@
+/*div {*/
+    /*page-break-before: always;*/
+/*}*/
+/*body {*/
+    /*line-height: 1em;*/
+    /*text-rendering: geometricPrecision;*/
+/*}*/
 .summary , .analyze , .trend {
     margin: 0 -15px;
 }
