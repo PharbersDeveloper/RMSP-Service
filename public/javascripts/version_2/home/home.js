@@ -1218,17 +1218,6 @@
 
                 var decisionJson = JSON.stringify($.extend(decisionTmp, f.parameterPrefixModule.conditions(userInfo)));
                 var managementJson = JSON.stringify($.extend(managerTmp, f.parameterPrefixModule.conditions(userInfo)));
-                // w.console.info(decisionJson)
-
-                // w.console.info(verifyAllSalesMenIsSelected())
-                // w.console.info(verifyAllInputIsNumber())
-                // w.console.info(verifyManageTimelg())
-                // w.console.info(verifyTimelg())
-                // w.console.info(verifyBudgeteq())
-                // w.console.info(verifyAllPersonnelTraining())
-                // w.console.info(verifyTimeeq())
-                // w.console.info(verifyAllHospitalAllot());
-                // w.console.info(verifyAllotHositalNotNull()）
 
                 if(verifyAllInputIsNumber() &&
                     verifyAllSalesMenIsSelected() &&
@@ -1250,11 +1239,8 @@
 
                                             setTimeout(function () {
                                                 f.alert.loading(false);
-                                                // f.alert.alert_success("消息", "模拟成功");
-                                                w.location = "/summary/"+ $('input:hidden[name="uuid"]').val()
-                                                // setTimeout(function(){
-                                                //     w.location = "/report/" + $('input:hidden[name="uuid"]').val() + "/" + $('input:hidden[name="phase"]').val();
-                                                // }, 1000)
+                                                // w.location = "/summary/"+ $('input:hidden[name="uuid"]').val()
+                                                w.location = "/report/" + $('input:hidden[name="uuid"]').val() + "/2";
                                             },600)
 
                                         }

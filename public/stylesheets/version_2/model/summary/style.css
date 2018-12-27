@@ -112,7 +112,7 @@
     margin:0 5px;
     background: #4d515e;
     border-radius: 3px;
-    /*float: left;*/
+    float: left;
 }
 .keyword .title {
     /*padding-top: 20px;*/
@@ -307,8 +307,8 @@
 .left {
     position: absolute;
     height: 200px;
-    top: 50%;
-    transform:translateY(-50%);
+    top: 9%;
+    /*transform:translateY(-50%);*/
 
     padding-right: 20px;
     /*border-right: 1px solid #fff;*/
