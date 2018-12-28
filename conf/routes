@@ -6,7 +6,6 @@ GET     /start                      controllers.RMSPRoutesControllerV2.start
 GET     /transition/:uuid/:phrase   controllers.RMSPRoutesControllerV2.transition(uuid, phrase)
 
 GET     /                           controllers.RMSPRoutesControllerV2.login
-#GET     /login                      controllers.RMSPRoutesController.login
 GET     /login                      controllers.RMSPRoutesControllerV2.login
 
 GET     /index                      controllers.RMSPRoutesControllerV2.indexV2(uuid = "")
@@ -23,11 +22,13 @@ GET     /report/:uuid/:phrase       controllers.RMSPRoutesControllerV2.report(uu
 
 GET     /summary/:uuid              controllers.RMSPRoutesControllerV2.summary(uuid)
 
+# 下载文件
+GET     /download/file/:name        controllers.FopController.downloadFile(name)
+
+GET     /download/summary/pdf/:uuid controllers.RMSPRoutesControllerV2.checkOutSummary(uuid)
+
 POST    /decision/proceed           controllers.RMSPRoutesController.updatedecision
 POST    /management/proceed         controllers.RMSPRoutesController.updatemanagement
-
-# 下载文件
-GET     /download/file/:name      controllers.FopController.downloadFile(name)
 
 # 用户注册
 POST    /user/register              controllers.user.RegisterController.registerUser
@@ -55,6 +56,9 @@ POST    /salesmen/init/radarmap     controllers.rsinformation.RsInformationContr
 
 # 测评报告
 POST    /summary/query              controllers.summary.SummaryController.query
+
+# 生成测评报告PDF
+POST    /generate/summary/pdf       controllers.generatepdf.GeneratePDFController.generatePDF()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

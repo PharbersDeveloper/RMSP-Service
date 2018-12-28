@@ -1,0 +1,19 @@
+
+@(uuid: String)
+@version_2.model.application.template("区域管理模拟平台"){
+    <input type="hidden" name="uuid" value="@uuid" disabled="disabled" />
+}
+
+<script>
+    $(function() {
+        var condition = {
+            "condition": {
+                "uuid": $('input[name="uuid"]').val(),
+                "host": window.location.host
+            }
+        };
+        f.ajaxModule.baseCall('/generate/summary/pdf', JSON.stringify(condition), 'POST', function(result) {
+            window.location.href = '/download/file/' + $('input[name="uuid"]').val() + ".pdf";
+        })
+    });
+</script>

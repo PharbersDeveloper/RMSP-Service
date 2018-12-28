@@ -27,13 +27,6 @@ class RMSPRoutesControllerV2 @Inject()(as_inject: ActorSystem, dbt: dbInstanceMa
 	implicit val db_basic : DBTrait = dbt.queryDBInstance("stp").get
 	implicit val attoken: AuthTokenTrait = att
 
-//	def indexV2 = Action {
-//		Ok(views.html.version_2.model.home.template())
-//	}
-
-//	def login = Action {
-//		Ok(views.html.Login.login())
-//	}
 	def login = Action {
 		Ok(views.html.version_2.model.login.template())
 	}
@@ -43,6 +36,9 @@ class RMSPRoutesControllerV2 @Inject()(as_inject: ActorSystem, dbt: dbInstanceMa
 	}
 	def summary(uuid: String) = Action {
 		Ok(views.html.version_2.model.summary.template(uuid))
+	}
+	def checkOutSummary(uuid: String) = Action {
+		Ok(views.html.version_2.model.checkOutSummary.template(uuid))
 	}
 	
 	def transition(uuid: String, phrase: String) = Action {
