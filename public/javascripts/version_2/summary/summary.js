@@ -336,7 +336,7 @@
                             radius: '70%',
                             name: {
                                 textStyle: {
-                                    fontSize: 10,
+                                    fontSize: 16,
                                     color: 'rgb(236, 236, 236)'
                                 }
                             },
