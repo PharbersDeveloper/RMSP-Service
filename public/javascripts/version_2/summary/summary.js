@@ -441,6 +441,10 @@
                             },
                             axisLabel: {
                                 interval:0,
+                                textStyle: {
+                                    color: '',   //x轴上的字体颜色
+                                    fontSize:'16'    // x轴字体大小
+                                },
                                 color: 'white',
                                 backgroundColor: '#509c91',
                                 padding: [58, 17, 58, 17]
