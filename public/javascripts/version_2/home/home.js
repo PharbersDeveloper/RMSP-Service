@@ -1241,7 +1241,7 @@
                                                 f.alert.loading(false);
                                                 // w.location = "/summary/"+ $('input:hidden[name="uuid"]').val()
                                                 w.location = "/report/" + $('input:hidden[name="uuid"]').val() + "/2";
-                                            },600)
+                                            },1000)
 
                                         }
                                     });

@@ -3,7 +3,7 @@ import play.sbt.PlayScala
 
 def common = Seq(
 	scalaVersion := "2.11.8",
-	version := "3.0.3",
+	version := "3.0.4",
 	organization := "com.pharbers"
 )
 

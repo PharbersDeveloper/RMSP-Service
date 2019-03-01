@@ -20,6 +20,6 @@
         <rfile value="/Users/qianpeng/Desktop/R/stp_handler_one_product_bak.R"/>
     </r-path>
     <excel-path>
-        <report value="/Users/qianpeng/Desktop/write_excel.R"/>
+        <report value="/Users/qianpeng/Desktop/R/write_excel.R"/>
     </excel-path>
 </pharbers-modules>
