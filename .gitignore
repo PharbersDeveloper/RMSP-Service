@@ -13,3 +13,5 @@ resource/
 *.history
 
 .metaserver/metaserver.log
+
+pharbers_config_deploy/

@@ -23,8 +23,8 @@ resolvers += Resolver.mavenLocal
 
 // Docker
 import NativePackagerHelper.directory
-mappings in Universal ++= directory("pharbers_config")
-	.map(x => x._1 -> x._2.replace("pharbers_config", "pharbers_config"))
+mappings in Universal ++= directory("pharbers_config_deploy")
+	.map(x => x._1 -> x._2.replace("pharbers_config_deploy", "pharbers_config"))
 
 //dockerCommands ++= Seq(
 //	Cmd("FROM", "scratch"),
