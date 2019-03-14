@@ -5,6 +5,7 @@ import com.pharbers.bmmessages.{CommonModules, MessageDefines}
 import com.pharbers.bmpattern.ModuleTrait
 import com.pharbers.common.RConfig
 import com.pharbers.common.cmd.rcmd.CallRFile2
+import com.pharbers.http.httpOpt
 import module.rscript.RscriptData.RscriptData
 import module.rscript.RscriptMessage._
 import play.api.libs.json.JsValue
@@ -23,8 +24,10 @@ object RscriptModule extends ModuleTrait {
 		try {
 			val uuid = (data \ "condition" \ "uuid").asOpt[String].map(x => x).getOrElse(throw new Exception("wrong input"))
 			val phase = (data \ "phase").asOpt[Int].map(x => x).getOrElse(throw new Exception("wrong input"))
-			val rfile = RConfig().program_path + RConfig().rfile()
-			val r = CallRFile2(rfile, uuid, phase).excute
+//			val rfile = RConfig().program_path + RConfig().rfile()
+//			val r = CallRFile2(rfile, uuid, phase).excute
+			val r = httpOpt("http://nginx_deploy:80/stp_handler/" + uuid).get
+			println(r)
 			(Some(Map("data" -> toJson("success"))), None)
 		} catch {
 			case ex: Exception => (None, Some(ErrorCode.errorToJson(ex.getMessage)))

@@ -1,3 +1,4 @@
+import com.typesafe.sbt.packager.docker._
 import play.routes.compiler.InjectedRoutesGenerator
 import play.sbt.PlayScala
 
@@ -19,6 +20,21 @@ lazy val root = (project in file(".")).
 routesGenerator := InjectedRoutesGenerator
 
 resolvers += Resolver.mavenLocal
+
+// Docker
+import NativePackagerHelper.directory
+mappings in Universal ++= directory("pharbers_config")
+	.map(x => x._1 -> x._2.replace("pharbers_config", "pharbers_config"))
+
+//dockerCommands ++= Seq(
+//	Cmd("FROM", "scratch"),
+//	Cmd("ADD", "./files/wkhtmltopdf/wkhtmltox-0.12.5-1.centos7.x86_64.rpm ./files/wkhtmltopdf/")
+//	Cmd("RUN", "yum -y install xorg-x11-fonts-75dp"),
+//	Cmd("RUN", "yum -y install xorg-x11-fonts-Type1")
+//	Cmd("RUN", "[\"rpm\", \"-iv\", \"/bin/wkhtmltox-0.12.5-1.centos7.x86_64.rpm\"]"),
+//	ExecCmd("wkhtmltopdf", "--help")
+//	ExecCmd("CMD", "echo", "Hello, World from Docker")
+//)
 
 libraryDependencies ++= Seq(
 	jdbc,

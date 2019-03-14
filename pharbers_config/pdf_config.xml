@@ -1,5 +1,5 @@
 <pharbers-modules>
     <pdf-path>
-        <pdffile value="./files"/>
+        <pdffile value="./pdf-files"/>
     </pdf-path>
 </pharbers-modules>

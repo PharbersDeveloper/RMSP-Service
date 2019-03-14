@@ -17,9 +17,11 @@
     <r-path>
         <!--<rfile value="/Users/qianpeng/Desktop/R文件/stp_handler.R"/>-->
         <!--<rfile value="/Users/qianpeng/Desktop/R文件/stp_handler_one_product.R"/>-->
+        <!--<rfile value="./stp_handler_one_product_bak.R"/>-->
         <rfile value="/Users/qianpeng/Desktop/R/stp_handler_one_product_bak.R"/>
     </r-path>
     <excel-path>
+        <!--<report value="./write_excel.R"/>-->
         <report value="/Users/qianpeng/Desktop/R/write_excel.R"/>
     </excel-path>
 </pharbers-modules>
