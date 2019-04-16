@@ -23,7 +23,7 @@ object RscriptModule extends ModuleTrait {
 	def callCalcRscript(data: JsValue)(implicit cm: CommonModules): (Option[String Map JsValue], Option[JsValue]) = {
 		try {
 			val uuid = (data \ "condition" \ "uuid").asOpt[String].map(x => x).getOrElse(throw new Exception("wrong input"))
-			val phase = (data \ "phase").asOpt[Int].map(x => x).getOrElse(throw new Exception("wrong input"))
+//			val phase = (data \ "phase").asOpt[Int].map(x => x).getOrElse(throw new Exception("wrong input"))
 //			val rfile = RConfig().program_path + RConfig().rfile()
 //			val r = CallRFile2(rfile, uuid, phase).excute
 			val r = httpOpt("http://nginx_deploy:80/stp_handler/" + uuid).get
