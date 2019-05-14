@@ -72,7 +72,7 @@ class RMSPRoutesControllerV2 @Inject()(as_inject: ActorSystem, dbt: dbInstanceMa
 						)
 					}
 
-					if ((reVal \ "status").asOpt[String].get == "ok") Redirect("/home/" + uid + "/1")
+					if ((reVal \ "status").asOpt[String].get == "ok") Redirect("/home/" + uid + "/2")
 					else Redirect("/login")
 				}
 			} else Redirect("/login")
@@ -109,7 +109,7 @@ class RMSPRoutesControllerV2 @Inject()(as_inject: ActorSystem, dbt: dbInstanceMa
 			val management = managements(uuid, phrase)// 人员培训 上次输入
 			val report = getReport("cebe92eb-ad0f-4053-a1c6-8aaa1594a480", "1") // 获取report
 			
-			Ok(views.html.version_2.model.home.template(uuid, phrase, market("news"),
+			Ok(views.html.version_2.model.home.template(uuid, "2", market("news"),
 				product("product"), salesman("salesman"), salesman("team_info"), decision("budget"),
 				decision("hospital").as[List[JsValue]], decision("decisioInputs").as[List[JsValue]], management("manageInput").as[List[JsValue]], (true, 2), report))
 		}
@@ -369,7 +369,7 @@ class RMSPRoutesControllerV2 @Inject()(as_inject: ActorSystem, dbt: dbInstanceMa
 	def takelast(uuid : String) = Action { request =>
 		getUserCookie(request) {
 			val pharse = if(checkInputPhase(uuid, 1)._2 > 2) 2 else checkInputPhase(uuid, 1)._2
-			Redirect("/home/" + uuid + "/" + pharse)
+			Redirect("/home/" + uuid + "/" + "2")
 		}
 	}
 
