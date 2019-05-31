@@ -64,8 +64,8 @@ object SummaryModule extends ModuleTrait with SummaryData{
 			val radar_map = reVal.map (_("assess_results").as[List[String Map JsValue]]).
 				getOrElse(throw new Exception("data not exist")).
 				map { x =>
-					val root = comment_root.find(_("code").as[Int] == x("ability_code").as[Int]).get("details").
-						as[List[String Map JsValue]].find(_("code").as[Int] == x("kpi_code").as[Int])
+					val root = comment_root.find(_("code").as[Int] == x("ability_code").as[String].toInt).get("details").
+						as[List[String Map JsValue]].find(_("code").as[Int] == x("kpi_code").as[String].toInt)
 					val comments = root.
 						get("comments").
 						as[List[String Map JsValue]].find(_("score").as[Int] == x("basic_score").as[Int]).
